@@ -13,7 +13,8 @@ function HeaderText() {
             display: 'flex',
             alignItems: 'center', 
             // justifyContent: 'center',
-            padding: 5 }}>
+            padding: 5, 
+            }}>
             <Typography
                 variant="h1"
                 noWrap
@@ -51,11 +52,11 @@ function HeaderText() {
             padding: 5 }}>
 
         <Button variant="contained" color="primary" size="large" sx={{margin:'2vh', backgroundColor:'#000000', padding:'3vh'}} endIcon= {<ArrowForwardIcon/>} href='booking'>
-          Book a Flight
+        &nbsp;Book a Flight&nbsp;
         </Button>
 
         <Button variant="contained" color="primary" size="large" sx={{margin:'2vh', backgroundColor:'#000000', padding:'3vh'}} endIcon={<PersonAddAltIcon/>} href='sign-up'>
-          Sign Up
+        &nbsp;Sign Up&nbsp;
         </Button>
         </Container>
      </>
