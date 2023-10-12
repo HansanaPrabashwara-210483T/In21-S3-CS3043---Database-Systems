@@ -7,8 +7,8 @@ const app = express()
 const db = mysql.createConnection({
     host:"localhost",
     user:"root",
-    password:"Hansaname21#",
-    database:"b_airlines"
+    password:"root123",
+    database:"airlinesystem"
 })
 
 app.use(express.json());
@@ -150,7 +150,29 @@ app.get("/flight", (req,res)=>{
     })
 })
 
-// Todo add a delay mechanism to deal with delays and update the expected arrival time
+// Delay mechanism to deal with delays and update the expected arrival time
+app.post("/flight", (req, res) => {
+    const q = `
+        UPDATE flight
+        SET arrival_time = DATE_ADD(arrival_time, INTERVAL ? HOUR),
+            departure_time = DATE_ADD(departure_time, INTERVAL ? HOUR),
+            delay = ?,
+            status = 'delayed'
+        WHERE flight_id = ?;
+    `;
+    const values = [
+        req.body.delayed_time,
+        req.body.delayed_time,
+        req.body.delayed_time,
+        req.body.flight_id
+    ];
+    db.query(q, values, (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+
 app.post("/flight", (req,res)=>{
     const q = "INSERT INTO flight (`route_id`,`aircraft_id`,`departure_time`,`expected_arrival_time`) VALUES (?);";
     const values = [
@@ -165,6 +187,8 @@ app.post("/flight", (req,res)=>{
         return res.json(data)
     });
 });
+
+
 
 /**
  * Membership 
