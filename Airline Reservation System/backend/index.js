@@ -1,15 +1,26 @@
 import express from "express"
 import mysql from "mysql2"
 import cors from "cors"
+import dotenv from "dotenv"
+
+dotenv.config({ path: './db.env'});
 
 const app = express()
 
 const db = mysql.createConnection({
+<<<<<<< Updated upstream
     host:"localhost",
     user:"root",
     password:"root123",
     database:"airlinesystem"
 })
+=======
+    host        : process.env.DB_HOST,
+    user        : process.env.DB_USER,
+    password    : process.env.DB_PASSWORD,
+    database    : process.env.DB_NAME,
+});
+>>>>>>> Stashed changes
 
 app.use(express.json());
 app.use(cors());
