@@ -206,7 +206,7 @@ app.get("/routes", (req, res) => {
 
 // Get rows related to a specific route by route_id
 app.get("/route/:route_id", (req, res) => {
-    const route_id = req.params.route_id; // Get the route_id from the request
+    const route_id = req.params.route_id;  //input variable to get flight relating to selected route in future
 
     const sql = "SELECT * FROM flight WHERE flight.flight_id = ? AND flight.departure_time > CURDATE()";
 
