@@ -191,6 +191,30 @@ app.post("/flight", (req,res)=>{
     });
 });
 
+/**
+ * Booking
+ */
+//displaying all routes
+app.get("/routes", (req, res) => {
+    const sql = "SELECT * FROM route";
+
+    db.query(sql, (err, rows) => {
+        if (err) return res.json(err);
+        return res.json(rows);
+    });
+});
+
+// Get rows related to a specific route by route_id
+app.get("/route/:route_id", (req, res) => {
+    const route_id = req.params.route_id; // Get the route_id from the request
+
+    const sql = "SELECT * FROM flight WHERE flight.flight_id = ? AND flight.departure_time > CURDATE()";
+
+    db.query(sql, [route_id], (err, rows) => {
+        if (err) return res.json(err);
+        return res.json(rows);
+    });
+});
 
 
 /**
@@ -235,7 +259,7 @@ app.get("/user", (req,res)=>{
 /**
  * TODO
  * Password should be hashed
- * Admin should be aleto create more admins
+ * Admin should be able to create more admins
  * All users should be able to change password and name and other data'
  * Membership should be updated accordingly
  */
