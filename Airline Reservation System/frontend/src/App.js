@@ -16,6 +16,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Aircraft from "./pages/Aircraft"
 import "./style.css";
+import Booking from "./pages/Booking";
 
 function App() {
   return (
@@ -23,7 +24,7 @@ function App() {
       <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home/>}/>
-        <Route path="/booking" element={<SearchBox/>}/>
+        <Route path="/booking" element={<Booking/>}/>
         <Route path="/sign-in" element={<SignIn/>}/>
         <Route path="/sign-up" element={<SignUp/>}/>
 
