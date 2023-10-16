@@ -52,6 +52,35 @@ app.post("/aircraft_model", (req,res)=>{
 });
 
 
+app.delete("/aircraft_model/:id", (req,res)=>{
+    const modelId = req.params.id
+    const q  = "DELETE from aircraft_model where model_id = ?"
+
+    db.query(q,[modelId],(err,data)=>{
+        if(err) return res.json(err)
+        return res.json("Aircraft Model has been deleted successfully")
+    });
+})
+
+
+app.put("/aircraft_model/:id", (req,res)=>{
+    const modelId = req.params.id
+    const q  = "UPDATE aircraft_model SET `brand`=?, `model`=?, `economy_seats` = ?, `business_seats` = ? , `platinum_seats`=? where model_id = ?"
+
+    const values = [
+        req.body.brand,
+        req.body.model,
+        req.body.economy_seats,
+        req.body.business_seats,
+        req.body.platinum_seats
+    ];
+
+    db.query(q,[...values,modelId],(err,data)=>{
+        if(err) return res.json(err)
+        return res.json("Aircraft model has been updated successfully")
+    });
+})
+
 
 /**
  * Airport
@@ -67,15 +96,11 @@ app.get("/airport", (req,res)=>{
 })
 
 app.post("/airport", (req,res)=>{
-    const q = "INSERT INTO airport (`airport_code`,`name`,`country`,`state`,`city`,`lat`,`lon`) VALUES (?);";
+    const q = "INSERT INTO airport (`airport_code`,`name`, `location_id`) VALUES (?);";
     const values = [
         req.body.airport_code,
         req.body.name,
-        req.body.country,
-        req.body.state,
-        req.body.city,
-        req.body.lat,
-        req.body.lon
+        req.body.location_id,
     ];
 
     db.query(q,[values],(err,data)=>{
@@ -85,10 +110,48 @@ app.post("/airport", (req,res)=>{
 });
 
 
+app.delete("/airport/:id", (req,res)=>{
+    const airportId = req.params.id
+    const q  = "DELETE from airport where airport_code = ?"
+
+    db.query(q,[airportId],(err,data)=>{
+        if(err) return res.json(err)
+        return res.json("Airport has been deleted successfully")
+    });
+})
+
+
+app.put("/airport/:id", (req,res)=>{
+    const airportId = req.params.id
+    const q  = "UPDATE airport SET `airport_code`= ?,`name` = ?, `location_id` = ? where airport_code = ?"
+
+    const values = [
+        req.body.airport_code,
+        req.body.name,
+        req.body.location_id,
+    ];
+
+    db.query(q,[...values,airportId],(err,data)=>{
+        if(err) return res.json(err)
+        return res.json("Airport has been updated successfully")
+    });
+})
+
+
 
 /**
  * Aircraft
  */
+
+app.get("/aircraft/:id", (req,res)=>{
+    const aircraftId = req.params.id
+    const q = "SELECT * FROM aircraft where aircraft_id = ?"
+    db.query(q,[aircraftId],(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
 
 app.get("/aircraft", (req,res)=>{
     const q = "SELECT * FROM aircraft"
@@ -110,6 +173,33 @@ app.post("/aircraft", (req,res)=>{
         return res.json(data)
     });
 });
+
+
+app.delete("/aircraft/:id", (req,res)=>{
+    const aircraftId = req.params.id
+    const q  = "DELETE from aircraft where aircraft_id = ?"
+
+    db.query(q,[aircraftId],(err,data)=>{
+        if(err) return res.json(err)
+        return res.json("Aircraft has been deleted successfully")
+    });
+})
+
+
+app.put("/aircraft/:id", (req,res)=>{
+    const aircraftId = req.params.id
+    const q  = "UPDATE aircraft SET `model_id`=?, `call_sign`=? where aircraft_id = ?"
+
+    const values = [
+        req.body.model_id,
+        req.body.call_sign,
+    ];
+
+    db.query(q,[...values,aircraftId],(err,data)=>{
+        if(err) return res.json(err)
+        return res.json("Aircraft has been updated successfully")
+    });
+})
 
 
 /**
@@ -138,6 +228,92 @@ app.post("/route", (req,res)=>{
         return res.json(data)
     });
 });
+
+app.delete("/route/:id", (req,res)=>{
+    const routeId = req.params.id
+    const q  = "DELETE from route where route_id = ?"
+
+    db.query(q,[routeId],(err,data)=>{
+        if(err) return res.json(err)
+        return res.json("Route has been deleted successfully")
+    });
+})
+
+
+app.put("/route/:id", (req,res)=>{
+    const routeId = req.params.id
+    const q  = "UPDATE route SET `origin`=?, `destination`=?,`economy_price`=?,`business_price`=?,`platinum_price`=? where route_id = ?"
+
+    const values = [
+        req.body.origin,
+        req.body.destination,
+        req.body.economy_price,
+        req.body.business_price,
+        req.body.platinum_price
+    ];
+
+    db.query(q,[...values,routeId],(err,data)=>{
+        if(err) return res.json(err)
+        return res.json("Route has been updated successfully")
+    });
+})
+
+
+
+/**
+ * Locations
+ */
+
+app.get("/location", (req,res)=>{
+    const q = "SELECT * FROM location"
+    db.query(q,(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+
+app.post("/location", (req,res)=>{
+    const q = "INSERT INTO location (`location_name`,`parent_location_id`) VALUES (?);";
+    const values = [
+        req.body.location_name,
+        req.body.parent_location_id
+    ];
+
+    db.query(q,[values],(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    });
+});
+
+app.delete("/location/:id", (req,res)=>{
+    const locationId = req.params.id
+    const q  = "DELETE from location where location_id = ?"
+
+    db.query(q,[locationId],(err,data)=>{
+        if(err) return res.json(err)
+        return res.json("Location has been deleted successfully")
+    });
+})
+
+
+app.put("/location/:id", (req,res)=>{
+    const locationId = req.params.id
+    const q  = "UPDATE location SET `location_name` = ?,`parent_location_id` = ? where location_id = ?"
+
+    const values = [
+        req.body.location_name,
+        req.body.parent_location_id,
+    ];
+
+    db.query(q,[...values,locationId],(err,data)=>{
+        if(err) return res.json(err)
+        return res.json("Location has been updated successfully")
+    });
+})
+
+
+
 
 
 
@@ -177,12 +353,13 @@ app.post("/flight", (req, res) => {
 
 
 app.post("/flight", (req,res)=>{
-    const q = "INSERT INTO flight (`route_id`,`aircraft_id`,`departure_time`,`expected_arrival_time`) VALUES (?);";
+    const q = "INSERT INTO flight (`route_id`,`aircraft_id`,`departure_time`,`arrival_time`,`status`) VALUE (?);";
     const values = [
         req.body.route_id,
         req.body.aircraft_id,
         req.body.departure_time,
-        req.body.expected_arrival_time,
+        req.body.arrival_time,
+        req.body.status,
     ];
 
     db.query(q,[values],(err,data)=>{
@@ -190,6 +367,49 @@ app.post("/flight", (req,res)=>{
         return res.json(data)
     });
 });
+
+app.delete("/flight/:id", (req,res)=>{
+    const flightId = req.params.id
+    const q  = "DELETE from flight where flight_id = ?"
+
+    db.query(q,[flightId],(err,data)=>{
+        if(err) return res.json(err)
+        return res.json("Flight has been deleted successfully")
+    });
+})
+
+
+app.put("/flight/:id", (req,res)=>{
+    const flightId = req.params.id
+    const q  = "UPDATE flight SET `route_id` = ?,`aircraft_id` = ?,`departure_time` = ?,`arrival_time` = ?,`status` = ?,`delay` = ? where flight_id = ?"
+
+    const values = [
+        req.body.route_id,
+        req.body.aircraft_id,
+        req.body.departure_time,
+        req.body.arrival_time,
+        req.body.status,
+        req.body.delay
+    ];
+
+    db.query(q,[...values,flightId],(err,data)=>{
+        if(err) return res.json(err)
+        return res.json("Location has been updated successfully")
+    });
+})
+
+/**
+ * Shedule
+ */
+app.get("/shedule", (req,res)=>{
+    const q = "select a.call_sign, r.origin, r.destination, f.departure_time, f.arrival_time, f.status, f.delay from flight as f join route as r on r.route_id = f.route_id join aircraft as a on a.aircraft_id = f.aircraft_id WHERE f.arrival_time > CURRENT_TIMESTAMP()"
+    db.query(q,(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+
 
 /**
  * Booking
