@@ -19,8 +19,9 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const pages = ['Booking','Schedule', 'Help'];
-const urls = ['/booking', '/shedule','/aircraft']
+
+const pages = ['Booking','Schedule', 'Help','Admin'];
+const urls = ['/booking', '/shedule','/help','/aircraft']
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 // const navigate = useNavcd igate()
