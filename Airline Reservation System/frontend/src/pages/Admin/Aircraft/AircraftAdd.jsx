@@ -20,21 +20,6 @@ const Aircraft_Add = () => {
     call_sign: ""
   });
 
-  const [aircraftModels,setAircraftModels] = useState([])
-
-
-  useEffect(() => {
-    const fetchALLModels = async() => {
-        try {
-            const res = await axios.get("http://localhost:8000/aircraft_model")
-            setAircraftModels(res.data);
-            console.log(res)
-        } catch (err) {
-            console.log(err)
-        }
-    }
-    fetchALLModels()
-}, [])
 
 
   const navigate = useNavigate()
@@ -56,7 +41,6 @@ const Aircraft_Add = () => {
   }
 
   console.log(the_model);
-  console.log(aircraftModels);
 
   return (
     <>
