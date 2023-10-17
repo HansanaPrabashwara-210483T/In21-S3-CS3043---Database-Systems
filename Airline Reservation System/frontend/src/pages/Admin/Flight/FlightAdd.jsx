@@ -45,9 +45,10 @@ const Flight_Add = () => {
   const handleClick = async e =>{
     setFlights((prev) => ({...prev, "departure_time": depature_time.format()}));
     setFlights((prev) => ({...prev, "arrival_time": arrival_time.format()}));
-    console.log(flights)
+    // console.log(flights)
     e.preventDefault()
     try{
+      console.log(flights)
       await axios.post("http://localhost:8000/flight",flights)
       navigate("/flight")
     }catch(err){
@@ -149,7 +150,7 @@ const Flight_Add = () => {
               fullWidth
               variant="contained"
               sx={{ mt: 6, mb: 2,backgroundColor:"black", width:"49%", float:"left", ":hover":{backgroundColor:"#36454F"}}}
-              href='/airport'>
+              href='/flight'>
                   Cancel
             </Button>
             <Button    type="submit"

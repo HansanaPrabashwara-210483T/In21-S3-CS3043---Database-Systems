@@ -58,13 +58,11 @@ const FlightTable = () => {
     };
 
     const removeTAndZ = (dateString) => {
-        // Split the date string on the T and Z characters.
         const [date, time] = dateString.split(/T|Z/);
-      
-        // Return the new date and time string.
-        return date + " : " +time;
-      };
-      
+        const [t,sec] = time.split(".")
+        const [h,m,s] = t.split(":")
+        return date + " | " + h + " : " + m;
+    };
 
 
     const rows : GridRowsProp = flights.map(flight => ({id: flight.flight_id, route_id: flight.route_id ,aircraft_id: flight.aircraft_id,
@@ -113,7 +111,7 @@ const FlightTable = () => {
                 return (
                   <Stack direction="row" spacing={2}>
                     <Button  color="primary"   size="small" 
-                    href={`/airport_update/`+params.row.id} >
+                    href={`/flight_update/`+params.row.id} >
                         Update
                     </Button>
                   </Stack>
