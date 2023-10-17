@@ -13,45 +13,38 @@ import NavBar from '../../Navbar'
 
 import HiveSharpIcon from '@mui/icons-material/HiveSharp';
 
-
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import {DemoItem} from '@mui/x-date-pickers/internals/demo';
+import Stack from '@mui/material/Stack';
 
 const Flight_Update = () => {
-  const [the_model,setModel] = useState({
-    model_id: null,
-    call_sign: ""
-  });
+  const [flight,setFlight] = useState({});
 
-const [curr, setCurr] = useState([]);
 
-  
 
   const navigate = useNavigate()
   const location = useLocation()
 
   const aircraft_id = location.pathname.split("/")[2]
 
-  useEffect(() => {
-    const fetchALLModels = async() => {
-        try {
-            const res = await axios.get("http://localhost:8000/airport")
-            setCurr(res.data);
-            console.log(res)
-        } catch (err) {
-            console.log(err)
-        }
-    }
-    fetchALLModels()
-}, [aircraft_id])
+  
+  const [depature_time, setDepature] = React.useState(null);
+  const [arrival_time, setArrival] = React.useState(null);
+
 
   const handleChange = (e) =>{
-    setModel((prev) => ({...prev, [e.target.name]: e.target.value}));
+    setFlight((prev) => ({...prev, [e.target.name]: e.target.value}));
   };
 
   const handleClick = async e =>{
+    setFlight((prev) => ({...prev, "departure_time": depature_time.format()}));
+    setFlight((prev) => ({...prev, "arrival_time": arrival_time.format()}));
     e.preventDefault()
     try{
-      await axios.put("http://localhost:8000/airport/"+ aircraft_id,the_model)
-      navigate("/airport")
+      await axios.put("http://localhost:8000/flight/"+ aircraft_id,flight)
+      navigate("/flight")
     }catch(err){
       console.log(err);
     }
@@ -59,8 +52,7 @@ const [curr, setCurr] = useState([]);
   }
 
   
-  console.log(curr)
-  console.log(the_model);
+  console.log(flight);
 
   return (
     <>
@@ -70,6 +62,7 @@ const [curr, setCurr] = useState([]);
         <Box
           sx={{
             marginTop: '20vh',
+            marginBottom: '20vh',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -79,49 +72,76 @@ const [curr, setCurr] = useState([]);
             <HiveSharpIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Update Airport
+            Update Flight
           </Typography>
           <Box component="form"  noValidate sx={{ mt:  1}}>
             
-          <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="airport_code"
-              label="Airport Code"
-              name="airport_code"
-              autoComplete="airport_code"
-              autoFocus
-              onChange={handleChange}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="name"
-              label="Airport Name"
-              id="airport_name"
-              autoComplete="airport_name"
-              onChange={handleChange}
-            />
+                <TextField
+                    margin="normal"
+                    required
+                    type='number'
+                    fullWidth
+                    id="route_id"
+                    label="Route ID"
+                    name="route_id"
+                    autoComplete="route_id"
+                    autoFocus
+                    onChange={handleChange}
+                  />
+                  <TextField
+                    margin="normal"
+                    required
+                    type='number'
+                    fullWidth
+                    name='aircraft_id'
+                    label="Aircraft ID"
+                    id="aircraft_id "
+                    autoComplete="aircraft_id "
+                    onChange={handleChange}
+                  />
 
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              type='number'
-              name="location_id"
-              label="Location ID"
-              id="location_id"
-              autoComplete="location_id"
-              onChange={handleChange}
-            />
+                  <Box sx={{marginTop:2, marginBottom:1}}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <Stack spacing={2} sx={{ minWidth: 305 }}>
+                      <DateTimePicker
+                        label="Depature Time"
+                        value={depature_time}
+                        onChange={setDepature}
+                      />
+                    </Stack>
+                  </LocalizationProvider>
+                  </Box>
+
+                  <Box sx={{marginTop:2, marginBottom:1}}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DemoItem>
+                <DateTimePicker
+                        label="Arrival Time"
+                        value={arrival_time}
+                        onChange={setArrival}
+                      />
+                </DemoItem>
+                      
+                    
+                  </LocalizationProvider>
+                  </Box>
+
+                  <TextField
+                    margin="normal"
+                    required
+                    fullWidth
+                    name="status"
+                    label="status"
+                    id="status"
+                    autoComplete="status"
+                    onChange={handleChange}
+                  />
 
             <Button  color="error"
               fullWidth
               variant="contained"
               sx={{ mt: 6, mb: 2,backgroundColor:"black", width:"49%", float:"left", ":hover":{backgroundColor:"#36454F"}}}
-              href='/aircraft'>
+              href='/flight'>
                   Cancel
             </Button>
             <Button    type="submit"
