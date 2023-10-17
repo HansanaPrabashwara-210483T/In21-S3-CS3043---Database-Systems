@@ -88,7 +88,7 @@ app.put("/aircraft_model/:id", (req,res)=>{
 
 
 app.get("/airport", (req,res)=>{
-    const q = "SELECT * FROM airport"
+    const q = "SELECT * FROM airport where valid = 1"
     db.query(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
@@ -154,7 +154,7 @@ app.get("/aircraft/:id", (req,res)=>{
 
 
 app.get("/aircraft", (req,res)=>{
-    const q = "SELECT * FROM aircraft"
+    const q = "SELECT * FROM aircraft where valid = 1"
     db.query(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
@@ -206,7 +206,7 @@ app.put("/aircraft/:id", (req,res)=>{
  * Routes
  */
 app.get("/route", (req,res)=>{
-    const q = "SELECT * FROM route"
+    const q = "SELECT * FROM route where valid = 1"
     db.query(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
@@ -265,7 +265,7 @@ app.put("/route/:id", (req,res)=>{
  */
 
 app.get("/location", (req,res)=>{
-    const q = "SELECT * FROM location"
+    const q = "SELECT * FROM location where valid = 1"
     db.query(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
@@ -322,35 +322,34 @@ app.put("/location/:id", (req,res)=>{
  */
 
 app.get("/flight", (req,res)=>{
-    const q = "SELECT * FROM flight"
+    const q = "SELECT * FROM flight where valid = 1"
     db.query(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
 })
 
-// Delay mechanism to deal with delays and update the expected arrival time
-app.post("/flight", (req, res) => {
-    const q = `
-        UPDATE flight
-        SET arrival_time = DATE_ADD(arrival_time, INTERVAL ? HOUR),
-            departure_time = DATE_ADD(departure_time, INTERVAL ? HOUR),
-            delay = ?,
-            status = 'delayed'
-        WHERE flight_id = ?;
-    `;
-    const values = [
-        req.body.delayed_time,
-        req.body.delayed_time,
-        req.body.delayed_time,
-        req.body.flight_id
-    ];
-    db.query(q, values, (err, data) => {
-        if (err) return res.json(err);
-        return res.json(data);
-    });
-});
-
+// // Delay mechanism to deal with delays and update the expected arrival time
+// app.post("/flight", (req, res) => {
+//     const q = `
+//         UPDATE flight
+//         SET arrival_time = DATE_ADD(arrival_time, INTERVAL ? HOUR),
+//             departure_time = DATE_ADD(departure_time, INTERVAL ? HOUR),
+//             delay = ?,
+//             status = 'delayed'
+//         WHERE flight_id = ?;
+//     `;
+//     const values = [
+//         req.body.delayed_time,
+//         req.body.delayed_time,
+//         req.body.delayed_time,
+//         req.body.flight_id
+//     ];
+//     db.query(q, values, (err, data) => {
+//         if (err) return res.json(err);
+//         return res.json(data);
+//     });
+// });
 
 app.post("/flight", (req,res)=>{
     const q = "INSERT INTO flight (`route_id`,`aircraft_id`,`departure_time`,`arrival_time`,`status`) VALUE (?);";
@@ -370,7 +369,7 @@ app.post("/flight", (req,res)=>{
 
 app.delete("/flight/:id", (req,res)=>{
     const flightId = req.params.id
-    const q  = "DELETE from flight where flight_id = ?"
+    const q  = "UPDATE flight SET `valid` = 0 where flight_id = ?"
 
     db.query(q,[flightId],(err,data)=>{
         if(err) return res.json(err)
@@ -381,7 +380,7 @@ app.delete("/flight/:id", (req,res)=>{
 
 app.put("/flight/:id", (req,res)=>{
     const flightId = req.params.id
-    const q  = "UPDATE flight SET `route_id` = ?,`aircraft_id` = ?,`departure_time` = ?,`arrival_time` = ?,`status` = ?,`delay` = ? where flight_id = ?"
+    const q  = "UPDATE flight SET `route_id` = ?,`aircraft_id` = ?,`departure_time` = ?,`arrival_time` = ?,`status` = ? where flight_id = ?"
 
     const values = [
         req.body.route_id,
@@ -394,9 +393,11 @@ app.put("/flight/:id", (req,res)=>{
 
     db.query(q,[...values,flightId],(err,data)=>{
         if(err) return res.json(err)
-        return res.json("Location has been updated successfully")
+        return res.json("flight has been updated successfully")
     });
 })
+
+
 
 /**
  * Shedule
