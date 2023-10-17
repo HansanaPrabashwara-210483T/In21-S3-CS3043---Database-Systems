@@ -30,33 +30,52 @@ const Aircraft = () => {
         fetchALLModels()
     }, [])
 
-    const rows : GridRowsProp = models.map(model => ({id: model.call_sign, origin: model.origin, destination: model.destination, depature: model.departure_time, status:model.status, delay:model.delay.data}));
+
+    const removeTAndZ = (dateString) => {
+        const [date, time] = dateString.split(/T|Z/);
+        const [t,sec] = time.split(".")
+        const [h,m,s] = t.split(":")
+        return date + " | " + h + " : " + m;
+    };
+
+    const rows : GridRowsProp = models.map(model => ({id: model.call_sign, origin: model.origin, destination: model.destination, depature: removeTAndZ(model.departure_time),arrival: removeTAndZ(model.arrival_time), status:model.status, delay:model.delay.data}));
 
     const columns : GridColDef[] = [
         {
             field: 'id',
             headerName: 'Aircraft',
-            width: 100
+            width: 50,
+            flex:.75
         }, {
             field: 'origin',
             headerName: 'Origin',
-            width: 100
+            width: 100,
+            flex:.75
         }, {
             field: 'destination',
             headerName: 'Destination',
-            width: 100
+            width: 100,
+            flex:.75
         }, {
             field: 'depature',
             headerName: 'Depature Time',
-            width: 250
+            width: 250,
+            flex:1.5
+        }, {
+            field: 'arrival',
+            headerName: 'Arrival Time',
+            width: 250,
+            flex:1.5
         },{
             field: 'status',
             headerName: 'Status',
-            width: 150
+            width: 150,
+            flex:1
         },{
             field: 'delay',
             headerName: 'Delay',
             width: 100,
+            flex:1,
             valueFormatter: (params) => {
                 return params.value.data ? 'Delay' : 'No Delay';
               }
