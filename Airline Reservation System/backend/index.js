@@ -422,7 +422,7 @@ app.get("/location/airports", (req,res)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
-})
+});
 
 // Get rows related to a specific route by route_id
 app.get("/route/:route_id", (req, res) => {
