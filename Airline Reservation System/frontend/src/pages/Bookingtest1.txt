@@ -1,0 +1,156 @@
+import React, { Component } from 'react';
+import axios from 'axios';
+
+class LocationDropdowns extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            mainRegion: '',
+            subRegion: '',
+            subSubRegion: '',  // Fourth level
+            airports: [],
+            mainRegionOptions: [],
+            subRegionOptions: [],
+            subSubRegionOptions: [],  // Fourth level options
+        };
+    }
+
+    componentDidMount() {
+        // Load the main regions initially
+        this.loadMainRegions();
+    }
+
+    loadMainRegions = () => {
+        axios.get('http://localhost:8000/location/parent_locations')
+            .then((response) => {
+                this.setState({
+                    mainRegionOptions: response.data,
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    loadSubRegions = (mainRegion) => {
+        axios.get('http://localhost:8000/location/sub_locations', {
+            params: { parentLocation: mainRegion }
+        })
+            .then((response) => {
+                this.setState({
+                    subRegionOptions: response.data,
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    loadSubSubRegions = (subRegion) => {
+        axios.get('http://localhost:8000/location/sub_locations', {
+            params: { parentLocation: subRegion }
+        })
+            .then((response) => {
+                this.setState({
+                    subSubRegionOptions: response.data,
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    handleMainRegionChange = (event) => {
+        const mainRegion = event.target.value;
+        this.setState({
+            mainRegion,
+            subRegion: '',
+            subSubRegion: '',  // Reset fourth level
+            airports: [],
+        });
+
+        // Load sub regions based on the selected main region
+        this.loadSubRegions(mainRegion);
+    }
+
+    handleSubRegionChange = (event) => {
+        const subRegion = event.target.value;
+        this.setState({
+            subRegion,
+            subSubRegion: '',  // Reset fourth level
+        });
+
+        // Load sub-sub regions based on the selected sub region
+        this.loadSubSubRegions(subRegion);
+    }
+
+    handleSubSubRegionChange = (event) => {
+        const subSubRegion = event.target.value;
+        this.setState({
+            subSubRegion,
+        });
+
+        // Load airports based on the selected sub-sub region
+        axios.get('http://localhost:8000/location/airports', {
+            params: { sublocation: subSubRegion }
+        })
+            .then((response) => {
+                this.setState({
+                    airports: response.data,
+                });
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    render() {
+        const { mainRegion, subRegion, subSubRegion, mainRegionOptions, subRegionOptions, subSubRegionOptions, airports } = this.state;
+
+        return (
+            <div>
+                <label>Main Region:</label>
+                <select value={mainRegion} onChange={this.handleMainRegionChange}>
+                    <option value="">Select Main Region</option>
+                    {mainRegionOptions.map((region) => (
+                        <option key={region.location_id} value={region.location_name}>{region.location_name}</option>
+                    ))}
+                </select>
+
+                <br />
+
+                <label>Sub Region:</label>
+                <select value={subRegion} onChange={this.handleSubRegionChange}>
+                    <option value="">Select Sub Region</option>
+                    {subRegionOptions.map((region) => (
+                        <option key={region.location_id} value={region.location_name}>{region.location_name}</option>
+                    ))}
+                </select>
+
+                {subSubRegionOptions.length > 0 && (  // Conditionally render the sub-sub region dropdown
+                    <>
+                        <label>Sub-Sub Region:</label>
+                        <select value={subSubRegion} onChange={this.handleSubSubRegionChange}>
+                            <option value="">Select Sub-Sub Region</option>
+                            {subSubRegionOptions.map((region) => (
+                                <option key={region.location_id} value={region.location_name}>{region.location_name}</option>
+                            ))}
+                        </select>
+                    </>
+                )}
+
+                <br />
+
+                <label>Airport:</label>
+                <select>
+                    <option value="">Select Airport</option>
+                    {airports.map((airport) => (
+                        <option key={airport.location_id} value={airport.name}>{airport.name}</option>
+                    ))}
+                </select>
+            </div>
+        );
+    }
+}
+
+    export default LocationDropdowns;
