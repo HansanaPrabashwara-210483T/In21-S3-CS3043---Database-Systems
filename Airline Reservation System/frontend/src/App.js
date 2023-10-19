@@ -39,6 +39,11 @@ import Flight from "./pages/Admin/Flight/Flight";
 import Flight_Add from "./pages/Admin/Flight/FlightAdd"
 import Flight_Update from "./pages/Admin/Flight/FlightUpdate"
 
+import BookingList from "./pages/Admin/BookingList/BookingList";
+import BookingList_Add from "./pages/Admin/BookingList/BookingListAdd";
+import BookingList_Update from "./pages/Admin/BookingList/BookingListUpdate";
+
+import User from "./pages/Admin/User/User";
 
 import Shedule from "./pages/Shedule";
 import "./style.css";
@@ -84,6 +89,12 @@ function App() {
         <Route path="/flight" element={<Flight/>}/>
         <Route path="/flight_add" element={<Flight_Add/>}/> 
         <Route path="/flight_update/:id" element={<Flight_Update/>}/> 
+
+        <Route path="/booking_list" element={<BookingList/>}/>
+        <Route path="/booking_list_add" element={<BookingList_Add/>}/> 
+        <Route path="/booking_list_update/:id" element={<BookingList_Update/>}/> 
+
+        <Route path="/user_list" element={<User/>}/>
 
       </Routes>
       </BrowserRouter>

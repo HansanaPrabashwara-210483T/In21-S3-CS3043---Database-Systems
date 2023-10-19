@@ -16,7 +16,6 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import RouteTable from './RouteTable';
 
 import GridViewIcon from '@mui/icons-material/GridView';
 import BookIcon from '@mui/icons-material/Book';
@@ -30,6 +29,7 @@ import PinDropIcon from '@mui/icons-material/PinDrop';
 import GroupsIcon from '@mui/icons-material/Groups';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import LogoutIcon from '@mui/icons-material/Logout';
+import BookingTable from './BookingListTable';
 
 const drawerWidth = 240;
 const urls1 = ['/dashboard', '/booking_list','/flight','/aircraft','/airport','/route','/aircraft_model','/location']
@@ -91,8 +91,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-
-export default function AirRoute() {
+export default function BookingList() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
 
@@ -211,7 +210,7 @@ export default function AirRoute() {
 
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         
-        <RouteTable></RouteTable>
+        <BookingTable></BookingTable>
 
       </Box>
     </Box>

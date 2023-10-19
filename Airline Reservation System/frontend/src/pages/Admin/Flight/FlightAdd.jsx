@@ -48,7 +48,7 @@ const Flight_Add = () => {
     // console.log(flights)
     e.preventDefault()
     try{
-      console.log(flights)
+      // console.log(flights)
       await axios.post("http://localhost:8000/flight",flights)
       navigate("/flight")
     }catch(err){
@@ -80,7 +80,7 @@ const Flight_Add = () => {
             <HiveSharpIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            New Aircraft
+            New Flight
           </Typography>
           <Box component="form"  noValidate sx={{ mt: 1 }}>
             <TextField

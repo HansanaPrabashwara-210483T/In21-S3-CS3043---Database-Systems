@@ -265,7 +265,7 @@ app.put("/route/:id", (req,res)=>{
  */
 
 app.get("/location", (req,res)=>{
-    const q = "SELECT * FROM location where valid = 1"
+    const q = "SELECT * FROM location"
     db.query(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
@@ -396,6 +396,67 @@ app.put("/flight/:id", (req,res)=>{
         return res.json("flight has been updated successfully")
     });
 })
+
+
+
+
+/**
+ * Booking List
+ * */
+
+
+app.get("/booking_list", (req,res)=>{
+    const q = "SELECT * FROM booking"
+    db.query(q,(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+
+app.delete("/booking_list/:id", (req,res)=>{
+    const aircraftId = req.params.id
+    const q  = "UPDATE booking SET `payment_status`= 0, where booking_id = ?"
+
+    db.query(q,[aircraftId],(err,data)=>{
+        if(err) return res.json(err)
+        return res.json("Booking has been Invalidated successfully")
+    });
+})
+
+app.put("/booking_list/:id", (req,res)=>{
+    const aircraftId = req.params.id
+    const q  = "UPDATE booking SET `payment_status`= 1, where booking_id = ?"
+    db.query(q,[aircraftId],(err,data)=>{
+        if(err) return res.json(err)
+        return res.json("Booking has been validated successfully")
+    });
+})
+
+
+/**
+ * User
+ */
+app.get("/user_list", (req,res)=>{
+    const q = "SELECT user_id,membership,username,login_status,customer_id, f.num_bookings FROM user_view as u join user_booking_count as f on u.user_id = f.reg_user_id"
+    db.query(q,(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

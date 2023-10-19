@@ -33,6 +33,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 
 const drawerWidth = 240;
 const urls1 = ['/dashboard', '/booking_list','/flight','/aircraft','/airport','/route','/aircraft_model','/location']
+const urls2 = ['/user_list', '/reports','/logout']
 
 
 const openedMixin = (theme) => ({
@@ -180,9 +181,9 @@ export default function Flight() {
         </List>
         <Divider />
         <List>
-          {['Customers', 'Reports', 'Logout'].map((text, index) => (
+          {['Users', 'Reports', 'Logout'].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
+              <ListItemButton href={urls2[index]}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
