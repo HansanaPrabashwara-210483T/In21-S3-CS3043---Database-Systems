@@ -457,6 +457,52 @@ app.get("/user_list", (req,res)=>{
 
 
 
+/**
+ * Seats Selecting
+ */
+app.get("/seat_select/:flight_id/:customer_id", (req,res)=>{
+    const flightId = req.params.flight_id
+    const q = "select seat_id, seat_number, seat_class, availability from seat where flight_id = ?"
+    db.query(q, [flightId],(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+app.post("/seat_select/:seat_id/:flight_id/:customer_id", (req,res)=>{
+    const seatId = req.params.seat_id
+    const customerId = req.params.customer_id
+    const flightId = req.params.flight_id
+
+    const values = [
+        Number(customerId),
+        Number(flightId),
+        Number(seatId)
+    ];
+    
+
+    const q2 = "INSERT INTO booking (`customer_id`,`flight_id`,`seat_id`) VALUES (?);";
+    db.query(q2,[values],(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    });
+
+    
+});
+
+app.put("/seat_select/:seat_id", (req,res)=>{
+    const seatId = req.params.seat_id
+    const q = "UPDATE seat SET `availability`= 0 where seat_id = ?;";
+    db.query(q,[seatId],(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    });
+});
+
+
+
+
+
 
 
 
