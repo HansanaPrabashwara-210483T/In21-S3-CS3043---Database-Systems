@@ -30,18 +30,6 @@ const [curr, setCurr] = useState([]);
 
   const aircraft_id = location.pathname.split("/")[2]
 
-  useEffect(() => {
-    const fetchALLModels = async() => {
-        try {
-            const res = await axios.get("http://localhost:8000/aircraft_models")
-            setCurr(res.data);
-            console.log(res)
-        } catch (err) {
-            console.log(err)
-        }
-    }
-    fetchALLModels()
-}, [aircraft_id])
 
   const handleChange = (e) =>{
     setModel((prev) => ({...prev, [e.target.name]: e.target.value}));
