@@ -1,3 +1,4 @@
+import "./App.css";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -45,6 +46,8 @@ import BookingList_Update from "./pages/Admin/BookingList/BookingListUpdate";
 
 import User from "./pages/Admin/User/User";
 
+import SeatSelect from "./pages/SeatSelect"; 
+
 import Shedule from "./pages/Shedule";
 import "./style.css";
 import Booking from "./pages/Booking";
@@ -59,6 +62,7 @@ function App() {
         <Route path="/sign-in" element={<SignIn/>}/>
         <Route path="/sign-up" element={<SignUp/>}/>
         <Route path="/shedule" element={<Shedule/>}/>
+        <Route path="/seat_select/:flight_id/:customer_id" element={<SeatSelect/>}/>
 
 
         <Route path="/admin" element={<Admin/>}/>
