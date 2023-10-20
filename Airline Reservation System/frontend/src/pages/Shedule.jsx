@@ -100,8 +100,8 @@ const Aircraft = () => {
 
             <Box
                 sx={{
-                height: 400,
-                width: '100%'
+
+                    width: '100%'
             }}>
                 <DataGrid
                     rows={rows}
