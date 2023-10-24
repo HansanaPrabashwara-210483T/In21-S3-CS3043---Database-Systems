@@ -29,6 +29,9 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import LogoutIcon from '@mui/icons-material/Logout';
 
+import InAirTable from './InAirTable';
+import BoardingTable from './BoardingTable';
+
 const drawerWidth = 240;
 const urls1 = ['/dashboard', '/booking_list','/flight_list','/aircraft','/airport','/route','/aircraft_model','/location']
 
@@ -205,9 +208,10 @@ export default function Air() {
         </List>
       </Drawer>
 
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box component="main" sx={{ flexGrow: 1, p: 3}} >
         
-       
+        <InAirTable/>
+                <BoardingTable/>
       </Box>
     </Box>
   );
