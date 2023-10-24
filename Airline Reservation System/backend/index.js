@@ -322,7 +322,7 @@ app.put("/location/:id", (req,res)=>{
  */
 
 app.get("/flight", (req,res)=>{
-    const q = "SELECT * FROM flight where valid = 1"
+    const q = "SELECT * FROM flight where valid = 1 ORDER BY departure_time ASC"
     db.query(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
@@ -352,7 +352,7 @@ app.get("/flight", (req,res)=>{
 // });
 
 app.post("/flight", (req,res)=>{
-    const q = "INSERT INTO flight (`route_id`,`aircraft_id`,`departure_time`,`arrival_time`,`status`) VALUE (?);";
+    const q = "INSERT INTO flight (`route_id`,`aircraft_id`,`departure_time`,`arrival_time`,`status`) VALUE (?);"
     const values = [
         req.body.route_id,
         req.body.aircraft_id,
@@ -446,7 +446,59 @@ app.get("/user_list", (req,res)=>{
 })
 
 
+/**
+ * Dashboard
+ */
+app.get("/in_air", (req,res)=>{
+    const q = "SELECT * FROM flight where valid = 1 and departure_time < CURRENT_TIMESTAMP() and arrival_time > CURRENT_TIMESTAMP()"
+    db.query(q,(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
 
+app.post("/in_air", (req,res)=>{
+    const q1 = "UPDATE flight SET `status` = 'IN_AIR' where departure_time < CURRENT_TIMESTAMP() and arrival_time > CURRENT_TIMESTAMP()"
+    db.query(q1,(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)  
+    })
+})
+app.post("/in_air", (req,res)=>{
+    const q = "UPDATE flight SET `status` = 'IN_AIR' where departure_time < CURRENT_TIMESTAMP() and arrival_time > CURRENT_TIMESTAMP()";
+
+    db.query(q,(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    });
+});
+
+app.put("/in_air", (req,res)=>{
+    const q = "UPDATE flight SET `status` = 'ARRIVED' where  arrival_time < CURRENT_TIMESTAMP()";
+
+    db.query(q,(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    });
+});
+
+
+app.get("/boarding", (req,res)=>{
+    const q = "SELECT * FROM flight where valid = 1 and TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP(),departure_time) < 10 and TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP(),departure_time) > 0"
+    db.query(q,(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+app.post("/boarding", (req,res)=>{
+    const q = "UPDATE flight SET `status` = 'ARRIVED' where TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP(),departure_time) < 10 and TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP(),departure_time) > 0";
+
+    db.query(q,(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    });
+});
 
 
 
@@ -498,6 +550,18 @@ app.put("/seat_select/:seat_id", (req,res)=>{
         return res.json(data)
     });
 });
+
+app.get("/booking/:seat_id", (req,res)=>{
+    const seatId = Number(req.params.seat_id)
+  
+    
+    const q = "SELECT booking_id FROM booking WHERE seat_id = ?"
+    db.query(q,[seatId],(err,data)=>{
+        // res.json(q)
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
 
 
 
