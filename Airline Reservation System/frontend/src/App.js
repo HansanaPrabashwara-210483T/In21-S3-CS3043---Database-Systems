@@ -45,8 +45,10 @@ import BookingList_Add from "./pages/Admin/BookingList/BookingListAdd";
 import BookingList_Update from "./pages/Admin/BookingList/BookingListUpdate";
 
 import User from "./pages/Admin/User/User";
+import AdminPanel from "./pages/Admin/AdminPanel";
 
 import SeatSelect from "./pages/SeatSelect"; 
+import Ticket from "./pages/Ticket";
 
 import Shedule from "./pages/Shedule";
 import "./style.css";
@@ -54,6 +56,7 @@ import Booking from "./pages/Booking";
 
 function App() {
   return (
+
     <div className="App">
       <BrowserRouter>
       <Routes>
@@ -63,6 +66,7 @@ function App() {
         <Route path="/sign-up" element={<SignUp/>}/>
         <Route path="/shedule" element={<Shedule/>}/>
         <Route path="/seat_select/:flight_id/:customer_id" element={<SeatSelect/>}/>
+        <Route path="/ticket/:booking_id" element={<Ticket/>}/>
 
 
         <Route path="/admin" element={<Admin/>}/>
@@ -97,6 +101,8 @@ function App() {
         <Route path="/booking_list" element={<BookingList/>}/>
         <Route path="/booking_list_add" element={<BookingList_Add/>}/> 
         <Route path="/booking_list_update/:id" element={<BookingList_Update/>}/> 
+
+        <Route path="/dashboard" element={<AdminPanel/>}/>
 
         <Route path="/user_list" element={<User/>}/>
 
