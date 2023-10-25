@@ -40,6 +40,11 @@ import Flight from "./pages/Admin/Flight/Flight";
 import Flight_Add from "./pages/Admin/Flight/FlightAdd"
 import Flight_Update from "./pages/Admin/Flight/FlightUpdate"
 
+import Delay from "./pages/Admin/Delay/Delay";
+import Delay_Arrival from "./pages/Admin/Delay/DelayArrival";
+import Delay_Depature from "./pages/Admin/Delay/DelayDepature";
+
+
 import BookingList from "./pages/Admin/BookingList/BookingList";
 import BookingList_Add from "./pages/Admin/BookingList/BookingListAdd";
 import BookingList_Update from "./pages/Admin/BookingList/BookingListUpdate";
@@ -53,6 +58,8 @@ import Ticket from "./pages/Ticket";
 import Shedule from "./pages/Shedule";
 import "./style.css";
 import Booking from "./pages/Booking";
+
+
 
 function App() {
   return (
@@ -97,6 +104,10 @@ function App() {
         <Route path="/flight" element={<Flight/>}/>
         <Route path="/flight_add" element={<Flight_Add/>}/> 
         <Route path="/flight_update/:id" element={<Flight_Update/>}/> 
+
+        <Route path="/delay" element={<Delay/>}/>
+        <Route path="/delay_departure/:id" element={<Delay_Depature/>}/> 
+        <Route path="/delay_arrival/:id" element={<Delay_Arrival/>}/>
 
         <Route path="/booking_list" element={<BookingList/>}/>
         <Route path="/booking_list_add" element={<BookingList_Add/>}/> 

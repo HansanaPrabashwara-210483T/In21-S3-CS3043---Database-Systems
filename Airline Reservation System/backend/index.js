@@ -397,6 +397,51 @@ app.put("/flight/:id", (req,res)=>{
     });
 })
 
+/**
+ * Delays
+ */
+app.get("/delay", (req,res)=>{
+    const q = "SELECT * FROM flight where valid = 1 and arrival_time > CURRENT_TIMESTAMP() ORDER BY departure_time ASC "
+    db.query(q,(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+app.put("/arrival_delay/:id", (req,res)=>{
+    const flightId = req.params.id
+    const q  = "UPDATE flight SET `arrival_time` = ADDTIME(`arrival_time`," + '"' + ""+req.body.delay_arrival+"" + '"' + "),`delay` = 1 where flight_id = ?"
+    // ,
+    const values = [
+        req.body.delay_arrival,
+    ];
+    db.query(q,[flightId],(err,data)=>{
+        // if(err) return res.json(err)
+        if(err){
+            console.log(err)
+            return res.json(err)
+        }
+        return console.log("delay has been updated successfully")
+    });
+})
+
+
+app.put("/departure_delay/:id", (req,res)=>{
+    const flightId = req.params.id
+    const q  = "UPDATE flight SET `departure_time` = ADDTIME(`departure_time`," + '"' + ""+req.body.delay_departure+"" + '"' + "),`delay` = 1 where flight_id = ?";
+
+  
+    db.query(q,[flightId],(err,data)=>{
+        // if(err) return res.json(err)
+        if(err){
+            console.log(err)
+            return res.json(err)
+        }
+        return console.log("delay has been updated successfully")
+    });
+})
+
+
 
 
 
