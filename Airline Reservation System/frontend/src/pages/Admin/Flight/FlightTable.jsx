@@ -98,7 +98,11 @@ const FlightTable = () => {
             headerName: 'Delay',
             width: 130,
             valueFormatter: (params) => {
-                return params.value.data ? 'DELAY' : 'NO DELAY';
+                if (params.value == 1) {
+                    return "DELAYED"
+                }else{
+                    return "NOT DELAYED"
+                }
               }
         }, {
             field: 'edit',
