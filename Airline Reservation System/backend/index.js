@@ -524,32 +524,34 @@ app.get("/shedule", (req,res)=>{
  */
 //displaying airport locations
 app.get("/location/airports", (req,res)=>{
-    const q = "SELECT name, location_id FROM airport"
+    const q = "SELECT name, airport_code FROM airport"
     db.query(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
 });
 // flights filtering by booking
-app.get("/route/available_flights", (req, res) => {
-    const originLocationId = req.query.origin;
-    const destinationLocationId = req.query.destination;
-    const departureTime = req.query.departure_time;
-    const arrivalTime = req.query.arrival_time;
+app.get("/route/available_flights/:origin/:destination/:departure/:arrival", (req, res) => {
+    console.log(req.params);
+    const originLocationId = req.params.origin;
+    const destinationLocationId = req.params.destination;
+    const departureTime = req.params.departure;
+    const arrivalTime = req.params.arrival;
 
+    console.log(originLocationId,destinationLocationId,departureTime,arrivalTime);
     const q = `
         SELECT call_sign, origin, destination, departure_time, arrival_time, flight.status, delay
         FROM flight
         LEFT JOIN route ON flight.route_id = route.route_id
-        LEFT JOIN location AS origin ON route.origin = origin.location_id
-        LEFT JOIN location AS destination ON route.destination = destination.location_id
         LEFT JOIN aircraft ON flight.aircraft_id = aircraft.aircraft_id
-        WHERE origin.location_id = ? AND destination.location_id = ? AND
-        flight.departure_time >= ? AND flight.arrival_time <= ?
+        WHERE origin = ? AND destination = ? AND
+        departure_time >= ? AND arrival_time <= ?;
     `;
     db.query(q, [originLocationId, destinationLocationId, departureTime, arrivalTime], (err, data) => {
-        if (err) return res.json(err);
-        return res.json(data);
+        // if (err) return res.json(err);
+        // return res.json(data);
+        if (err) return console.log(err);
+        return console.log(data);
     });
 });
 

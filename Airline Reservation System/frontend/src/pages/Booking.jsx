@@ -70,17 +70,16 @@ export default function CustomizedSelects() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        console.log(originAirport);
-        
-        const response = await axios.post('http://localhost:8000/route/available_flights', {
-            origin: originAirport,
-            destination: targetAirport,
-            departure_time: depature_time,
-            arrival_time: arrival_time
-        });
-
-        console.log(response);
-
+        const response = await axios.get('http://localhost:8000/route/available_flights/'+originAirport+'/'+targetAirport+'/'+depature_time.format()+'/'+arrival_time.format()
+            //, {
+            // params: {
+            //     origin: originAirport,
+            //     destination: targetAirport,
+            //     departure_time: depature_time,
+            //     arrival_time: arrival_time
+            // }
+        //}
+        );
     };
 
 
@@ -110,7 +109,7 @@ export default function CustomizedSelects() {
                             onChange={handleOriginAirportChange}
                            >
                             {originAirports.map((originAirport) => (
-                                <MenuItem key={originAirport.location_id} value={originAirport.location_id}>
+                                <MenuItem key={originAirport.airport_code} value={originAirport.airport_code}>
                                     {originAirport.name}
                                 </MenuItem>
                             ))}
@@ -129,7 +128,7 @@ export default function CustomizedSelects() {
                             onChange={handleTargetAirportChange}
                         >
                             {targetAirports.map((targetAirport) => (
-                                <MenuItem key={targetAirport.location_id} value={targetAirport.location_id}>
+                                <MenuItem key={targetAirport.airport_code} value={targetAirport.airport_code}>
                                     {targetAirport.name}
                                 </MenuItem>
                             ))}
