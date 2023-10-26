@@ -2,6 +2,7 @@ import express from "express"
 import mysql from "mysql2"
 import cors from "cors"
 import dotenv from "dotenv"
+import authRouter from "./routes/auth.js";
 
 dotenv.config({ path: './db.env'});
 
@@ -17,6 +18,14 @@ const db = mysql.createConnection({
 app.use(express.json());
 app.use(cors());
 
+// For all authentication or profile-related routes, use the auth.js router
+app.use('/auth', authRouter);
+
+/* 
+app.get('/auth/register', (req, res) => {
+    res.send("Done");
+}); 
+*/
 
 /**
  * Aircraft Models
@@ -654,12 +663,38 @@ app.get("/shedule", (req,res)=>{
  */
 //displaying airport locations
 app.get("/location/airports", (req,res)=>{
-    const q = "SELECT name, location_id FROM airport"
+    const q = "SELECT name, airport_code FROM airport"
     db.query(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
 });
+// flights filtering by booking
+app.get("/route/available_flights/:origin/:destination/:departure/:arrival", (req, res) => {
+    console.log(req.params);
+    const originLocationId = req.params.origin;
+    const destinationLocationId = req.params.destination;
+    const departureTime = req.params.departure;
+    const arrivalTime = req.params.arrival;
+
+    console.log(originLocationId,destinationLocationId,departureTime,arrivalTime);
+    const q = `
+        SELECT call_sign, origin, destination, departure_time, arrival_time, flight.status, delay
+        FROM flight
+        LEFT JOIN route ON flight.route_id = route.route_id
+        LEFT JOIN aircraft ON flight.aircraft_id = aircraft.aircraft_id
+        WHERE origin = ? AND destination = ? AND
+        departure_time >= ? AND arrival_time <= ?;
+    `;
+    db.query(q, [originLocationId, destinationLocationId, departureTime, arrivalTime], (err, data) => {
+        // if (err) return res.json(err);
+        // return res.json(data);
+        if (err) return console.log(err);
+        return res.json(data);
+    });
+});
+
+
 
 // Get rows related to a specific route by route_id
 app.get("/route/:route_id", (req, res) => {

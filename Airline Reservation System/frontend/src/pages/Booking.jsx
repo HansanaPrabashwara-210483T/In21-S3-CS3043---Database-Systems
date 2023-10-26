@@ -32,14 +32,17 @@ export default function CustomizedSelects() {
         );
     }
 
-    //empty variables
-    const [originAirports, setOriginAirports] = useState([]);
-    const [targetAirports, setTargetAirports] = useState([]);
+    // variables
+    const [originAirports, setOriginAirports] = useState(['']);
+    const [targetAirports, setTargetAirports] = useState(['']);
+
     const [originAirport, setOriginAirport] = React.useState('');
     const [targetAirport, setTargetAirport] = React.useState('');
+    
     //empty time variables
-    const [depature_time, setDepature] = React.useState(null);
-    const [arrival_time, setArrival] = React.useState(null);
+    const [depature_time, setDepatureTime] = React.useState('');
+    const [arrival_time, setArrivalTime] = React.useState('');
+    // get data
 
 
     useEffect(() => {
@@ -55,34 +58,21 @@ export default function CustomizedSelects() {
             });
     }, []); // The empty dependency array ensures the effect runs only once on component mount
 
+
+
     const handleOriginAirportChange = (event) => { // handle origin change
         setOriginAirport(event.target.value);
     };
     const handleTargetAirportChange = (event) => { // handle origin change
         setTargetAirport(event.target.value);
     };
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password')
-        });
-    };
-    // const handleClick = async e =>{
-    //     setFlights((prev) => ({...prev, "departure_time": depature_time.format()}));
-    //     setFlights((prev) => ({...prev, "arrival_time": arrival_time.format()}));
-    //     // console.log(flights)
-    //     e.preventDefault()
-    //     try{
-    //         console.log(flights)
-    //         await axios.post("http://localhost:8000/flight",flights)
-    //         navigate("/flight")
-    //     }catch(err){
-    //         console.log(err);
-    //     }
-    // }
 
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        const response = await axios.get('http://localhost:8000/route/available_flights/'+originAirport+'/'+targetAirport+'/'+depature_time.format()+'/'+arrival_time.format());
+        window.location.href = 'http://localhost:3000/route/available_flights/'+originAirport+'/'+targetAirport+'/'+depature_time.format()+'/'+arrival_time.format();
+    };
 
 
     return ( <>
@@ -111,7 +101,7 @@ export default function CustomizedSelects() {
                             onChange={handleOriginAirportChange}
                            >
                             {originAirports.map((originAirport) => (
-                                <MenuItem key={originAirport.location_id} value={originAirport.location_id}>
+                                <MenuItem key={originAirport.airport_code} value={originAirport.airport_code}>
                                     {originAirport.name}
                                 </MenuItem>
                             ))}
@@ -130,7 +120,7 @@ export default function CustomizedSelects() {
                             onChange={handleTargetAirportChange}
                         >
                             {targetAirports.map((targetAirport) => (
-                                <MenuItem key={targetAirport.location_id} value={targetAirport.location_id}>
+                                <MenuItem key={targetAirport.airport_code} value={targetAirport.airport_code}>
                                     {targetAirport.name}
                                 </MenuItem>
                             ))}
@@ -143,7 +133,8 @@ export default function CustomizedSelects() {
                         <DemoItem >
                             <DatePicker
                                 label="Departure Date"
-                                //onChange={handleOriginAirportChange}
+                                value={depature_time}
+                                onChange={(date) => setDepatureTime(date)}
                             />
                         </DemoItem>
                     </LocalizationProvider>
@@ -153,8 +144,9 @@ export default function CustomizedSelects() {
                     <LocalizationProvider dateAdapter = {AdapterDayjs} >
                         <DemoItem >
                             <DatePicker
-                                label="Origin Date"
-                                //onChange={handleTargetAirportChange}
+                                label="Arrival Date"
+                                value={arrival_time}
+                                onChange={(date) => setArrivalTime(date)}
                             />
                         </DemoItem>
                     </LocalizationProvider>
