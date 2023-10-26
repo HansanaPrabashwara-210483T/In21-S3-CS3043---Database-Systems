@@ -2,6 +2,7 @@ import express from "express"
 import mysql from "mysql2"
 import cors from "cors"
 import dotenv from "dotenv"
+import authRouter from "./routes/auth.js";
 
 dotenv.config({ path: './db.env'});
 
@@ -17,6 +18,14 @@ const db = mysql.createConnection({
 app.use(express.json());
 app.use(cors());
 
+// For all authentication or profile-related routes, use the auth.js router
+app.use('/auth', authRouter);
+
+/* 
+app.get('/auth/register', (req, res) => {
+    res.send("Done");
+}); 
+*/
 
 /**
  * Aircraft Models
