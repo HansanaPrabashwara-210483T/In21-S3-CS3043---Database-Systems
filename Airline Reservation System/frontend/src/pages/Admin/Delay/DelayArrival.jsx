@@ -21,6 +21,7 @@ import Stack from '@mui/material/Stack';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 
+import dayjs from 'dayjs';
 
 
 const Delay_Arrival = () => {
@@ -34,7 +35,7 @@ const Delay_Arrival = () => {
   const flight_id = location.pathname.split("/")[2]
 
   
-  const [arrival_delay, setArrivalDelay] = React.useState(null);
+  const [arrival_delay, setArrivalDelay] =React.useState(null);
 
   const removeTAndZ = (dateString) => {
     const [date, time] = dateString.split(/T|Z/);
@@ -50,14 +51,13 @@ const Delay_Arrival = () => {
 
   const handleClick = async e =>{
     includeTime(e);
-    includeTime(e);
     setFlight((prev) => ({"delay_arrival":  removeTAndZ(arrival_delay.format())}));
     e.preventDefault()
     try{
       console.log(flight);
       const a  = await axios.put("http://localhost:8000/arrival_delay/"+ flight_id,flight)
       console.log(a);
-      navigate("/delay")
+      // navigate("/delay")
     }
     catch(err){
       console.log(err);
@@ -66,7 +66,7 @@ const Delay_Arrival = () => {
   }
 
   
-  console.log(flight);
+  // console.log(flight);
 
   return (
     <>

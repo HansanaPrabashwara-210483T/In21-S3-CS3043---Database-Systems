@@ -546,9 +546,31 @@ app.post("/boarding", (req,res)=>{
 });
 
 
+/**
+ * Reports
+ */
 
+// Report 1
 
-
+app.get("/report_1/:id", (req,res)=>{
+    const flightId =  req.params.id
+    // const q =  "SELECT * FROM flight"
+    const q = "SELECT customer.customer_id, user_type, name, address, nic, passport_id from customer join booking on customer.customer_id = booking.customer_id where booking.flight_id = ?"
+    //vilash
+    const p = `
+            SELECT name, date_of_birth,
+            CASE
+                WHEN TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) > 25 THEN 'adult'
+                ELSE 'child'
+            END AS age_category
+            FROM airline_project_g24.customer
+            WHERE cutomer_id in (SELECT customer_id FROM booking WHERE flight_id = ?);  
+            `;
+    db.query(q,[flightId],(err,data)=>{
+        if(err) return console.log(err)
+        return res.json(data)
+    })
+})
 
 
 
@@ -612,9 +634,6 @@ app.get("/booking/:seat_id", (req,res)=>{
 
 
 
-
-
-
 /**
  * Shedule
  */
@@ -625,6 +644,8 @@ app.get("/shedule", (req,res)=>{
         return res.json(data)
     })
 })
+
+
 
 
 

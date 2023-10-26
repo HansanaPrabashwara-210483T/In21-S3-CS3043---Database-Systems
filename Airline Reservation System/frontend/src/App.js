@@ -52,6 +52,9 @@ import BookingList_Update from "./pages/Admin/BookingList/BookingListUpdate";
 import User from "./pages/Admin/User/User";
 import AdminPanel from "./pages/Admin/AdminPanel";
 
+import Report from "./pages/Admin/Reports/Report";
+import Report_1 from "./pages/Admin/Reports/Report_1";
+
 import SeatSelect from "./pages/SeatSelect"; 
 import Ticket from "./pages/Ticket";
 
@@ -114,6 +117,11 @@ function App() {
         <Route path="/booking_list_update/:id" element={<BookingList_Update/>}/> 
 
         <Route path="/dashboard" element={<AdminPanel/>}/>
+
+        <Route path="/reports" element={<Report/>}/>
+        <Route path="/report_1/" element={<Report_1/>}/>
+
+        
 
         <Route path="/user_list" element={<User/>}/>
 
