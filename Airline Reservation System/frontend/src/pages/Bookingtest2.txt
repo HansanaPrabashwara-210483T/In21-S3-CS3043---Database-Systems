@@ -108,3 +108,22 @@ class LocationDropdowns extends Component {
 }
 
 export default LocationDropdowns;
+
+
+
+
+
+    // const handleClick = async e =>{
+    //     setFlights((prev) => ({...prev, "departure_time": depature_time.format()}));
+    //     setFlights((prev) => ({...prev, "arrival_time": arrival_time.format()}));
+    //     // console.log(flights)
+    //     e.preventDefault()
+    //     try{
+    //         console.log(flights)
+    //         // await axios.post("http://localhost:8000/flight",flights)
+    //         // navigate("/flight")
+    //     }catch(err){
+    //         console.log(err);
+    //     }
+    // }
+    //

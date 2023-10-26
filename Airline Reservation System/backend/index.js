@@ -530,6 +530,30 @@ app.get("/location/airports", (req,res)=>{
         return res.json(data)
     })
 });
+// flights filtering by booking
+app.get("/route/available_flights", (req, res) => {
+    const originLocationId = req.query.origin;
+    const destinationLocationId = req.query.destination;
+    const departureTime = req.query.departure_time;
+    const arrivalTime = req.query.arrival_time;
+
+    const q = `
+        SELECT call_sign, origin, destination, departure_time, arrival_time, flight.status, delay
+        FROM flight
+        LEFT JOIN route ON flight.route_id = route.route_id
+        LEFT JOIN location AS origin ON route.origin = origin.location_id
+        LEFT JOIN location AS destination ON route.destination = destination.location_id
+        LEFT JOIN aircraft ON flight.aircraft_id = aircraft.aircraft_id
+        WHERE origin.location_id = ? AND destination.location_id = ? AND
+        flight.departure_time >= ? AND flight.arrival_time <= ?
+    `;
+    db.query(q, [originLocationId, destinationLocationId, departureTime, arrivalTime], (err, data) => {
+        if (err) return res.json(err);
+        return res.json(data);
+    });
+});
+
+
 
 // Get rows related to a specific route by route_id
 app.get("/route/:route_id", (req, res) => {
