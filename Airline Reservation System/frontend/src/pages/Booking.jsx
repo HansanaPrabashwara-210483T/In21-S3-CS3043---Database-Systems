@@ -33,15 +33,16 @@ export default function CustomizedSelects() {
     }
 
     // variables
-    const [originAirports, setOriginAirports] = useState([]);
-    const [targetAirports, setTargetAirports] = useState([]);
+    const [originAirports, setOriginAirports] = useState(['']);
+    const [targetAirports, setTargetAirports] = useState(['']);
+
     const [originAirport, setOriginAirport] = React.useState('');
     const [targetAirport, setTargetAirport] = React.useState('');
+    
     //empty time variables
-    const [depature_time, setDepatureTime] = React.useState(null);
-    const [arrival_time, setArrivalTime] = React.useState(null);
+    const [depature_time, setDepatureTime] = React.useState('');
+    const [arrival_time, setArrivalTime] = React.useState('');
     // get data
-    const [flights, setFlights] = React.useState([]);
 
 
     useEffect(() => {
@@ -65,23 +66,20 @@ export default function CustomizedSelects() {
     const handleTargetAirportChange = (event) => { // handle origin change
         setTargetAirport(event.target.value);
     };
-    const handleSubmit = (event) => {
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        const origin = formData.get('originAirport');
-        const destination = formData.get('targetAirport');
-        const departureTime = formData.get('depature_time');
-        const arrivalTime = formData.get('arrival_time');
 
-        const flightResultsUrl = `http://localhost:8000/route/available_flights?origin=${origin}&destination=${destination}&departure_time=${departureTime}&arrival_time=${arrivalTime}`;
-
-        // Fetch the flight results from the backend.
-        axios.get(flightResultsUrl).then((response) => {
-            const flights = response.data;
-
-            // Navigate to the FlightResults page with the flight results.
-            window.location.href = `/flight-results?flights=${JSON.stringify(flights)}`;
+        console.log(originAirport);
+        
+        const response = await axios.post('http://localhost:8000/route/available_flights', {
+            origin: originAirport,
+            destination: targetAirport,
+            departure_time: depature_time,
+            arrival_time: arrival_time
         });
+
+        console.log(response);
 
     };
 
