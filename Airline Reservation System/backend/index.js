@@ -551,7 +551,7 @@ app.get("/route/available_flights/:origin/:destination/:departure/:arrival", (re
         // if (err) return res.json(err);
         // return res.json(data);
         if (err) return console.log(err);
-        return console.log(data);
+        return res.json(data);
     });
 });
 

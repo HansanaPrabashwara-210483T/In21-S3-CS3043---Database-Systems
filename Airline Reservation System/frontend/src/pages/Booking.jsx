@@ -70,16 +70,8 @@ export default function CustomizedSelects() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const response = await axios.get('http://localhost:8000/route/available_flights/'+originAirport+'/'+targetAirport+'/'+depature_time.format()+'/'+arrival_time.format()
-            //, {
-            // params: {
-            //     origin: originAirport,
-            //     destination: targetAirport,
-            //     departure_time: depature_time,
-            //     arrival_time: arrival_time
-            // }
-        //}
-        );
+        const response = await axios.get('http://localhost:8000/route/available_flights/'+originAirport+'/'+targetAirport+'/'+depature_time.format()+'/'+arrival_time.format());
+        window.location.href = 'http://localhost:3000/route/available_flights/'+originAirport+'/'+targetAirport+'/'+depature_time.format()+'/'+arrival_time.format();
     };
 
 
