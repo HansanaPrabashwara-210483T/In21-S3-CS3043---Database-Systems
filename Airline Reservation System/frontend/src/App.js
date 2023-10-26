@@ -52,6 +52,8 @@ import Shedule from "./pages/Shedule";
 import "./style.css";
 import Booking from "./pages/Booking";
 import FlightResults from "./pages/FlightResults";
+import FAQ from "./pages/Help";
+
 
 function App() {
   return (
@@ -100,8 +102,9 @@ function App() {
         <Route path="/booking_list_update/:id" element={<BookingList_Update/>}/> 
 
         <Route path="/user_list" element={<User/>}/>
-
+      
         <Route path="/flight-results" element={<FlightResults/>} />
+        <Route path="/help" element={<FAQ />} />
 
       </Routes>
       </BrowserRouter>
