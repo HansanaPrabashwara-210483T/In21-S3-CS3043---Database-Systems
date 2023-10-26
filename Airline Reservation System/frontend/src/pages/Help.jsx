@@ -37,12 +37,12 @@ function FAQ() {
     <>
     <NavBar />
     
-    <Container>
+    <Container  sx={{marginTop:8}}> 
       <Typography variant="h4" component="h1" gutterBottom>
         Frequently Asked Questions
       </Typography>
       {faqs.map((faq, index) => (
-        <Accordion key={index}>
+        <Accordion key={index} sx={{ borderTop:'2px solid rgba(0, 0, 0, 0.3)' }}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls={`panel${index}-content`}
