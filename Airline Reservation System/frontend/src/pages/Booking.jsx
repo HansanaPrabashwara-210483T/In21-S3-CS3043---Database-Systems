@@ -40,7 +40,7 @@ export default function CustomizedSelects() {
     const [targetAirport, setTargetAirport] = React.useState('');
     
     //empty time variables
-    const [depature_time, setDepatureTime] = React.useState('');
+    const [departure_time, setDepatureTime] = React.useState('');
     const [arrival_time, setArrivalTime] = React.useState('');
     // get data
 
@@ -70,8 +70,8 @@ export default function CustomizedSelects() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const response = await axios.get('http://localhost:8000/route/available_flights/'+originAirport+'/'+targetAirport+'/'+depature_time.format()+'/'+arrival_time.format());
-        window.location.href = 'http://localhost:3000/route/available_flights/'+originAirport+'/'+targetAirport+'/'+depature_time.format()+'/'+arrival_time.format();
+        const response = await axios.get('http://localhost:8000/route/available_flights/'+originAirport+'/'+targetAirport+'/'+departure_time.format()+'/'+arrival_time.format());
+        window.location.href = 'http://localhost:3000/route/available_flights/'+originAirport+'/'+targetAirport+'/'+departure_time.format()+'/'+arrival_time.format();
     };
 
 
@@ -133,7 +133,7 @@ export default function CustomizedSelects() {
                         <DemoItem >
                             <DatePicker
                                 label="Departure Date"
-                                value={depature_time}
+                                value={departure_time}
                                 onChange={(date) => setDepatureTime(date)}
                             />
                         </DemoItem>

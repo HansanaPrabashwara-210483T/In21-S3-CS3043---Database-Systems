@@ -23,49 +23,34 @@ const FlightResultsTable = () => {
 
     const location = useLocation();
 
-    const originalAirport = location.pathname.split("/")[2]
-    const targetAirport = location.pathname.split("/")[3]
-    const departure_time = location.pathname.split("/")[4]
-    const arrival_time = location.pathname.split("/")[5]
+    const originAirport = location.pathname.split("/")[3]
+    const targetAirport = location.pathname.split("/")[4]
+    const departure_time = location.pathname.split("/")[5]
+    const arrival_time = location.pathname.split("/")[6]
+    console.log("original airport.....", originAirport)
+    console.log("destination airport..", targetAirport)
+    console.log("d_time.....", departure_time)
+    console.log("a_time.....", arrival_time)
 
     useEffect(() => {
-        const fetchALLModels = async() => {
+        const fetchFlightResults = async () => {
             try {
-                const res = await axios.get("http://localhost:8000/route/available_flights/"+originalAirport+"/"+targetAirport+"/"+departure_time+"/"+arrival_time)
+                const res = await axios.get('http://localhost:8000/route/available_flights/'+originAirport+'/'+targetAirport+'/'+departure_time+'/'+arrival_time);
                 setResults(res.data);
-                console.log(res)
-            } catch (err) {
-                console.log(err)
+            } catch (error) {
+                console.error("Error fetching flight results:", error);
             }
         }
-        fetchALLModels()
-    }, [])
+        fetchFlightResults();
+    }, [originAirport, targetAirport, departure_time, arrival_time]);
 
 
-    const handleDelete = async(id) => {
-        try {
-            await axios.delete(`http://localhost:8000/aircraft/`+id)
-            window.location.reload()
-        }catch(err){
-            console.log(err)
-        }
-    }
-
-    const [open, setOpen] = React.useState(false);
     const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-
-    const rows : GridRowsProp = Results.map(Result => ({aircraftName: Result.call_sign, originAirport:Result.originAirport, targetAirport:Result.targetAirport, departureTime:Result.departure_time, arrivalTime:Result.arrival_time,
-        flightStatus:Result.status, delayStatus:Result.delay}));
+    // here i removed mapping on originAirport and targetAirport and used initially declared variables due to cells not rendering
+    const rows : GridRowsProp = Results.map(Result => ({aircraftName: Result.call_sign, originAirport, targetAirport, departureTime:Result.departure_time, arrivalTime:Result.arrival_time,
+        flightStatus:Result.status}));
+    console.log(Results)
 
     const columns : GridColDef[] = [
         {
@@ -74,16 +59,16 @@ const FlightResultsTable = () => {
             width: 200
         }, {
             field: 'originAirport',
-            headerName: 'Origin',
+            headerName: 'Origin Airport',
             width: 200
         }, {
             field: 'targetAirport',
-            headerName: 'Target',
-            width: 200
+            headerName: 'Destination Airport',
+            width: 300
         }, {
             field: 'departureTime',
             headerName: 'Departure Time',
-            width: 200
+            width: 300
         }, {
             field: 'arrivalTime',
             headerName: 'Arrival Time',
@@ -91,11 +76,7 @@ const FlightResultsTable = () => {
         }, {
             field: 'flightStatus',
             headerName: 'Flight Status',
-            width: 100
-        },{
-            field: 'delayStatus',
-            headerName: 'Delay Status',
-            width: 100
+            width: 200
         }
     ];
 
@@ -106,15 +87,7 @@ const FlightResultsTable = () => {
             <Box component="main" sx={{ flexGrow: 1}}>
                 <Grid>
 
-                    <h1>Aircrafts
-                        <Button
-                            variant="contained"
-                            href="/aircraft_add"
-                            style={{
-                                float: 'right',
-                                backgroundColor: '#000000'
-                            }}>Add</Button>
-                    </h1>
+                    <h1>Available Flights</h1>
 
                 </Grid>
             </Box>
@@ -130,6 +103,7 @@ const FlightResultsTable = () => {
                     <DataGrid
                         rows={rows}
                         columns={columns}
+                        getRowId={(row) => row.aircraftName}
                         initialState={{
                             pagination: {
                                 paginationModel: {
@@ -138,16 +112,11 @@ const FlightResultsTable = () => {
                             }
                         }}
                         pageSizeOptions={[5]}
-                        checkboxSelection
-                        disableRowSelectionOnClick/>
-
+                        />
 
                 </Box>
-
             </div>
-
         </Box>
-
         </>
     )
 }
