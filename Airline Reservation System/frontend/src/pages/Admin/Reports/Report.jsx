@@ -29,13 +29,24 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import LogoutIcon from '@mui/icons-material/Logout';
 
-import InAirTable from './InAirTable';
-import BoardingTable from './BoardingTable';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
 
 const drawerWidth = 240;
-const urls1 = ['/dashboard', '/booking_list','/flight_list','/aircraft','/airport','/route','/aircraft_model','/location']
+const urls1 = ['/dashboard', '/booking_list','/flight','/aircraft','/airport','/route','/aircraft_model','/location']
+const urls2 = ['/user_list', '/reports','/logout']
 
 
+const Item = styled(Box)(({ theme }) => ({
+    padding: theme.spacing(1),
+    height: "5vw",
+    // boxShadow: "0px 0px 2px 0px rgba(0,0,0,0.75)",
+    
+  }));
+
+  
 const openedMixin = (theme) => ({
   width: drawerWidth,
   transition: theme.transitions.create('width', {
@@ -91,7 +102,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function Air() {
+
+export default function AirRoute() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
 
@@ -181,9 +193,9 @@ export default function Air() {
         </List>
         <Divider />
         <List>
-          {['Customers', 'Reports', 'Logout'].map((text, index) => (
+          {['Users', 'Reports', 'Logout'].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
+              <ListItemButton href={urls2[index]}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
@@ -208,10 +220,54 @@ export default function Air() {
         </List>
       </Drawer>
 
-      <Box component="main" sx={{ flexGrow: 1, p: 3}} >
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+
+      <Box component="main" sx={{ flexGrow: 1, paddingTop: 4.5 }}>
         
-        <InAirTable/>
-                <BoardingTable/>
+        
+                 
+        <Box component="main" sx={{ flexGrow: 1}}>
+            <Grid>
+
+                <h1>Reports
+                </h1>
+
+            </Grid>
+        </Box>
+        
+      <Box sx={{ width: '50%' }} marginLeft={30}>
+      <Stack spacing={2}>
+        <Item>
+            <h2>Adults and Children in a flight
+
+            <Button variant="contained" href="/report_1" style={{float: 'right', backgroundColor: '#000000'}}>Check</Button>
+            </h2>
+           
+        </Item>
+        <Item>
+        <h2>Number of passengers visiting a destiation
+        <Button variant="contained" href="/report_2" style={{float: 'right', backgroundColor: '#000000'}}>Check</Button>
+        </h2>
+        </Item>
+        <Item>
+        <h2>Number of bookings by a passenger type
+        <Button variant="contained" href="/report_3" style={{float: 'right', backgroundColor: '#000000'}}>Check</Button>
+        </h2>
+        </Item>
+        <Item>
+        <h2>Past Flights
+        <Button variant="contained" href="/report_4" style={{float: 'right', backgroundColor: '#000000'}}>Check</Button>
+        </h2>
+        </Item>
+        <Item>
+        <h2>Revenue by a aircraft types
+        <Button variant="contained" href="/report_5" style={{float: 'right', backgroundColor: '#000000'}}>Check</Button>
+        </h2>
+        </Item>
+      </Stack>
+      </Box>
+    </Box>
+
       </Box>
     </Box>
   );

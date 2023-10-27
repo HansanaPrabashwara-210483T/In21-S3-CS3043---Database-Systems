@@ -16,14 +16,14 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 
-const FlightTable = () => {
+const DelayTable = () => {
     const [flights,
         setflights] = useState([])
 
     useEffect(() => {
         const fetchALLModels = async() => {
             try {
-                const res = await axios.get("http://localhost:8000/flight")
+                const res = await axios.get("http://localhost:8000/delay")
                 setflights(res.data);
                 console.log(res)
             } catch (err) {
@@ -34,16 +34,6 @@ const FlightTable = () => {
     }, [])
 
 
-    const handleDelete = async(id) => {
-        try {
-            await axios.delete(`http://localhost:8000/flight/`+id)
-            // console.log(id)
-            window.location.reload()
-        }catch(err){
-            console.log(err)
-        }
-        
-    }
 
     const [open, setOpen] = React.useState(false);
     const theme = useTheme();
@@ -82,14 +72,6 @@ const FlightTable = () => {
             headerName: 'Aircraft ID',
             width: 100
         },{
-            field: 'departure_time',
-            headerName: 'Depature Time',
-            width: 200
-        },{
-            field: 'arrival_time',
-            headerName: 'Arrival Time',
-            width: 200
-        },{
             field: 'status',
             headerName: 'Status',
             width: 130
@@ -104,62 +86,45 @@ const FlightTable = () => {
                     return "NOT DELAYED"
                 }
               }
-        }, {
-            field: 'edit',
+        },{
+            field: 'departure_time',
+            headerName: 'Depature Time',
+            width: 150
+        },{
+            field: 'departure_delay',
             headerName: '',
-            width: 100,
+            width: 150,
             sortable: false,
             disableClickEventBubbling: true,
             
             renderCell: (params) => {
                 return (
                   <Stack direction="row" spacing={2}>
-                    <Button  color="primary"   size="small" 
-                    href={`/flight_update/`+params.row.id} >
-                        Update
+                    <Button  color="error"   size="small" 
+                    href={`/delay_departure/`+params.row.id} >
+                        Delay Departure
                     </Button>
                   </Stack>
                 );
             },
           },{
-            field: 'delete',
+            field: 'arrival_time',
+            headerName: 'Arrival Time',
+            width: 150
+        },{
+            field: 'arrival_delay',
             headerName: '',
-            width: 100,
+            width: 150,
             sortable: false,
             disableClickEventBubbling: true,
             
             renderCell: (params) => {
                 return (
                   <Stack direction="row" spacing={2}>
-                    
-                    {/* <Button variant="outlined" color="warning" size="small" href=''>Edit</Button> */}
-                    <Button  color="error"  size="small"   onClick={handleClickOpen}>Delete</Button>
-                    {/* ()=>handleDelete(params.row.id) */}
-                    
-                    <Dialog
-                        fullScreen={fullScreen}
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="responsive-dialog-title"
-                    >
-                    <DialogTitle id="responsive-dialog-title">
-                        {"Delete airport instance?"}
-                        </DialogTitle>
-                        <DialogContent>
-                        <DialogContentText>
-                            Are you sure you want to delete airport instance? You might not be able to restore it again.
-                        </DialogContentText>
-                        </DialogContent>
-                        <DialogActions>
-                        <Button autoFocus onClick={handleClose}>
-                            Cancel
-                        </Button>
-                        <Button onClick={()=>handleDelete(params.row.id)} color="error"  autoFocus>
-                            Delete
-                        </Button>
-                        </DialogActions>
-                    </Dialog>
-
+                    <Button  color="error"   size="small" 
+                    href={`/delay_arrival/`+params.row.id} >
+                        Delay Arrival
+                    </Button>
                   </Stack>
                 );
             },
@@ -173,24 +138,8 @@ const FlightTable = () => {
         <Box component="main" sx={{ flexGrow: 1}}>
             <Grid>
 
-                <h1>Flight
-                    <Box variant="contained"  style={{float: 'right', width:'auto'}}>
-                    <Button
-                        variant="contained"
-                        href="/flight_add"
-                        style={{
-                        float: 'right',
-                        backgroundColor: '#000000'
-                    }}>Add</Button>
-                    <Button
-                        variant="contained"
-                        href="/delay"
-                        style={{
-                        float:'left',
-                        marginRight:'1VW',
-                        backgroundColor: '#000000'
-                    }}>Delay</Button>
-                    </Box>
+                <h1>Flight Delay
+                    
                 </h1>
 
             </Grid>
@@ -228,4 +177,5 @@ const FlightTable = () => {
     </>
   )
 }
-export default FlightTable
+
+export default DelayTable

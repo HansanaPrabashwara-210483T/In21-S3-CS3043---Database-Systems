@@ -16,15 +16,20 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 
-const FlightTable = () => {
-    const [flights,
-        setflights] = useState([])
+const BoardingTable = () => {
+    const [boarding,
+        setInBoarding] = useState([])
 
     useEffect(() => {
         const fetchALLModels = async() => {
+            try{
+                await axios.post("http://localhost:8000/boarding")
+            }catch(err){
+                console.log(err)
+            }
             try {
-                const res = await axios.get("http://localhost:8000/flight")
-                setflights(res.data);
+                const res = await axios.get("http://localhost:8000/boarding")
+                setInBoarding(res.data);
                 console.log(res)
             } catch (err) {
                 console.log(err)
@@ -36,13 +41,11 @@ const FlightTable = () => {
 
     const handleDelete = async(id) => {
         try {
-            await axios.delete(`http://localhost:8000/flight/`+id)
-            // console.log(id)
+            await axios.delete(`http://localhost:8000/aircraft/`+id)
             window.location.reload()
         }catch(err){
             console.log(err)
         }
-        
     }
 
     const [open, setOpen] = React.useState(false);
@@ -65,13 +68,14 @@ const FlightTable = () => {
     };
 
 
-    const rows : GridRowsProp = flights.map(flight => ({id: flight.flight_id, route_id: flight.route_id ,aircraft_id: flight.aircraft_id,
+    const rows : GridRowsProp = boarding.map(flight => ({id: flight.flight_id, route_id: flight.route_id ,aircraft_id: flight.aircraft_id,
         departure_time: removeTAndZ(flight.departure_time), arrival_time: removeTAndZ(flight.arrival_time), status: flight.status, delay: flight.delay.data}));
     
     const columns : GridColDef[] = [
         {
             field: 'id',
             headerName: 'Flight ID',
+            headerClassName: 'tableHeader',
             width: 100
         }, {
             field: 'route_id',
@@ -98,11 +102,7 @@ const FlightTable = () => {
             headerName: 'Delay',
             width: 130,
             valueFormatter: (params) => {
-                if (params.value == 1) {
-                    return "DELAYED"
-                }else{
-                    return "NOT DELAYED"
-                }
+                return params.value.data ? 'DELAY' : 'NO DELAY';
               }
         }, {
             field: 'edit',
@@ -172,26 +172,8 @@ const FlightTable = () => {
                  
         <Box component="main" sx={{ flexGrow: 1}}>
             <Grid>
-
-                <h1>Flight
-                    <Box variant="contained"  style={{float: 'right', width:'auto'}}>
-                    <Button
-                        variant="contained"
-                        href="/flight_add"
-                        style={{
-                        float: 'right',
-                        backgroundColor: '#000000'
-                    }}>Add</Button>
-                    <Button
-                        variant="contained"
-                        href="/delay"
-                        style={{
-                        float:'left',
-                        marginRight:'1VW',
-                        backgroundColor: '#000000'
-                    }}>Delay</Button>
-                    </Box>
-                </h1>
+                <h2>Currently Boarding
+                </h2>
 
             </Grid>
         </Box>
@@ -228,4 +210,4 @@ const FlightTable = () => {
     </>
   )
 }
-export default FlightTable
+export default BoardingTable

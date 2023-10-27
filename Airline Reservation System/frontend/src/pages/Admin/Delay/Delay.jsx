@@ -14,7 +14,9 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
+import DelayTable from './DelayTable';
 
 import GridViewIcon from '@mui/icons-material/GridView';
 import BookIcon from '@mui/icons-material/Book';
@@ -29,11 +31,9 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import LogoutIcon from '@mui/icons-material/Logout';
 
-import InAirTable from './InAirTable';
-import BoardingTable from './BoardingTable';
-
 const drawerWidth = 240;
-const urls1 = ['/dashboard', '/booking_list','/flight_list','/aircraft','/airport','/route','/aircraft_model','/location']
+const urls1 = ['/dashboard', '/booking_list','/flight','/aircraft','/airport','/route','/aircraft_model','/location']
+const urls2 = ['/user_list', '/reports','/logout']
 
 
 const openedMixin = (theme) => ({
@@ -91,7 +91,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-export default function Air() {
+export default function Flight() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
 
@@ -181,9 +181,9 @@ export default function Air() {
         </List>
         <Divider />
         <List>
-          {['Customers', 'Reports', 'Logout'].map((text, index) => (
+          {['Users', 'Reports', 'Logout'].map((text, index) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
+              <ListItemButton href={urls2[index]}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
@@ -208,10 +208,10 @@ export default function Air() {
         </List>
       </Drawer>
 
-      <Box component="main" sx={{ flexGrow: 1, p: 3}} >
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         
-        <InAirTable/>
-                <BoardingTable/>
+        <DelayTable/>
+
       </Box>
     </Box>
   );

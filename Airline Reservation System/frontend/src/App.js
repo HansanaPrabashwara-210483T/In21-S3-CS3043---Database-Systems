@@ -40,13 +40,23 @@ import Flight from "./pages/Admin/Flight/Flight";
 import Flight_Add from "./pages/Admin/Flight/FlightAdd"
 import Flight_Update from "./pages/Admin/Flight/FlightUpdate"
 
+import Delay from "./pages/Admin/Delay/Delay";
+import Delay_Arrival from "./pages/Admin/Delay/DelayArrival";
+import Delay_Depature from "./pages/Admin/Delay/DelayDepature";
+
+
 import BookingList from "./pages/Admin/BookingList/BookingList";
 import BookingList_Add from "./pages/Admin/BookingList/BookingListAdd";
 import BookingList_Update from "./pages/Admin/BookingList/BookingListUpdate";
 
 import User from "./pages/Admin/User/User";
+import AdminPanel from "./pages/Admin/AdminPanel";
+
+import Report from "./pages/Admin/Reports/Report";
+import Report_1 from "./pages/Admin/Reports/Report_1";
 
 import SeatSelect from "./pages/SeatSelect"; 
+import Ticket from "./pages/Ticket";
 
 import Shedule from "./pages/Shedule";
 import "./style.css";
@@ -56,8 +66,11 @@ import FAQ from "./pages/Help";
 import FlightResultsTable from "./pages/FlightResults";
 
 
+
+
 function App() {
   return (
+
     <div className="App">
       <BrowserRouter>
       <Routes>
@@ -67,6 +80,7 @@ function App() {
         <Route path="/sign-up" element={<SignUp/>}/>
         <Route path="/shedule" element={<Shedule/>}/>
         <Route path="/seat_select/:flight_id/:customer_id" element={<SeatSelect/>}/>
+        <Route path="/ticket/:booking_id" element={<Ticket/>}/>
 
 
         <Route path="/admin" element={<Admin/>}/>
@@ -98,11 +112,22 @@ function App() {
         <Route path="/flight_add" element={<Flight_Add/>}/> 
         <Route path="/flight_update/:id" element={<Flight_Update/>}/> 
 
+        <Route path="/delay" element={<Delay/>}/>
+        <Route path="/delay_departure/:id" element={<Delay_Depature/>}/> 
+        <Route path="/delay_arrival/:id" element={<Delay_Arrival/>}/>
+
         <Route path="/booking_list" element={<BookingList/>}/>
         <Route path="/booking_list_add" element={<BookingList_Add/>}/> 
         <Route path="/booking_list_update/:id" element={<BookingList_Update/>}/>
 
         <Route path="/route/available_flights/:originAirport/:targetAirport/:depature_time/:arrival_time" element={<FlightResultsTable/>} />
+
+        <Route path="/dashboard" element={<AdminPanel/>}/>
+
+        <Route path="/reports" element={<Report/>}/>
+        <Route path="/report_1/" element={<Report_1/>}/>
+
+        
 
         <Route path="/user_list" element={<User/>}/>
       

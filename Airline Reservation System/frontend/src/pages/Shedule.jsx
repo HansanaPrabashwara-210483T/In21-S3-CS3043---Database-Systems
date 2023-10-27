@@ -77,7 +77,11 @@ const Aircraft = () => {
             width: 100,
             flex:1,
             valueFormatter: (params) => {
-                return params.value.data ? 'Delay' : 'No Delay';
+                if (params.value == 1) {
+                    return "DELAYED"
+                }else{
+                    return "NOT DELAYED"
+                }
               }
         },
         

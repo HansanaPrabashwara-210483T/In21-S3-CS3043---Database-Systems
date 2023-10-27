@@ -1,22 +1,22 @@
 import express from "express"
-import mysql from "mysql2"
 import cors from "cors"
-import dotenv from "dotenv"
+import db from "./config/db.js";
+import authRouter from "./routes/auth.js";
 
-dotenv.config({ path: './db.env'});
 
 const app = express()
-
-const db = mysql.createConnection({
-    host        : process.env.DB_HOST,
-    user        : process.env.DB_USER,
-    password    : process.env.DB_PASSWORD,
-    database    : process.env.DB_NAME,
-});
 
 app.use(express.json());
 app.use(cors());
 
+// For all authentication or profile-related routes, use the auth.js router
+app.use('/auth', authRouter);
+
+/* 
+app.get('/auth/register', (req, res) => {
+    res.send("Done");
+}); 
+*/
 
 /**
  * Aircraft Models
@@ -322,7 +322,7 @@ app.put("/location/:id", (req,res)=>{
  */
 
 app.get("/flight", (req,res)=>{
-    const q = "SELECT * FROM flight where valid = 1"
+    const q = "SELECT * FROM flight where valid = 1 ORDER BY departure_time ASC"
     db.query(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
@@ -352,7 +352,7 @@ app.get("/flight", (req,res)=>{
 // });
 
 app.post("/flight", (req,res)=>{
-    const q = "INSERT INTO flight (`route_id`,`aircraft_id`,`departure_time`,`arrival_time`,`status`) VALUE (?);";
+    const q = "INSERT INTO flight (`route_id`,`aircraft_id`,`departure_time`,`arrival_time`,`status`) VALUE (?);"
     const values = [
         req.body.route_id,
         req.body.aircraft_id,
@@ -396,6 +396,51 @@ app.put("/flight/:id", (req,res)=>{
         return res.json("flight has been updated successfully")
     });
 })
+
+/**
+ * Delays
+ */
+app.get("/delay", (req,res)=>{
+    const q = "SELECT * FROM flight where valid = 1 and arrival_time > CURRENT_TIMESTAMP() ORDER BY departure_time ASC "
+    db.query(q,(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+app.put("/arrival_delay/:id", (req,res)=>{
+    const flightId = req.params.id
+    const q  = "UPDATE flight SET `arrival_time` = ADDTIME(`arrival_time`," + '"' + ""+req.body.delay_arrival+"" + '"' + "),`delay` = 1 where flight_id = ?"
+    // ,
+    const values = [
+        req.body.delay_arrival,
+    ];
+    db.query(q,[flightId],(err,data)=>{
+        // if(err) return res.json(err)
+        if(err){
+            console.log(err)
+            return res.json(err)
+        }
+        return console.log("delay has been updated successfully")
+    });
+})
+
+
+app.put("/departure_delay/:id", (req,res)=>{
+    const flightId = req.params.id
+    const q  = "UPDATE flight SET `departure_time` = ADDTIME(`departure_time`," + '"' + ""+req.body.delay_departure+"" + '"' + "),`delay` = 1 where flight_id = ?";
+
+  
+    db.query(q,[flightId],(err,data)=>{
+        // if(err) return res.json(err)
+        if(err){
+            console.log(err)
+            return res.json(err)
+        }
+        return console.log("delay has been updated successfully")
+    });
+})
+
 
 
 
@@ -446,12 +491,86 @@ app.get("/user_list", (req,res)=>{
 })
 
 
+/**
+ * Dashboard
+ */
+app.get("/in_air", (req,res)=>{
+    const q = "SELECT * FROM flight where valid = 1 and departure_time < CURRENT_TIMESTAMP() and arrival_time > CURRENT_TIMESTAMP()"
+    db.query(q,(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+app.post("/in_air", (req,res)=>{
+    const q1 = "UPDATE flight SET `status` = 'IN_AIR' where departure_time < CURRENT_TIMESTAMP() and arrival_time > CURRENT_TIMESTAMP()"
+    db.query(q1,(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)  
+    })
+})
+app.post("/in_air", (req,res)=>{
+    const q = "UPDATE flight SET `status` = 'IN_AIR' where departure_time < CURRENT_TIMESTAMP() and arrival_time > CURRENT_TIMESTAMP()";
+
+    db.query(q,(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    });
+});
+
+app.put("/in_air", (req,res)=>{
+    const q = "UPDATE flight SET `status` = 'ARRIVED' where  arrival_time < CURRENT_TIMESTAMP()";
+
+    db.query(q,(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    });
+});
 
 
+app.get("/boarding", (req,res)=>{
+    const q = "SELECT * FROM flight where valid = 1 and TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP(),departure_time) < 10 and TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP(),departure_time) > 0"
+    db.query(q,(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
+app.post("/boarding", (req,res)=>{
+    const q = "UPDATE flight SET `status` = 'ARRIVED' where TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP(),departure_time) < 10 and TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP(),departure_time) > 0";
+
+    db.query(q,(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    });
+});
 
 
+/**
+ * Reports
+ */
 
+// Report 1
 
+app.get("/report_1/:id", (req,res)=>{
+    const flightId =  req.params.id
+    // const q =  "SELECT * FROM flight"
+    const q = "SELECT customer.customer_id, user_type, name, address, nic, passport_id from customer join booking on customer.customer_id = booking.customer_id where booking.flight_id = ?"
+    //vilash
+    const p = `
+            SELECT name, date_of_birth,
+            CASE
+                WHEN TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) > 25 THEN 'adult'
+                ELSE 'child'
+            END AS age_category
+            FROM airline_project_g24.customer
+            WHERE cutomer_id in (SELECT customer_id FROM booking WHERE flight_id = ?);  
+            `;
+    db.query(q,[flightId],(err,data)=>{
+        if(err) return console.log(err)
+        return res.json(data)
+    })
+})
 
 
 
@@ -499,8 +618,17 @@ app.put("/seat_select/:seat_id", (req,res)=>{
     });
 });
 
-
-
+app.get("/booking/:seat_id", (req,res)=>{
+    const seatId = Number(req.params.seat_id)
+  
+    
+    const q = "SELECT booking_id FROM booking WHERE seat_id = ?"
+    db.query(q,[seatId],(err,data)=>{
+        // res.json(q)
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
 
 
 
@@ -516,6 +644,8 @@ app.get("/shedule", (req,res)=>{
         return res.json(data)
     })
 })
+
+
 
 
 
