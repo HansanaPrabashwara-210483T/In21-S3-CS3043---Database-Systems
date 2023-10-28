@@ -54,6 +54,15 @@ import AdminPanel from "./pages/Admin/AdminPanel";
 
 import Report from "./pages/Admin/Reports/Report";
 import Report_1 from "./pages/Admin/Reports/Report_1";
+import Report_1_Results from "./pages/Admin/Reports/Report_1_Results";
+import Report_2 from "./pages/Admin/Reports/Report_2";
+import Report_2_Results from "./pages/Admin/Reports/Report_2_Results";
+import Report_3 from "./pages/Admin/Reports/Report_3";
+import Report_3_Results from "./pages/Admin/Reports/Report_3_Results";
+import Report_4 from "./pages/Admin/Reports/Report_4";
+import Report_4_Results from "./pages/Admin/Reports/Report_4_Results";
+import Report_5_Results from "./pages/Admin/Reports/Report_5_Results";
+
 
 import SeatSelect from "./pages/SeatSelect"; 
 import Ticket from "./pages/Ticket";
@@ -64,7 +73,6 @@ import Booking from "./pages/Booking";
 import FlightResults from "./pages/FlightResults";
 import FAQ from "./pages/Help";
 import FlightResultsTable from "./pages/FlightResults";
-
 
 
 
@@ -124,8 +132,19 @@ function App() {
 
         <Route path="/dashboard" element={<AdminPanel/>}/>
 
+
         <Route path="/reports" element={<Report/>}/>
         <Route path="/report_1/" element={<Report_1/>}/>
+        <Route path="/reports_1_results/:id" element={<Report_1_Results/>}/>
+        <Route path="/report_2/" element={<Report_2/>}/>
+        <Route path="/reports_2_results/:id/:id/:id" element={<Report_2_Results/>}/>
+        <Route path="/report_3/" element={<Report_3/>}/>
+        <Route path="/reports_3_results/:id/:id" element={<Report_3_Results/>}/>
+        <Route path="/report_4/" element={<Report_4/>}/>
+        <Route path="/reports_4_results/:id/:id" element={<Report_4_Results/>}/>
+        <Route path="/report_5" element={<Report_5_Results/>}/>
+
+        
 
         
 
