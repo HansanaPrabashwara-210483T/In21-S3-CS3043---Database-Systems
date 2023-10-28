@@ -1,0 +1,23 @@
+.no-flights-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    white-space: normal;
+}
+
+.no-flights-page h5 {
+    font-size: 48px;
+}
+
+.no-flights-page p {
+    font-size: 24px;
+}
+
+.no-flights-page button {
+    font-size: 20px;
+}
+.no-flights-page h5,
+.no-flights-page p {
+    white-space: normal;
+}

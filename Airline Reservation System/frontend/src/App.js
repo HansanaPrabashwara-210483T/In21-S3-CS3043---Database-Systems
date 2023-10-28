@@ -64,6 +64,7 @@ import Booking from "./pages/Booking";
 import FlightResults from "./pages/FlightResults";
 import FAQ from "./pages/Help";
 import FlightResultsTable from "./pages/FlightResults";
+import NoFlightsAvailablePage from "./pages/NoAvailableFlights";
 
 
 
@@ -121,6 +122,7 @@ function App() {
         <Route path="/booking_list_update/:id" element={<BookingList_Update/>}/>
 
         <Route path="/route/available_flights/:originAirport/:targetAirport/:depature_time/:arrival_time" element={<FlightResultsTable/>} />
+        <Route path="/route/noflightsavailablepage" element={<NoFlightsAvailablePage/>}/>
 
         <Route path="/dashboard" element={<AdminPanel/>}/>
 

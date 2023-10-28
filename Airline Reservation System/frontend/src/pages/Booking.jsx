@@ -70,9 +70,21 @@ export default function CustomizedSelects() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const response = await axios.get('http://localhost:8000/route/available_flights/'+originAirport+'/'+targetAirport+'/'+departure_time.format()+'/'+arrival_time.format());
-        window.location.href = 'http://localhost:3000/route/available_flights/'+originAirport+'/'+targetAirport+'/'+departure_time.format()+'/'+arrival_time.format();
+        try {
+            const response = await axios.get('http://localhost:8000/route/available_flights/'+originAirport+'/'+targetAirport+'/'+departure_time.format()+'/'+arrival_time.format());
+
+            if (response.data && response.data.length > 0) {
+                // The response is not empty, navigate to the given page
+                window.location.href = 'http://localhost:3000/route/available_flights/'+originAirport+'/'+targetAirport+'/'+departure_time.format()+'/'+arrival_time.format();
+            } else {
+                // The response is empty, redirect to another page
+                window.location.href = 'http://localhost:3000/route/noflightsavailablepage';
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
     };
+
 
 
     return ( <>
