@@ -2,6 +2,7 @@ import express from "express"
 import cors from "cors"
 import db from "./config/db.js";
 import authRouter from "./routes/auth.js";
+import e from "express";
 
 
 const app = express()
@@ -555,18 +556,104 @@ app.post("/boarding", (req,res)=>{
 app.get("/report_1/:id", (req,res)=>{
     const flightId =  req.params.id
     // const q =  "SELECT * FROM flight"
-    const q = "SELECT customer.customer_id, user_type, name, address, nic, passport_id from customer join booking on customer.customer_id = booking.customer_id where booking.flight_id = ?"
+    // const q = "SELECT customer.customer_id, user_type, name, address, nic, passport_id from customer join booking on customer.customer_id = booking.customer_id where booking.flight_id = ?"
     //vilash
     const p = `
-            SELECT name, date_of_birth,
+            SELECT customer_id, user_type, name, address, nic, passport_id, date_of_birth,
             CASE
-                WHEN TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) > 25 THEN 'adult'
+                WHEN TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) > 18 THEN 'adult'
                 ELSE 'child'
             END AS age_category
             FROM airline_project_g24.customer
-            WHERE cutomer_id in (SELECT customer_id FROM booking WHERE flight_id = ?);  
+            WHERE customer_id in (SELECT customer_id FROM booking WHERE flight_id = ?);  
             `;
-    db.query(q,[flightId],(err,data)=>{
+    db.query(p,[flightId],(err,data)=>{
+        if(err) return console.log(err)
+        return res.json(data)
+    })
+})
+
+app.get("/report_2/:id/:start/:end", (req,res)=>{
+    const airportID =  req.params.id
+    const startTime = req.params.start
+    const endTime = req.params.end
+    // const q =  "SELECT * FROM flight"
+    // const q = "SELECT customer.customer_id, user_type, name, address, nic, passport_id from customer join booking on customer.customer_id = booking.customer_id where booking.flight_id = ?"
+    //vilash
+    const p = `
+            SELECT a.name, COUNT(b.booking_id) AS count
+            FROM booking as b
+            JOIN flight as f ON f.flight_id = b.flight_id
+            JOIN route as r ON f.route_id = r.route_id
+            JOIN airport as a ON a.airport_code = r.destination
+            WHERE r.destination = ? AND f.departure_time > ? AND f.arrival_time < ? ;  
+            `;
+    db.query(p,[airportID,startTime,endTime],(err,data)=>{
+        if(err) return console.log(err)
+        return res.json(data)
+    })
+})
+
+
+app.get("/report_3/:start/:end", (req,res)=>{
+    const startTime = req.params.start
+    const endTime = req.params.end
+ 
+    const p = `
+        SELECT COUNT(CASE WHEN c.user_type = 'reg' THEN c.customer_id END) AS count1, 
+            COUNT(CASE WHEN c.user_type = 'guest' THEN c.customer_id END) AS count2
+        FROM customer as c
+        JOIN booking as b ON c.customer_id = b.customer_id
+        JOIN flight as f ON f.flight_id = b.flight_id
+        WHERE f.departure_time > ? AND f.arrival_time < ?;  
+    `;
+    db.query(p,[startTime,endTime],(err,data)=>{
+        if(err) return console.log(err)
+        return res.json(data)
+    })
+})
+
+
+app.get("/report_4/:origin/:destination", (req,res)=>{
+    const origin = req.params.origin
+    const destination = req.params.destination
+ 
+    const p = `
+        SELECT f.flight_id, a.call_sign ,f.departure_time,f.arrival_time,f.delay, COUNT(b.booking_id) AS total_booking_amount
+        FROM flight as f
+        JOIN route as r ON f.route_id = r.route_id
+        JOIN aircraft as a ON a.aircraft_id = f.aircraft_id
+        LEFT JOIN booking as b ON b.flight_id = f.flight_id
+        WHERE r.origin = ? AND r.destination = ? AND f.status = "ARRIVED"
+        GROUP BY f.flight_id;  
+    `;
+    db.query(p,[origin,destination],(err,data)=>{
+        if(err) return console.log(err)
+        return res.json(data)
+    })
+})
+
+
+app.get("/report_5", (req,res)=>{
+
+    const p = `
+    SELECT
+        am.model_id,
+        am.brand,
+        am.model,
+        SUM(b.total_cost) AS total_revenue
+    FROM
+        booking b
+    INNER JOIN flight f ON b.flight_id = f.flight_id
+    INNER JOIN aircraft a ON f.aircraft_id = a.aircraft_id
+    INNER JOIN aircraft_model am ON a.model_id = am.model_id
+
+    GROUP BY
+        am.model_id,
+        am.brand,
+        am.model;
+    `;
+    db.query(p,(err,data)=>{
         if(err) return console.log(err)
         return res.json(data)
     })

@@ -9,32 +9,43 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import NavBar from '../../Navbar'
+import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
+import {LocalizationProvider} from '@mui/x-date-pickers/LocalizationProvider';
+import {DatePicker} from '@mui/x-date-pickers/DatePicker';
+import {DemoContainer, DemoItem} from '@mui/x-date-pickers/internals/demo';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 import HiveSharpIcon from '@mui/icons-material/HiveSharp';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
 
 
-
-const Report_1 = () => {
+const Report_3= () => {
  
-
-  const [id,setId] = useState(null);
+  const [departure,setDeparture] = useState(null);
+  const [arrival,setArrival] = useState(null);
 
   const navigate = useNavigate()
 
   const handleClick = async e =>{
-    console.log(id);
     e.preventDefault()
     try{
-      if(id != null){
-        navigate("/reports_1_results/"+id)
-      } 
+      
+      navigate("/reports_3_results/"+departure.format()+"/"+arrival.format())
+      
     }catch(err){
       console.log(err);
     }
 
   }
 
-  console.log(id);
+
+
+  // console.log(targetAirports);
+  // console.log(departure.format());
+  // console.log(arrival.format());
 
   return (
     <>
@@ -53,21 +64,24 @@ const Report_1 = () => {
             <HiveSharpIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Adults and Children in Flights
+            Bookings by Passenger Type
           </Typography>
-          <Box component="form"  noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="flight_id"
-              label="Flight ID"
-              name="flight_id"
-              type="number"
-              autoComplete="Flight ID"
-              autoFocus
-              onChange={(e)=>setId(e.target.value)}
-            />
+          <Box component="form"  noValidate sx={{ mt: 1 }} width={400}>
+         
+            <Box sx={{marginTop:2, marginBottom:3}}>
+                <LocalizationProvider dateAdapter = {AdapterDayjs} > 
+                    <DemoItem >
+                        <DateTimePicker label="Starting Time"  name="st" id="st" onChange={(val) => {setDeparture(val);}}/>
+                    </DemoItem>    
+                </LocalizationProvider> 
+            </Box>
+            <Box sx={{marginTop:2, marginBottom:1}}>
+                <LocalizationProvider dateAdapter = {AdapterDayjs} > 
+                    <DemoItem >
+                        <DateTimePicker label="Ending Time"  name="et" id="et" onChange={(val) => {setArrival(val);}}/>
+                    </DemoItem>    
+                </LocalizationProvider> 
+            </Box>
            
            <Button  color="error"
               fullWidth
@@ -92,4 +106,4 @@ const Report_1 = () => {
 }
 
 
-export default  Report_1 
+export default  Report_3 
