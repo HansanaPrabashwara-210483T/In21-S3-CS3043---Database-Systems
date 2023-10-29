@@ -30,8 +30,11 @@ import {DemoItem} from '@mui/x-date-pickers/internals/demo';
 const Flight_Add = () => {
   const [flights,setFlights] = useState({});
 
+  const [routes, setRoutes] = useState([]);
+  const [aircrafts, setAircrafts] = useState([]);
   const [depature_time, setDepature] = React.useState(null);
   const [arrival_time, setArrival] = React.useState(null);
+  const [status, setStatus] = React.useState(null);
 
 
 
@@ -43,13 +46,17 @@ const Flight_Add = () => {
   };
 
   const handleClick = async e =>{
-    setFlights((prev) => ({...prev, "departure_time": depature_time.format()}));
-    setFlights((prev) => ({...prev, "arrival_time": arrival_time.format()}));
     // console.log(flights)
     e.preventDefault()
     try{
       // console.log(flights)
-      await axios.post("http://localhost:8000/flight",flights)
+      await axios.post("http://localhost:8000/flight",{
+        "route_id": routes,
+        "aircraft_id": aircrafts,
+        "departure_time": depature_time.format(),
+        "arrival_time": arrival_time.format(),
+        "status": status
+      })
       navigate("/flight")
     }catch(err){
       console.log(err);
@@ -93,7 +100,7 @@ const Flight_Add = () => {
               name="route_id"
               autoComplete="route_id"
               autoFocus
-              onChange={handleChange}
+              onChange={(e) => {setRoutes(e.target.value);}}
             />
             <TextField
               margin="normal"
@@ -104,7 +111,7 @@ const Flight_Add = () => {
               label="Aircraft ID"
               id="aircraft_id "
               autoComplete="aircraft_id "
-              onChange={handleChange}
+              onChange={(e) => {setAircrafts(e.target.value);}}
             />
 
             <Box sx={{marginTop:2, marginBottom:1}}>
@@ -113,24 +120,22 @@ const Flight_Add = () => {
                 <DateTimePicker
                   label="Depature Time"
                   value={depature_time}
-                  onChange={setDepature}
+                  onChange={(val)=>{setDepature(val);}}
                 />
               </Stack>
             </LocalizationProvider>
             </Box>
 
             <Box sx={{marginTop:2, marginBottom:1}}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoItem>
-          <DateTimePicker
-                  label="Arrival Time"
-                  value={arrival_time}
-                  onChange={setArrival}
-                />
-          </DemoItem>
-                
-               
-            </LocalizationProvider>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DemoItem>
+                  <DateTimePicker
+                    label="Arrival Time"
+                    value={arrival_time}
+                    onChange={(val) =>{setArrival(val);}}
+                  />
+                </DemoItem>
+              </LocalizationProvider>
             </Box>
 
             <TextField
@@ -141,7 +146,7 @@ const Flight_Add = () => {
               label="status"
               id="status"
               autoComplete="status"
-              onChange={handleChange}
+              onChange={(e) => {setStatus(e.target.value);}}
             />
             
            

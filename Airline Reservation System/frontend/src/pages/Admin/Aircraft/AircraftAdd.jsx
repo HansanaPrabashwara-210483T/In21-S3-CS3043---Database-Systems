@@ -22,7 +22,7 @@ const Aircraft_Add = () => {
 
 
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
 
   const handleChange = (e) =>{
