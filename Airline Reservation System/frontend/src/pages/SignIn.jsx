@@ -9,57 +9,111 @@ import Container from '@mui/material/Container';
 import NavBar from './Navbar'
 
 import HiveSharpIcon from '@mui/icons-material/HiveSharp';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-// TODO remove, this demo shouldn't need to reset the theme. const defaultTheme
-// = createTheme();
 
 export default function SignIn() {
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password')
-        });
-    };
 
-    return ( <> <NavBar/> < Container component = "main" maxWidth = "xs" > <CssBaseline/> < Box sx = {{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }} > <Avatar sx={{
-        m: 1,
-        bgcolor: '#000000'
-    }}>
-        <HiveSharpIcon/>
-    </Avatar> 
-    < Typography component = "h1" variant = "h5" > Sign in </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="User Name"
-              name="username"
-              autoComplete="username"
-              autoFocus
-            /> 
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"/> 
-        
-        < Button type = "submit" fullWidth variant = "contained" sx = {{ mt: 6, mb: 2, backgroundColor:"black"}} > 
-        Sign In
-        </Button>
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
+      event.preventDefault();
+
+      try {
+
+        const response = await axios.post("http://localhost:8000/auth/login", {
+          Username: username,
+          Password: password
+        });
+
+        // If returned status is 200, then login was successfu
+        if (response.status === 200) {
+
+          if (response.data.token) {
+
+            // setUser(response.data.user);
+            // Store the JWT (if it exists) in the client's local-storage
+            localStorage.setItem('token', response.data.token);
+          }
+
+          // Redirect to the previous page on successful login
+          navigate(-1);
+        } else if (response.status === 401) {
+
+          alert('ERROR: ' + response.data.message);
+
+        } else if (response.status === 500) {
+
+          alert('ERROR: ' + response.data.message);
+
+        }
+
+      } catch (error) {
+        alert('ERROR: ' + error);
+        navigate('/sign-in');
+        console.log(error);
+        //useNavigate('/somewhere');
+      }
+  };
+
+  return ( <> 
+    <NavBar/>
+
+    <Container component = "main" maxWidth = "xs" > 
+
+      <CssBaseline/> 
+      <Box 
+        sx = {{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+          }} > 
+
+        <Avatar sx={{m: 1, bgcolor: '#000000' }}>
+          <HiveSharpIcon/>
+        </Avatar> 
+
+        <Typography component = "h1" variant = "h5" > 
+          Sign in 
+        </Typography>
+
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            label="User Name"
+            name="username"
+            autoComplete="username"
+            autoFocus
+            onChange = {(e) => { setUsername(e.target.value); }} /> 
+
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            onChange = {(e) => { setPassword(e.target.value); }} /> 
             
-          </Box > </Box> </Container>
-      </>);
+          <Button type = "submit" fullWidth variant = "contained" sx = {{ mt: 6, mb: 2, backgroundColor:"black"}} > 
+            Sign In
+          </Button>
+                
+        </Box> 
+    </Box> 
+  </Container>
+
+  </>
+  );
 }
