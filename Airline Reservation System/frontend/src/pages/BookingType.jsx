@@ -16,15 +16,13 @@ import HiveSharpIcon from '@mui/icons-material/HiveSharp';
 
 const LoginForBooking = () => {
 
-
-
-
     const navigate = useNavigate()
     const location = useLocation()
-
     const flight_id = location.pathname.split("/")[2]
+    const user_id = location.pathname.split("/")[3]
+    
 
-
+    
   return (
     <>
             <NavBar/>

@@ -53,7 +53,9 @@ const Delay_Arrival = () => {
     catch(err){
       console.log(err);
     }
-    navigate('/delay')
+    finally{
+      navigate('/delay')
+    }
   }
 
   

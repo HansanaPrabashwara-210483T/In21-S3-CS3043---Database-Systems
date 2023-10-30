@@ -16,6 +16,8 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import {useLocation} from "react-router-dom";
+import NavBar from './Navbar'
+
 
 const FlightResultsTable = () => {
     const [Results,
@@ -34,6 +36,21 @@ const FlightResultsTable = () => {
 
     useEffect(() => {
         const fetchFlightResults = async () => {
+            try{
+                await axios.post("http://localhost:8000/boarding")
+            }catch(err){
+                console.log(err)
+            }
+            try{
+                await axios.post("http://localhost:8000/in_air")
+            }catch(err){
+                console.log(err)
+            }
+            try{
+                await axios.put("http://localhost:8000/in_air")
+            }catch(err){
+                console.log(err)
+            }
             try {
                 const res = await axios.get('http://localhost:8000/route/available_flights/'+originAirport+'/'+targetAirport+'/'+departure_time+'/'+arrival_time);
                 setResults(res.data);
@@ -44,11 +61,17 @@ const FlightResultsTable = () => {
         fetchFlightResults();
     }, [originAirport, targetAirport, departure_time, arrival_time]);
 
+    const removeTAndZ = (dateString) => {
+        const [date, time] = dateString.split(/T|Z/);
+        const [t,sec] = time.split(".")
+        const [h,m,s] = t.split(":")
+        return date + " | " + h + " : " + m;
+    };
 
     const theme = useTheme();
 
     // here i removed mapping on originAirport and targetAirport and used initially declared variables due to cells not rendering
-    const rows : GridRowsProp = Results.map(Result => ({aircraftName: Result.call_sign, originAirport, targetAirport, departureTime:Result.departure_time, arrivalTime:Result.arrival_time,
+    const rows : GridRowsProp = Results.map(Result => ({id: Result.flight_id ,aircraftName: Result.call_sign, originAirport, targetAirport, departureTime:removeTAndZ(Result.departure_time), arrivalTime:removeTAndZ(Result.arrival_time),
         flightStatus:Result.status}));
     console.log(Results)
 
@@ -56,33 +79,51 @@ const FlightResultsTable = () => {
         {
             field: 'aircraftName',
             headerName: 'Aircraft Name',
-            width: 200
+            flex: 1
         }, {
             field: 'originAirport',
             headerName: 'Origin Airport',
-            width: 200
+            flex: 1.5
         }, {
             field: 'targetAirport',
             headerName: 'Destination Airport',
-            width: 300
+            flex: 1.5
         }, {
             field: 'departureTime',
             headerName: 'Departure Time',
-            width: 300
+            flex: 2
         }, {
             field: 'arrivalTime',
             headerName: 'Arrival Time',
-            width: 200
+            flex: 2
         }, {
             field: 'flightStatus',
             headerName: 'Flight Status',
-            width: 200
+            flex: 1
+        },{
+            field: 'id',
+            headerName: '',
+            flex: 2,
+            renderCell: (params) => (
+                
+                <Stack direction="row" spacing={2}>
+                    {/* // If user is not authenticated */}
+                    <Button variant="contained" color="success" href={"/login_for_booking/"+params.value}>Book Now</Button>
+                
+                {/* // if user is authenticated */}
+                
+                    <Button variant="contained" color="success" href={"/user_booking_type/"+params.value}>Book Now</Button>
+                </Stack>
+            )
         }
     ];
 
-    return ( <> <Box component="main" sx={{ flexGrow: 1, paddingTop: 4.5 }}>
+    return ( <> 
+    <NavBar />
+    <Container>
+    <Box component="main" sx={{ flexGrow: 1, paddingTop: 4.5 }}>
 
-
+            
 
             <Box component="main" sx={{ flexGrow: 1}}>
                 <Grid>
@@ -117,6 +158,7 @@ const FlightResultsTable = () => {
                 </Box>
             </div>
         </Box>
+        </Container>
         </>
     )
 }

@@ -28,7 +28,7 @@ app.get("/", (req,res)=>{
 })
 
 app.get("/aircraft_model", (req,res)=>{
-    const q = "SELECT * FROM aircraft_model"
+    const q = "SELECT * FROM aircraft_model WHERE valid = 1"
     db.query(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
@@ -55,7 +55,7 @@ app.post("/aircraft_model", (req,res)=>{
 
 app.delete("/aircraft_model/:id", (req,res)=>{
     const modelId = req.params.id
-    const q  = "DELETE from aircraft_model where model_id = ?"
+    const q  = "UPDATE from aircraft_model SET `valid` = 0 where model_id = ?"
 
     db.query(q,[modelId],(err,data)=>{
         if(err) return res.json(err)
@@ -113,7 +113,7 @@ app.post("/airport", (req,res)=>{
 
 app.delete("/airport/:id", (req,res)=>{
     const airportId = req.params.id
-    const q  = "DELETE from airport where airport_code = ?"
+    const q  = "UPDATE airport SET `valid` = 0 where airport_code = ?"
 
     db.query(q,[airportId],(err,data)=>{
         if(err) return res.json(err)
@@ -178,7 +178,7 @@ app.post("/aircraft", (req,res)=>{
 
 app.delete("/aircraft/:id", (req,res)=>{
     const aircraftId = req.params.id
-    const q  = "DELETE from aircraft where aircraft_id = ?"
+    const q  = "UPDATE aircraft SET `valid` = 0 where aircraft_id = ?"
 
     db.query(q,[aircraftId],(err,data)=>{
         if(err) return res.json(err)
@@ -232,7 +232,7 @@ app.post("/route", (req,res)=>{
 
 app.delete("/route/:id", (req,res)=>{
     const routeId = req.params.id
-    const q  = "DELETE from route where route_id = ?"
+    const q  = "UPDATE route SET `valid` = 0 where route_id = ?"
 
     db.query(q,[routeId],(err,data)=>{
         if(err) return res.json(err)
@@ -452,17 +452,17 @@ app.put("/departure_delay/:id", (req,res)=>{
 
 
 app.get("/booking_list", (req,res)=>{
-    const q = "SELECT * FROM booking"
+    const q = "SELECT * FROM booking ORDER BY booking_id DESC"
     db.query(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
 })
 
-
+// This will invalidate a booking
 app.delete("/booking_list/:id", (req,res)=>{
     const aircraftId = req.params.id
-    const q  = "UPDATE booking SET `payment_status`= 0, where booking_id = ?"
+    const q  = "UPDATE booking SET `payment_status`= 0 where booking_id = ?"
 
     db.query(q,[aircraftId],(err,data)=>{
         if(err) return res.json(err)
@@ -470,14 +470,18 @@ app.delete("/booking_list/:id", (req,res)=>{
     });
 })
 
+
+// This will validate a booking
 app.put("/booking_list/:id", (req,res)=>{
     const aircraftId = req.params.id
-    const q  = "UPDATE booking SET `payment_status`= 1, where booking_id = ?"
+    console.log(aircraftId)
+    const q  = "UPDATE booking SET `payment_status`= 1 where booking_id = ?;"
     db.query(q,[aircraftId],(err,data)=>{
         if(err) return res.json(err)
         return res.json("Booking has been validated successfully")
     });
 })
+
 
 
 /**
@@ -725,7 +729,7 @@ app.get("/booking/:seat_id", (req,res)=>{
  * Shedule
  */
 app.get("/shedule", (req,res)=>{
-    const q = "select a.call_sign, r.origin, r.destination, f.departure_time, f.arrival_time, f.status, f.delay from flight as f join route as r on r.route_id = f.route_id join aircraft as a on a.aircraft_id = f.aircraft_id WHERE f.arrival_time > CURRENT_TIMESTAMP()"
+    const q = "select a.call_sign, r.origin, r.destination, f.departure_time, f.arrival_time, f.status, f.delay from flight as f join route as r on r.route_id = f.route_id join aircraft as a on a.aircraft_id = f.aircraft_id WHERE f.valid = 1 AND f.arrival_time > CURRENT_TIMESTAMP() ORDER BY DATE(f.departure_time) DESC"
     db.query(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
@@ -741,7 +745,7 @@ app.get("/shedule", (req,res)=>{
  */
 //displaying airport locations
 app.get("/location/airports", (req,res)=>{
-    const q = "SELECT name, airport_code FROM airport"
+    const q = "SELECT name, airport_code FROM airport WHERE valid = 1"
     db.query(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
@@ -757,10 +761,10 @@ app.get("/route/available_flights/:origin/:destination/:departure/:arrival", (re
 
     console.log(originLocationId,destinationLocationId,departureTime,arrivalTime);
     const q = `
-        SELECT call_sign, origin, destination, departure_time, arrival_time, flight.status, delay
+        SELECT DISTINCT flight.flight_id, call_sign, origin, destination, departure_time, arrival_time, flight.status, delay
         FROM flight
-        LEFT JOIN route ON flight.route_id = route.route_id
-        LEFT JOIN aircraft ON flight.aircraft_id = aircraft.aircraft_id
+        INNER JOIN route ON flight.route_id = route.route_id
+        INNER JOIN aircraft ON flight.aircraft_id = aircraft.aircraft_id
         WHERE origin = ? AND destination = ? AND
         departure_time >= ? AND arrival_time <= ?;
     `;
@@ -778,7 +782,7 @@ app.get("/route/available_flights/:origin/:destination/:departure/:arrival", (re
 app.get("/route/:route_id", (req, res) => {
     const route_id = req.params.route_id;  //input variable to get flight relating to selected route in future
 
-    const sql = "SELECT * FROM flight WHERE flight.flight_id = ? AND flight.departure_time > CURDATE()";
+    const sql = "SELECT * FROM flight WHERE flight.flight_id = ? AND flight.departure_time > CURDATE() AND valid = 1";
 
     db.query(sql, [route_id], (err, rows) => {
         if (err) return res.json(err);
@@ -854,6 +858,43 @@ app.post("/user", (req,res)=>{
     });
 });
 
+
+
+
+/**
+ * Customer form for guest user booking
+*/
+
+app.post("/guest", (req,res)=>{
+    const q = "INSERT INTO customer(`user_type`,`name`,`date_of_birth`,`address`, `nic`,`passport_id`) VALUES (?);";
+    const values = [
+        "guest",
+        req.body.name,
+        req.body.date_of_birth,
+        req.body.address,
+        req.body.nic,
+        req.body.passport_id,
+    ];
+
+    db.query(q,[values],(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    });
+});
+
+app.get("/guest_get_id/:name/:dob/:address/:nic/:pid", (req,res)=>{
+    const name = req.params.name
+    const dob = req.params.dob
+    const address = req.params.address
+    const nic = req.params.nic
+    const pid = req.params.pid
+    
+    const q = "SELECT customer_id FROM customer WHERE name = ? AND date_of_birth = ? AND address = ? AND nic = ? AND passport_id = ?"
+    db.query(q,[name,dob,address,nic,pid],(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
 
 
 app.listen(8000, ()=>{
