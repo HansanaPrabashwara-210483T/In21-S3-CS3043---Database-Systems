@@ -19,6 +19,21 @@ const Aircraft = () => {
 
     useEffect(() => {
         const fetchALLModels = async() => {
+            try{
+                await axios.post("http://localhost:8000/boarding")
+            }catch(err){
+                console.log(err)
+            }
+            try{
+                await axios.post("http://localhost:8000/in_air")
+            }catch(err){
+                console.log(err)
+            }
+            try{
+                await axios.put("http://localhost:8000/in_air")
+            }catch(err){
+                console.log(err)
+            }
             try {
                 const res = await axios.get("http://localhost:8000/shedule")
                 setmodels(res.data);

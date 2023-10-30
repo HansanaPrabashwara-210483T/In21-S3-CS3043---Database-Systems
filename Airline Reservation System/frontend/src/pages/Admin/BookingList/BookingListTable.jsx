@@ -36,19 +36,20 @@ const BookingListTable = () => {
     const handleInvalidate = async(id) => {
         try {
             await axios.delete(`http://localhost:8000/booking_list/`+id)
-            window.location.reload()
         }catch(err){
             console.log(err)
         }
+        window.location.reload()
     }
 
     const handleValidate = async(id) => {
         try {
             await axios.put(`http://localhost:8000/booking_list/`+id)
-            window.location.reload()
         }catch(err){
             console.log(err)
         }
+        window.location.reload()
+
     }
 
     const [open, setOpen] = React.useState(false);
@@ -102,7 +103,6 @@ const BookingListTable = () => {
             headerName: '',
             width: 100,
             sortable: false,
-            disableClickEventBubbling: true,
             
             renderCell: (params) => {
                 console.log(params)
@@ -110,10 +110,10 @@ const BookingListTable = () => {
                   <Stack direction="row" spacing={2}>
                     
                     {/* <Button variant="outlined" color="warning" size="small" href=''>Edit</Button> */}
-                    <Button color ={params.value == 0 ? 'success' : 'error'}  size="small"   onClick={handleClickOpen}>{params.value == 1 ? 'Invalidate' : 'validate'}</Button>
+                    {/* <Button color ={params.value == 0 ? 'success' : 'error'}  size="small"   onClick={handleClickOpen}>{params.row.payment_proceed == 1 ? 'Invalidate' : 'validate'}</Button> */}
                     {/* ()=>handleDelete(params.row.id) */}
                     
-                    <Dialog
+                    {/* <Dialog
                         fullScreen={fullScreen}
                         open={open}
                         onClose={handleClose}
@@ -124,18 +124,49 @@ const BookingListTable = () => {
                         </DialogTitle>
                         <DialogContent>
                         <DialogContentText>
-                            Are you sure you want to {params.value == 0 ? 'validate' : 'invalidate'} this booking instance?
+                            Are you sure you want to validate this booking instance?
                         </DialogContentText>
                         </DialogContent>
                         <DialogActions>
-                        <Button autoFocus onClick={handleClose}>
-                            Cancel
-                        </Button>
-                        <Button onClick={params.value === 0 ? ()=>handleInvalidate(params.id) : ()=>handleValidate(params.id)} color={params.value === 0 ? 'error' : 'success'}  autoFocus>
-                            {params.value === 0 ? 'success' : 'error'}
-                        </Button>
+                            <Button autoFocus onClick={handleClose}>
+                                Cancel
+                            </Button>
+                            <Button onClick={() => console.log(params.row.id)} color='success' autoFocus>
+                                validate
+                            </Button>
                         </DialogActions>
-                    </Dialog>
+                    </Dialog> */}
+
+                
+                    {/* {params.value === 0 && (
+                        <Button
+                            color="success"
+                            size="small"
+                            onClick={() => handleValidate(params.row.id)}
+                        >
+                            Validate
+                        </Button>
+                    )}
+                    {params.value === 1 && (
+                        <Button
+                            color="error"
+                            size="small"
+                            onClick={() => handleInvalidate(params.row.id)}
+                        >
+                            Invalidate
+                        </Button>
+                    )}
+                         */}
+                
+
+                    <Button color ={params.value == 0 ? 'success' : 'error'}  size="small"   onClick={()=>{
+                        if(params.row.payment_proceed == 1){
+                            handleInvalidate(params.row.id)
+                        }else{
+                            handleValidate(params.row.id)
+                        }
+                    
+                    }}> {params.row.payment_proceed == 1 ? 'Invalidate' : 'validate'}</Button>
 
                   </Stack>
                 );
