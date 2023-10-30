@@ -21,3 +21,7 @@
 .no-flights-page p {
     white-space: normal;
 }
+
+.large-paragraph {
+    font-size: 18px; /* You can adjust the size as needed */
+}
