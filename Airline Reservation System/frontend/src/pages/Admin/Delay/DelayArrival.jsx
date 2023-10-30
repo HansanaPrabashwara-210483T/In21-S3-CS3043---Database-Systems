@@ -25,7 +25,6 @@ import dayjs from 'dayjs';
 
 
 const Delay_Arrival = () => {
-  const [flight,setFlight] = useState({});
 
 
 
@@ -34,40 +33,30 @@ const Delay_Arrival = () => {
 
   const flight_id = location.pathname.split("/")[2]
 
-  
   const [arrival_delay, setArrivalDelay] =React.useState(null);
 
   const removeTAndZ = (dateString) => {
     const [date, time] = dateString.split(/T|Z/);
     const [t,sec] = time.split("+");
     return t;
-};
-
-  const includeTime = async (e) => {
-    setFlight((prev) => ({...prev, "delay_arrival":  removeTAndZ(arrival_delay.format())}));
-  }
-
+  };
 
 
   const handleClick = async e =>{
-    includeTime(e);
-    setFlight((prev) => ({"delay_arrival":  removeTAndZ(arrival_delay.format())}));
     e.preventDefault()
     try{
-      console.log(flight);
-      const a  = await axios.put("http://localhost:8000/arrival_delay/"+ flight_id,flight)
-      console.log(a);
-      // navigate("/delay")
+      console.log(arrival_delay.format());
+        await axios.put("http://localhost:8000/arrival_delay/"+ flight_id,{
+        "delay_arrival":  removeTAndZ(arrival_delay.format())
+      })
     }
     catch(err){
       console.log(err);
     }
-
+    navigate('/delay')
   }
 
   
-  // console.log(flight);
-
   return (
     <>
     {/* <NavBar/> */}
@@ -97,7 +86,7 @@ const Delay_Arrival = () => {
                       <TimePicker label="Arrival Delay" 
                       ampm={false}
                       value={arrival_delay}
-                      onChange={setArrivalDelay}
+                      onChange={(val) =>{setArrivalDelay(val);}}
                       name = "delay_arrival"
                       />
                     </Stack>

@@ -361,7 +361,7 @@ app.post("/flight", (req,res)=>{
         req.body.arrival_time,
         req.body.status,
     ];
-
+    console.log(values)
     db.query(q,[values],(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)

@@ -20,14 +20,14 @@ import {DemoItem} from '@mui/x-date-pickers/internals/demo';
 import Stack from '@mui/material/Stack';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { Navigate } from "react-router-dom";
 
 
 
 const Delay_Arrival = () => {
-  const [flight,setFlight] = useState({});
 
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const flight_id = location.pathname.split("/")[2]
 
@@ -40,13 +40,10 @@ const Delay_Arrival = () => {
   };
 
   const handleClick = async e =>{
-    setFlight((prev) => ({"delay_departure":  removeTAndZ(depature_delay.format())}));
     e.preventDefault()
     try{
-      console.log(flight);
-      const a  = await axios.put("http://localhost:8000/departure_delay/"+ flight_id,flight)
-      console.log(a);
-      navigate("/delay")
+        await axios.put("http://localhost:8000/departure_delay/"+ flight_id,{"delay_departure":  removeTAndZ(depature_delay.format())})
+        navigate('/delay')
     }
     catch(err){
       console.log(err);
@@ -54,7 +51,7 @@ const Delay_Arrival = () => {
   }
 
   
-  console.log(flight);
+
 
   return (
     <>
@@ -85,7 +82,7 @@ const Delay_Arrival = () => {
                       <TimePicker label="Departure Delay" 
                       ampm={false}
                       value={depature_delay}
-                      onChange={setDepatureDelay}
+                      onChange={(val) =>{setDepatureDelay(val);}}
                       name = "delay_depature"
                       />
                     </Stack>
