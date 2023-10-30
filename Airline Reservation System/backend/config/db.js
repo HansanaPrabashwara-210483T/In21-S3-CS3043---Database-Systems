@@ -9,8 +9,8 @@ const db = mysql.createPool({
     connectionLimit: 10,
     host           : "localhost", 
     user           : "root",
-    password       : "Hansaname21#",
-    database       : "airline_project_g24",
+    password       : "root123",
+    database       : "airlinesystem",
 });
 
 // The following SHOULD be how the connection is made, unfortunately, for some
