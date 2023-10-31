@@ -541,4 +541,14 @@ h2 {
 .footer .copyrightDiv .bottomText {
   font-size: 10px;
   margin-bottom: 0px;
+}
+
+.flightTable {
+  padding-top: 25vh;
+  color: var(--darkPrimary);
+  text-align: center;
+}
+.flightTable h1 {
+  font-size: 24px;
+  padding-bottom: 5vh;
 }/*# sourceMappingURL=App.css.map */

@@ -88,7 +88,7 @@ export default function CustomizedSelects() {
 
 
     return ( <>
-            <NavBar/> <Container component = "main" maxWidth = "xs" >  < Box sx = {{
+            <NavBar/> <Container component = "main" maxWidth = "xs" sx={{paddingTop:25}} >  < Box sx = {{
             marginTop: 8,
             display: 'flex',
             flexDirection: 'column',

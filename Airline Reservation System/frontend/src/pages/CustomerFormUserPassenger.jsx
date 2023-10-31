@@ -79,7 +79,7 @@ export default function CustomerFormUserPassenger() {
     <> 
         <NavBar/> 
 
-        <Container component = "main" maxWidth = "xs" >  
+        <Container component = "main" maxWidth = "xs" sx={{paddingTop:25}}>  
 
             <Box sx = {{
                     marginTop: 8,

@@ -143,7 +143,7 @@ const FlightResultsTable = () => {
 
     return ( <> 
     <NavBar />
-    <Container>
+    <Container sx={{paddingTop:25}}>
     <Box component="main" sx={{ flexGrow: 1, paddingTop: 4.5 }}>
 
             
