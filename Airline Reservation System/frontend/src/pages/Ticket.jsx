@@ -19,6 +19,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 export default function Ticket() {
     const [booking,setBookings] = useState([])
+    const [isButtonHidden, setIsButtonHidden] = useState(false);
 
 
     const location = useLocation()
@@ -48,13 +49,42 @@ export default function Ticket() {
     };
 
 
+    const printPage = () => {
+        window.print();
+    };
+
+    const combineEvent = () => {
+        setIsButtonHidden(true);
+        setTimeout(() => {
+            printPage();
+        }, 50); 
+        setTimeout(() => {
+            setIsButtonHidden(false);
+        }, 1000); 
+    };
+
     return(
-        <>< NavBar /> <Container>
+        <>
+        {!isButtonHidden && (< NavBar />)} <Container>
 
         <Container>
             <Grid>
       
-                <h1>Your Ticket</h1>
+                <h1>Your Ticket
+                {!isButtonHidden && (
+                                <Button
+                                    id="myButton"
+                                    variant="contained"
+                                    onClick={combineEvent}
+                                    style={{
+                                        float: 'right',
+                                        backgroundColor: '#000000'
+                                    }}
+                                >
+                                    Print Report
+                                </Button>
+                            )}
+                </h1>
       
             </Grid>
         </Container>
