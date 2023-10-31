@@ -12,6 +12,7 @@ import {Button} from '@mui/material';
 import axios from 'axios'
 import {useState} from 'react'
 import {useEffect} from 'react'
+import EventSeatIcon from '@mui/icons-material/EventSeat';
 
 export default function SeatSelect() {
     
@@ -85,7 +86,7 @@ export default function SeatSelect() {
                     flex={1}
                     sx={{width:"5vw", marginBottom:"2vw"}}
                         value={seat.seat_id}
-                        control={<Radio size="small" />}
+                        control={<Radio icon={<EventSeatIcon />} checkedIcon={<EventSeatIcon/>}/>}
                         label={seat.seat_class + "-" + seat.seat_number}
                         labelPlacement="top"
                         onClick={handleChange}
@@ -97,7 +98,7 @@ export default function SeatSelect() {
                     <FormControlLabel
                     sx={{width:"5vw", marginBottom:"2vw"}}
                         value={seat.seat_id}
-                        control={<Radio disabled size="small"/>}
+                        control={<Radio disabled icon={<EventSeatIcon/>}/>}
                         label={seat.seat_class + "-" + seat.seat_number}
                         labelPlacement="top"
                     />
