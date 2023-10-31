@@ -75,7 +75,9 @@ import FAQ from "./pages/Help";
 import FlightResultsTable from "./pages/FlightResults";
 import NoFlightsAvailablePage from "./pages/NoAvailableFlights";
 import LoginForBooking from "./pages/LoginForBooking";
-import CustomerForm from "./pages/CustomerForm";
+import CustomerFormGuest from "./pages/CustomerFormGuest";
+import UserBookingType from "./pages/UserBookingType";
+import CustomerFormUserPassenger from "./pages/CustomerFormUserPassenger";
 
 
 function App() {
@@ -93,7 +95,13 @@ function App() {
         <Route path="/ticket/:booking_id" element={<Ticket/>}/>
 
         <Route path="/login_for_booking/:flight_id" element={<LoginForBooking/>}/>
-        <Route path="/guest/:flight_id" element={<CustomerForm/>}/>
+        <Route path="/guest/:flight_id" element={<CustomerFormGuest/>}/>
+
+        <Route path="/user_booking_type/:flight_id" element={<UserBookingType/>}/>
+        <Route path="/user_passenger/:flight_id/:user_id" element={<CustomerFormUserPassenger/>}/>
+
+
+
         
         <Route path="/admin" element={<Admin/>}/>
 

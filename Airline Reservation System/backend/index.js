@@ -882,19 +882,40 @@ app.post("/guest", (req,res)=>{
     });
 });
 
-app.get("/guest_get_id/:name/:dob/:address/:nic/:pid", (req,res)=>{
-    const name = req.params.name
-    const dob = req.params.dob
-    const address = req.params.address
-    const nic = req.params.nic
-    const pid = req.params.pid
+// app.get("/guest_get_id/:name/:dob/:address/:nic/:pid", (req,res)=>{
+//     const name = req.params.name
+//     const dob = req.params.dob
+//     const address = req.params.address
+//     const nic = req.params.nic
+//     const pid = req.params.pid
     
-    const q = "SELECT customer_id FROM customer WHERE name = ? AND date_of_birth = ? AND address = ? AND nic = ? AND passport_id = ?"
-    db.query(q,[name,dob,address,nic,pid],(err,data)=>{
+//     const q = "SELECT customer_id FROM customer WHERE name = ? AND date_of_birth = ? AND address = ? AND nic = ? AND passport_id = ?"
+//     db.query(q,[name,dob,address,nic,pid],(err,data)=>{
+//         if(err) return res.json(err)
+//         return res.json(data)
+//     })
+// })
+
+
+
+app.post("/user_passenger", (req,res)=>{
+    const q = "INSERT INTO customer(`user_type`,`name`,`date_of_birth`,`address`, `nic`,`passport_id`) VALUES (?);"
+    // and should create a user passenger instance with user_id and customer_id
+    const values = [
+        "guest",
+        req.body.name,
+        req.body.date_of_birth,
+        req.body.address,
+        req.body.nic,
+        req.body.passport_id,
+    ];
+
+    db.query(q,[values],(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
-    })
-})
+    });
+});
+
 
 
 app.listen(8000, ()=>{
