@@ -4,7 +4,7 @@ import { BsPhoneVibrate } from "react-icons/bs";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { CgMenuGridO } from "react-icons/cg";
 
-import bg from "../assets/bg3.jpg";
+import bg from "../assets/bg4.jpg";
 
 const Background = () => {
   return <img src={bg} className="background" />;

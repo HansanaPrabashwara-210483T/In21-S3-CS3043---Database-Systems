@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { SlCalender } from "react-icons/sl";
 import { BsShieldCheck } from "react-icons/bs";
 import { BsBookmarkCheck } from "react-icons/bs";
-import image from "../assets/bg2.jpg";
+import image1 from "../assets/indo.jpg";
+import image2 from "../assets/taj.jpg";
 
 export class Info extends Component {
   render() {
@@ -11,7 +12,6 @@ export class Info extends Component {
         <div className="infoContainer container">
           <div className="titleDiv flex">
             <h2>Travel to make memories all around the world!</h2>
-            <button className="bttn">View All</button>
           </div>
           <div className="cardsDiv grid">
             <div className="singleCard grid">
@@ -20,8 +20,8 @@ export class Info extends Component {
               </div>
               <span className="cardTitle">Book & Relax</span>
               <p>
-                You can also call airlines from your phone and book a flight
-                ticket!
+                Effortlessly reserve your journey and unwind before you even
+                take off.
               </p>
             </div>
             <div className="singleCard grid">
@@ -30,8 +30,8 @@ export class Info extends Component {
               </div>
               <span className="cardTitle">Safe & Secure</span>
               <p>
-                You can also call airlines from your phone and book a flight
-                ticket!
+                Travel with peace of mind knowing that your safety is our top
+                priority.
               </p>
             </div>
             <div className="singleCard grid">
@@ -40,17 +40,16 @@ export class Info extends Component {
               </div>
               <span className="cardTitle">Save Money</span>
               <p>
-                You can also call airlines from your phone and book a flight
-                ticket!
+                Maximize your budget with our cost-effective travel solutions.
               </p>
             </div>
           </div>
           <div className="cardsDiv2 grid">
             <div>
-              <img src={image} className="singleImage grid" />
+              <img src={image1} className="singleImage grid" />
             </div>
             <div>
-              <img src={image} className="singleImage grid" />
+              <img src={image2} className="singleImage grid" />
             </div>
           </div>
         </div>

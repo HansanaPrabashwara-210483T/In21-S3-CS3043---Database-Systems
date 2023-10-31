@@ -1,5 +1,6 @@
 import React from "react";
 import logo from "../assets/logoNameSmall.png";
+import { useNavigate } from "react-router-dom";
 import { TiSocialFacebook } from "react-icons/ti";
 import { AiOutlineTwitter } from "react-icons/ai";
 import { MdEmail } from "react-icons/md";
@@ -25,21 +26,22 @@ function Footer() {
         <div className="footerLinks">
           <span className="linkTitle">Information</span>
           <li>
-            <a href="Home">Home</a>
+            <a href="/">Home</a>
           </li>
           <li>
-            <a href="Home">Explore</a>
+            <a href="/shedule">Schedule</a>
           </li>
           <li>
-            <a href="Home">Travel</a>
+            <a href="/booking">Booking</a>
           </li>
           <li>
-            <a href="Home">About us</a>
+            <a href="/help">Help</a>
           </li>
         </div>
         <div>
           <div className="quote">
-            Uniting destinations, ensuring seamless journeys for every traveler.
+            Weaving experiences, ensuring a pleasant journey for every
+            adventurer
           </div>
           <p className="underQuote">Fly with us...</p>
         </div>

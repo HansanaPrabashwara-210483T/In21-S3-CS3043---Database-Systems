@@ -14,7 +14,6 @@ function Home() {
       <Navbar />
       <Background />
       <HomeLogo />
-      <Search />
       <Support />
       <Info />
       <Footer />

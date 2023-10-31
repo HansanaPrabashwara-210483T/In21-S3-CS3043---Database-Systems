@@ -188,7 +188,7 @@ h2 {
 
 .homelogo {
   width: 100vw;
-  height: 85vh;
+  height: 100vh;
   padding-top: 30vh;
   text-align: center;
   gap: 2rem;
@@ -321,34 +321,34 @@ h2 {
   margin-top: 5vh;
 }
 .support .sectionContainer .infoDiv .textDiv .singleInfo h4 {
-  margin-top: 3rem;
+  margin-top: 2rem;
   color: var(--textColor);
-  font-size: 3rem;
+  font-size: 2rem;
 }
 .support .sectionContainer .infoDiv .textDiv .singleInfo p {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   margin-left: 10vw;
   margin-right: 10vw;
-  margin-bottom: 7.5rem;
+  margin-bottom: 6rem;
   color: var(--greyText);
 }
 .support .sectionContainer .infoDiv .textDiv .singleInfo .numberContainer {
   background-color: var(--PrimaryColor);
-  border-radius: 50px;
+  border-radius: 45px;
   margin: auto;
   align-items: center;
   display: flex;
   justify-content: center;
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
 }
 .support .sectionContainer .infoDiv .textDiv .singleInfo .numberContainer .number {
   font-weight: 900;
-  font-size: 6rem;
+  font-size: 4rem;
   color: var(--whiteColor);
 }
 .support .sectionContainer .titlesDiv p {
-  font-size: 2rem;
+  font-size: 1.2rem;
   margin-left: 20rem;
   margin-right: 20rem;
   margin-bottom: 7.5rem;
@@ -358,6 +358,7 @@ h2 {
   font-variant-caps: all-petite-caps;
   font-size: 10rem;
   color: var(--darkPrimary);
+  font-family: "Ubuntu";
 }
 
 .info {
@@ -371,24 +372,28 @@ h2 {
   gap: 1.5rem;
   justify-content: center;
 }
+.info .infoContainer .titleDiv h2 {
+  font-family: "Ubuntu";
+  color: var(--darkPrimary);
+  font-size: 2.5rem;
+}
 .info .infoContainer .cardsDiv2 {
-  gap: 5rem;
   margin-top: 3rem;
   grid-template-columns: repeat(2, 1fr);
   margin-top: 100px;
   margin-bottom: 150px;
-  margin-left: 150px;
-  margin-right: 150px;
+  margin-left: 17.5vw;
+  margin-right: 17.5vw;
 }
 .info .infoContainer .cardsDiv2 .singleImage {
   background: var(--whiteColor);
-  padding: 1rem;
+  padding: 0.75rem;
   border-radius: 15rem;
   gap: 1rem;
   text-align: center;
   margin: auto;
   height: 360px;
-  width: 90%;
+  width: 260px;
   max-width: 250px;
   transition: 0.5s ease-in-out;
 }
@@ -397,7 +402,8 @@ h2 {
   transition: 0.5s ease-in-out;
 }
 .info .infoContainer .cardsDiv {
-  gap: 5rem;
+  margin-left: 5vw;
+  margin-right: 5vw;
   margin-top: 8rem;
   grid-template-columns: repeat(3, 1fr);
 }
@@ -414,7 +420,7 @@ h2 {
   transition: 0.5s ease-in-out;
 }
 .info .infoContainer .cardsDiv .singleCard p {
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 }
 .info .infoContainer .cardsDiv .singleCard:hover {
   transform: translateY(-20px);
@@ -439,7 +445,7 @@ h2 {
 .info .infoContainer .cardsDiv .singleCard .cardTitle {
   color: var(--darkPrimary);
   font-weight: 700;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 .info .infoContainer .cardsDiv .singleCard .colorOne {
   background: var(--PrimaryColor);
@@ -458,14 +464,14 @@ h2 {
 
 .footer {
   background: var(--whiteColor);
-  padding-top: 5rem;
+  padding-top: 3rem;
 }
 .footer .sectionContainer {
   align-items: flex-start;
   flex-direction: row;
   display: flex;
   gap: 2.5rem;
-  padding-bottom: 7rem;
+  padding-bottom: 3rem;
 }
 .footer .sectionContainer .gridOne {
   gap: 1rem;
@@ -491,9 +497,9 @@ h2 {
 }
 .footer .sectionContainer .gridOne .socialIcon .icon:hover {
   color: var(--whiteColor);
-  border: 1px solid var(--darkPrimary);
+  border: 1px solid var(--greyText);
   transition: 0.5s ease-in-out;
-  background: var(--darkPrimary);
+  background: var(--greyText);
   transform: translateY(-7px);
 }
 .footer .sectionContainer .footerLinks {
@@ -506,14 +512,15 @@ h2 {
 .footer .sectionContainer .footerLinks .linkTitle {
   color: var(--darkPrimary);
   font-weight: 500;
+  font-size: 1.5rem;
   display: block;
   padding-bottom: 1.2rem;
 }
 .footer .sectionContainer .footerLinks li a {
   padding-bottom: 0.4rem;
-  font-weight: 300;
+  font-weight: 400;
   display: block;
-  font-size: 12px;
+  font-size: 1rem;
   color: var(--greyText);
   transition: 0.4s ease-in-out;
 }
@@ -565,6 +572,7 @@ h2 {
 }
 
 .ContainerBooking {
+  font-family: "Ubuntu";
   padding-top: 15vh;
   padding-bottom: 15vh;
   padding-left: 20vw;
@@ -619,6 +627,7 @@ h2 {
   background-color: var(--PrimaryColor);
   width: 15rem;
   margin-top: 1rem;
+  margin-bottom: 1rem;
   font-size: 1rem;
   font-weight: 500;
   height: 3rem;
