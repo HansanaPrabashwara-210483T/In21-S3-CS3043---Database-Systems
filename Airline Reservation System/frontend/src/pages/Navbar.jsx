@@ -1,20 +1,23 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-//import * as React from 'react';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import logo from "../assets/logoNameSmall.png";
-// import { SiConsul } from "react-icons/si";
-// import { BsPhoneVibrate } from "react-icons/bs";
-// import { AiOutlineGlobal } from "react-icons/ai";
-// import { CgMenuGridO } from "react-icons/cg";
-
-const pages = ['Booking','Schedule', 'Help'];
-const urls = ['/booking', '/shedule','/help']
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
-
+import { CgProfile } from "react-icons/cg";
 const ResponsiveAppBar = () => {
 
     const navigate = useNavigate();
+
+    // opening annd closing profile menu
+    const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const handleOpenUserMenu = (event) => {
+        setAnchorElUser(event.currentTarget);
+    };
+
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
 
     const handleLogout = () => {
         localStorage.removeItem("token");
@@ -35,6 +38,12 @@ const ResponsiveAppBar = () => {
     }
     const handleHelpClick = (event) => {
         navigate('/help');
+    }
+    const handleSignInClick = (event) => {
+        navigate('/sign-in');
+    }
+    const handleSignUPClick = (event) => {
+        navigate('/sign-up');
     }
 
     const [noBg, addBg] = useState("navBar");
@@ -67,7 +76,36 @@ const ResponsiveAppBar = () => {
                     <li className="listItem" onClick={handleHelpClick}>
                         Help
                     </li>
-                    <button className="bttn flex btnTwo">Contact</button>
+
+                    {!localStorage.getItem("token")  && (
+                        <>
+                            <button className="bttn flex btnTwo" onClick={handleSignUPClick}>Sign Up</button>
+
+                            <button className="bttn flex btnTwo" onClick={handleSignInClick}>Sign In</button>
+                        </>
+                    )}
+                    {localStorage.getItem("token")  && (
+                        <>
+                            <div>
+                                <div className="profile" onClick={handleOpenUserMenu}>
+                                    <CgProfile />
+                                    <p style={{ whiteSpace: 'pre' }}>{localStorage.getItem('username')}</p>
+                                </div>
+
+                                <Menu
+                                    id="menu-appbar"
+                                    anchorEl={anchorElUser}
+                                    open={Boolean(anchorElUser)}
+                                    onClose={handleCloseUserMenu}
+                                >
+                                    <MenuItem onClick={handleLogout} >
+                                        <Typography textAlign="center" color="text.secondary">Logout</Typography>
+                                    </MenuItem>
+                                </Menu>
+                            </div>
+                        </>
+                    )}
+
                 </ul>
             </div>
         </div>
