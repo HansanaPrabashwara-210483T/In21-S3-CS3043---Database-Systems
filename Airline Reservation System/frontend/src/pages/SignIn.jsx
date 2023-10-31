@@ -38,10 +38,21 @@ export default function SignIn() {
             // setUser(response.data.user);
             // Store the JWT (if it exists) in the client's local-storage
             localStorage.setItem('token', response.data.token);
+            localStorage.setItem('user_id', response.data.user.user_id);
+            localStorage.setItem('username', response.data.user.username);
+            localStorage.setItem('customer_id', response.data.user.customer_id);
+
+            if(response.data.user.username == "Admin"){
+              navigate("/dashboard")
+            }else{
+              navigate(-1);
+            }
+          }else{
+             // Redirect to the previous page on successful login
+              navigate(-1);
           }
 
-          // Redirect to the previous page on successful login
-          navigate(-1);
+         
         } else if (response.status === 401) {
 
           alert('ERROR: ' + response.data.message);
