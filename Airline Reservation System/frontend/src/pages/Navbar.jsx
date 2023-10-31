@@ -16,24 +16,6 @@ const ResponsiveAppBar = () => {
 
     const navigate = useNavigate();
 
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
-
-    const handleOpenNavMenu = (event) => {
-        setAnchorElNav(event.currentTarget);
-    };
-    const handleOpenUserMenu = (event) => {
-        setAnchorElUser(event.currentTarget);
-    };
-
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
-
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
-
     const handleLogout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("user_id");
@@ -44,6 +26,15 @@ const ResponsiveAppBar = () => {
 
     const handleBookingClick = (event) => {
         navigate('/booking');
+    }
+    const handleScheduleClick = (event) => {
+        navigate('/shedule');
+    }
+    const handleHomeClick = (event) => {
+        navigate('/');
+    }
+    const handleHelpClick = (event) => {
+        navigate('/help');
     }
 
     const [noBg, addBg] = useState("navBar");
@@ -64,17 +55,17 @@ const ResponsiveAppBar = () => {
             </div>
             <div className="navBarMenu">
                 <ul className="menu flex">
-                    <li className="listItem" onClick={handleOpenNavMenu}>
+                    <li className="listItem" onClick={handleHomeClick}>
                         Home
                     </li>
-                    <li className="listItem">
+                    <li className="listItem" onClick={handleScheduleClick}>
                         Schedule
                     </li>
                     <li className="listItem" onClick={handleBookingClick}>
-                        Book
+                        Booking
                     </li>
-                    <li className="listItem">
-                        About
+                    <li className="listItem" onClick={handleHelpClick}>
+                        Help
                     </li>
                     <button className="bttn flex btnTwo">Contact</button>
                 </ul>

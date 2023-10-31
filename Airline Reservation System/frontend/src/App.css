@@ -175,7 +175,7 @@ h2 {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
 }
 
-.home {
+.homelogo {
   width: 100vw;
   height: 85vh;
   padding-top: 30rem;
@@ -183,7 +183,7 @@ h2 {
   gap: 2rem;
   flex-direction: column;
 }
-.home .logoLarge {
+.homelogo .logoLarge {
   position: absolute;
   width: 40%;
 }
