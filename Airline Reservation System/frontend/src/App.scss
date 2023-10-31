@@ -370,11 +370,13 @@ h2{
       }
     }
     .titlesDiv{
+      justify-content: center;
       p{
+        margin: auto;
         font-size: 1.2rem;
-        margin-left: 20rem;
-        margin-right: 20rem;
-        margin-bottom: 7.5rem;
+        width: 20rem;
+        margin-top: 1rem;
+        margin-bottom: 6rem;
       }
       .caption{
         font-weight:600;
