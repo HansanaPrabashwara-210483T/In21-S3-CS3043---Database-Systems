@@ -124,18 +124,17 @@ h2 {
   z-index: 1000;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
   display: flex;
   position: fixed;
   transition: 0.3s ease-in-out;
 }
 .navBar .logoDiv {
-  padding-left: 5rem;
-  margin-bottom: 3rem;
+  padding-left: 3rem;
+  margin-bottom: 1rem;
 }
 .navBar .logoDiv .logo {
   margin-top: 0.5rem;
-  width: 20rem;
+  width: 10rem;
 }
 .navBar .menu {
   flex-direction: row;
@@ -161,7 +160,7 @@ h2 {
   margin-left: 20px;
   margin-right: 20px;
   font-size: 16px;
-  font-weight: 300;
+  font-weight: 400;
 }
 .navBar .btnTwo:hover {
   transform: translateY(-5px);
@@ -178,7 +177,7 @@ h2 {
 .homelogo {
   width: 100vw;
   height: 85vh;
-  padding-top: 30rem;
+  padding-top: 30vh;
   text-align: center;
   gap: 2rem;
   flex-direction: column;
