@@ -19,6 +19,8 @@ import InputLabel from "@mui/material/InputLabel";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Background from "../components/Background";
+import { HiOutlineLocationMarker } from "react-icons/hi";
+import { MdOutlineDateRange } from "react-icons/md";
 
 export default function CustomizedSelects() {
   function Label({ componentName, valueType, isProOnly }) {
@@ -113,82 +115,129 @@ export default function CustomizedSelects() {
             onSubmit={handleSubmit}
             noValidate
             sx={{ mt: 1 }}>
-            <Box sx={{ marginTop: 2, marginBottom: 1 }}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  Origin Airport
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select-1"
-                  value={originAirport}
-                  label="originAirport"
-                  autoFocus
-                  onChange={handleOriginAirportChange}>
-                  {originAirports.map((originAirport) => (
-                    <MenuItem
-                      key={originAirport.airport_code}
-                      value={originAirport.airport_code}>
-                      {originAirport.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Box>
+            <div className="singleInput flex">
+              <div className="iconDiv">
+                <HiOutlineLocationMarker className="icon" />
+              </div>
+              <Box
+                sx={{
+                  marginTop: 2,
+                  marginBottom: 2,
+                  width: 600,
+                }}>
+                <FormControl fullWidth>
+                  <InputLabel
+                    sx={{ fontFamily: "Ubuntu" }}
+                    id="demo-simple-select-label">
+                    Origin Airport
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select-1"
+                    value={originAirport}
+                    label="originAirport"
+                    autoFocus
+                    onChange={handleOriginAirportChange}>
+                    {originAirports.map((originAirport) => (
+                      <MenuItem
+                        key={originAirport.airport_code}
+                        value={originAirport.airport_code}>
+                        {originAirport.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            </div>
 
-            <Box sx={{ marginTop: 2, marginBottom: 1, width: 400 }}>
-              <FormControl fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                  Target Airport
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select-2"
-                  value={targetAirport}
-                  label="targetAirport"
-                  onChange={handleTargetAirportChange}>
-                  {targetAirports.map((targetAirport) => (
-                    <MenuItem
-                      key={targetAirport.airport_code}
-                      value={targetAirport.airport_code}>
-                      {targetAirport.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Box>
+            <div className="singleInput flex">
+              <div className="iconDiv">
+                <HiOutlineLocationMarker className="icon" />
+              </div>
+              <Box
+                sx={{
+                  marginTop: 2,
+                  marginBottom: 2,
+                  width: 600,
+                  borderBlockColor: "transparent",
+                }}>
+                <FormControl fullWidth>
+                  <InputLabel
+                    id="demo-simple-select-label"
+                    sx={{ fontFamily: "Ubuntu" }}>
+                    Target Airport
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select-2"
+                    value={targetAirport}
+                    label="targetAirport"
+                    onChange={handleTargetAirportChange}>
+                    {targetAirports.map((targetAirport) => (
+                      <MenuItem
+                        key={targetAirport.airport_code}
+                        value={targetAirport.airport_code}>
+                        {targetAirport.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Box>
+            </div>
 
-            <Box sx={{ marginTop: 2, marginBottom: 1 }}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoItem>
-                  <DatePicker
-                    label="Departure Date"
-                    value={departure_time}
-                    onChange={(date) => setDepatureTime(date)}
-                  />
-                </DemoItem>
-              </LocalizationProvider>
-            </Box>
+            <div className="singleInput flex">
+              <div className="iconDiv">
+                <MdOutlineDateRange className="icon" />
+              </div>
+              <Box
+                sx={{
+                  marginTop: 2,
+                  marginBottom: 2,
+                  width: 600,
+                }}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoItem>
+                    <DatePicker
+                      sx={{ fontFamily: "Ubuntu" }}
+                      label="Departure Date"
+                      value={departure_time}
+                      onChange={(date) => setDepatureTime(date)}
+                    />
+                  </DemoItem>
+                </LocalizationProvider>
+              </Box>
+            </div>
 
-            <Box sx={{ marginTop: 2, marginBottom: 1 }}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoItem>
-                  <DatePicker
-                    label="Arrival Date"
-                    value={arrival_time}
-                    onChange={(date) => setArrivalTime(date)}
-                  />
-                </DemoItem>
-              </LocalizationProvider>
-            </Box>
+            <div className="singleInput flex">
+              <div className="iconDiv">
+                <MdOutlineDateRange className="icon" />
+              </div>
+              <Box
+                sx={{
+                  marginTop: 2,
+                  marginBottom: 2,
+                  width: 600,
+                }}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoItem>
+                    <DatePicker
+                      className="customDatePicker"
+                      label="Arrival Date"
+                      value={arrival_time}
+                      onChange={(date) => setArrivalTime(date)}
+                    />
+                  </DemoItem>
+                </LocalizationProvider>
+              </Box>
+            </div>
 
-            <Button
+            <button
               type="submit"
               fullWidth
               variant="contained"
-              className="bttnBooking">
+              className="bttn bttnBooking">
               Search Flights
-            </Button>
+            </button>
           </Box>
         </div>
       </div>

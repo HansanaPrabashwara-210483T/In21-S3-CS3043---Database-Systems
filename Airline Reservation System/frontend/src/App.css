@@ -156,14 +156,26 @@ h2 {
   transform: translateY(-5px);
   transition: 0.3s ease-in-out;
 }
-.navBar .btnTwo {
-  margin-left: 20px;
-  margin-right: 20px;
+.navBar .btnOne {
+  margin-right: -2.4rem;
   font-size: 16px;
   font-weight: 400;
+  border-radius: 1rem 0px 0px 1rem;
+  transition: 0.5s;
+}
+.navBar .btnOne:hover {
+  transform: translateY(-5px);
+  transition: 0.5s;
+}
+.navBar .btnTwo {
+  font-size: 16px;
+  font-weight: 400;
+  border-radius: 0rem 1rem 1rem 0rem;
+  transition: 0.5s;
 }
 .navBar .btnTwo:hover {
   transform: translateY(-5px);
+  transition: 0.5s;
 }
 
 .navbar_With_Bg {
@@ -189,10 +201,10 @@ h2 {
 
 .background {
   position: fixed;
-  width: 100%;
   z-index: -1000;
   align-items: center;
   display: flex;
+  width: 100vw;
 }
 
 .search {
@@ -553,8 +565,8 @@ h2 {
 }
 
 .ContainerBooking {
-  padding-top: 20vh;
-  padding-bottom: auto;
+  padding-top: 15vh;
+  padding-bottom: 15vh;
   padding-left: 20vw;
   padding-right: 20vw;
   display: flex;
@@ -563,22 +575,55 @@ h2 {
 .ContainerBooking .glassBox {
   width: 60rem;
   background-color: var(--glassColor);
-  padding: 4rem;
-  padding-top: 3rem;
+  padding: 6rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
   border-radius: 2rem;
   text-align: center;
   border: 2px solid var(--glassBorderColor);
   -webkit-backdrop-filter: blur(10px);
           backdrop-filter: blur(10px);
 }
+.ContainerBooking .glassBox .singleInput {
+  display: flex;
+  width: 90%;
+  margin: auto;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: var(--glassColor);
+  border-radius: 1rem;
+}
+.ContainerBooking .glassBox .singleInput .iconDiv {
+  padding: 14px 14px;
+  border-radius: 0.5rem;
+  background: var(--glassColor2);
+}
+.ContainerBooking .glassBox .singleInput .iconDiv .icon {
+  color: var(--blackColor);
+  opacity: 0.7;
+  width: 25px;
+  height: 25px;
+}
 .ContainerBooking .glassBox h1 {
-  padding-bottom: 1rem;
   color: var(--darkPrimary);
 }
 .ContainerBooking .glassBox .bttnBooking {
   color: var(--whiteColor);
   background-color: var(--PrimaryColor);
+  width: 15rem;
+  margin-top: 1rem;
+  font-size: 1rem;
+  font-weight: 500;
+  height: 3rem;
+  border-radius: 1rem;
 }
 .ContainerBooking .glassBox .bttnBooking:hover {
-  background-color: var(--PrimaryColor);
+  background-color: var(--HoverColor);
 }/*# sourceMappingURL=App.css.map */
