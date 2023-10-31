@@ -10,7 +10,7 @@ const db = mysql.createPool({
     host           : "localhost", 
     user           : "root",
     password       : "root123",
-    database       : "airlinesystem",
+    database       : "airline_project_g24",
 });
 
 // The following SHOULD be how the connection is made, unfortunately, for some
