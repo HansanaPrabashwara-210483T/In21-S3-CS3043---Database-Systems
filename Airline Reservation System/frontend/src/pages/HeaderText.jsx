@@ -50,7 +50,8 @@ function HeaderText() {
             alignItems: 'center', 
             justifyContent: 'center',
             padding: 5 }}>
-
+        {!localStorage.getItem("token") && ( 
+        <>     
         <Button variant="contained" color="primary" size="large" sx={{margin:'2vh', backgroundColor:'#000000', padding:'3vh'}} endIcon= {<ArrowForwardIcon/>} href='booking'>
         &nbsp;Book a Flight&nbsp;
         </Button>
@@ -58,6 +59,17 @@ function HeaderText() {
         <Button variant="contained" color="primary" size="large" sx={{margin:'2vh', backgroundColor:'#000000', padding:'3vh'}} endIcon={<PersonAddAltIcon/>} href='sign-up'>
         &nbsp;Sign Up&nbsp;
         </Button>
+        </>
+        )}
+
+        {localStorage.getItem("token") && ( 
+        <>     
+        <Button variant="contained" color="primary" size="large" sx={{margin:'2vh', backgroundColor:'#000000', padding:'3vh'}} endIcon= {<ArrowForwardIcon/>} href='booking'>
+        &nbsp;Book a Flight&nbsp;
+        </Button>
+
+        </>
+        )}
         </Container>
      </>
 
