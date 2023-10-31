@@ -43,6 +43,7 @@ export default function CustomerFormGuest() {
         event.preventDefault();
         try {
             const response = await axios.post("http://localhost:8000/guest", {
+                user_type: 'guest',
                 name: name, 
                 date_of_birth: dob, 
                 address: address,
@@ -50,29 +51,13 @@ export default function CustomerFormGuest() {
                 passport_id: passport_id,
              
             });
-            const id = await getCustomerID();
+            const id = response.data.customer_id;
             navigate('/seat_select/'+flight_id+'/'+id);
         } catch (error) {
             console.log(error);
         }
 
-    };
-
-    const getCustomerID = async () => {
-        
-        try {
-            const response = await axios.get("http://localhost:8000/guest_get_id/"+name+"/"+dob+"/"+address+"/"+nic+"/"+passport_id);
-            
-            console.log(response);
-            return response.data[0].id;
-            //navigate('/login');
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    console.log(dob);
-   
+    };   
 
     return ( 
     <> 
