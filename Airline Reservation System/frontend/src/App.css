@@ -550,4 +550,35 @@ h2 {
 .flightTable h1 {
   font-size: 24px;
   padding-bottom: 5vh;
+}
+
+.ContainerBooking {
+  padding-top: 20vh;
+  padding-bottom: auto;
+  padding-left: 20vw;
+  padding-right: 20vw;
+  display: flex;
+  justify-content: center;
+}
+.ContainerBooking .glassBox {
+  width: 60rem;
+  background-color: var(--glassColor);
+  padding: 4rem;
+  padding-top: 3rem;
+  border-radius: 2rem;
+  text-align: center;
+  border: 2px solid var(--glassBorderColor);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+}
+.ContainerBooking .glassBox h1 {
+  padding-bottom: 1rem;
+  color: var(--darkPrimary);
+}
+.ContainerBooking .glassBox .bttnBooking {
+  color: var(--whiteColor);
+  background-color: var(--PrimaryColor);
+}
+.ContainerBooking .glassBox .bttnBooking:hover {
+  background-color: var(--PrimaryColor);
 }/*# sourceMappingURL=App.css.map */
