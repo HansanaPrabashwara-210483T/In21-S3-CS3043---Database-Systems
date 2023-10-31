@@ -15,7 +15,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import NavBar from './Navbar'
 
 
@@ -33,6 +33,19 @@ const FlightResultsTable = () => {
     console.log("destination airport..", targetAirport)
     console.log("d_time.....", departure_time)
     console.log("a_time.....", arrival_time)
+
+    const buttonClick = () => {
+        const existing_token = localStorage.getItem("token");
+        console.log(existing_token);
+        var href = '';
+        if (existing_token) {
+            href = "/user_booking_type";
+        } else {
+            href = "/login_for_booking";
+        }
+
+        console.log(href);
+    }
 
     useEffect(() => {
         const fetchFlightResults = async () => {
@@ -69,6 +82,7 @@ const FlightResultsTable = () => {
     };
 
     const theme = useTheme();
+    const navigate = useNavigate();
 
     // here i removed mapping on originAirport and targetAirport and used initially declared variables due to cells not rendering
     const rows : GridRowsProp = Results.map(Result => ({id: Result.flight_id ,aircraftName: Result.call_sign, originAirport, targetAirport, departureTime:removeTAndZ(Result.departure_time), arrivalTime:removeTAndZ(Result.arrival_time),
@@ -108,11 +122,20 @@ const FlightResultsTable = () => {
                 
                 <Stack direction="row" spacing={2}>
                     {/* // If user is not authenticated */}
-                    <Button variant="contained" color="success" href={"/login_for_booking/"+params.value}>Book Now</Button>
+                    
+                    {/* <Button variant="contained" color="success" href={"/login_for_booking/"+params.value}>Book Now</Button> */}
                 
                 {/* // if user is authenticated */}
                 
-                    <Button variant="contained" color="success" href={"/user_booking_type/"+params.value}>Book Now</Button>
+                    {/* <Button variant="contained" color="success" href={"/user_booking_type/"+params.value}>Book Now</Button> */}
+                    <Button variant="contained" color="success" onClick={()=>{
+                        if(localStorage.getItem("token")){
+                            navigate("/user_booking_type/"+ params.value)
+                        }else{
+                            navigate("/login_for_booking/"+params.value)
+                        }
+                    }}>Book Now</Button>
+
                 </Stack>
             )
         }
