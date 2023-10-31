@@ -20,9 +20,10 @@ import { useNavigate } from 'react-router-dom';
 
 
 
-const pages = ['Booking','Schedule', 'Help','Admin'];
-const urls = ['/booking', '/shedule','/help','/aircraft']
+const pages = ['Booking','Schedule', 'Help'];
+const urls = ['/booking', '/shedule','/help']
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+// const settingsUrls = ['/profile', '/account', '/dashboard', '/logout'];
 
 // const navigate = useNavcd igate()
 
@@ -44,6 +45,14 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("customer_id");
+    localStorage.removeItem("username");
+    window.location.reload();
+  }
 
 
 
@@ -96,9 +105,11 @@ function ResponsiveAppBar() {
               }}
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
+              
               sx={{
                 display: { xs: 'block', md: 'none' },
               }}
+
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
@@ -142,17 +153,23 @@ function ResponsiveAppBar() {
             ))}
           </Box>
 
-
-          <Box sx={{ flexGrow: 0 }}>
-            <Button href='/sign-up' sx={{ my: 2, color: 'white', display: 'block' }} >Sign Up</Button>
-          </Box>
-          <Box sx={{ flexGrow: 0 }}>
-            <Button href='/sign-in' sx={{ my: 2, color: 'white', display: 'block' }} >Sign In</Button>
-          </Box>
-          {/* <Box sx={{ flexGrow: 0 }}>
+        {!localStorage.getItem("token")  && (
+          <>
+            <Box sx={{ flexGrow: 0 }}>
+              <Button href='/sign-up' sx={{ my: 2, color: 'white', display: 'block' }} >Sign Up</Button>
+            </Box>
+            <Box sx={{ flexGrow: 0 }}>
+              <Button href='/sign-in' sx={{ my: 2, color: 'white', display: 'block' }} >Sign In</Button>
+            </Box>
+          </>
+        )}
+          
+        
+        {localStorage.getItem("token")  && (
+           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="A" />
               </IconButton>
             </Tooltip>
             <Menu
@@ -171,13 +188,16 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+              <MenuItem onClick={handleLogout}>
+                  <Typography textAlign="center">Hi {localStorage.getItem("username")}</Typography>
                 </MenuItem>
-              ))}
+              <MenuItem onClick={handleLogout}>
+                  <Typography textAlign="center">Logout</Typography>
+                </MenuItem>
             </Menu>
-          </Box> */}
+          </Box> 
+        )}
+
         </Toolbar>
       </Container>
     </AppBar>
