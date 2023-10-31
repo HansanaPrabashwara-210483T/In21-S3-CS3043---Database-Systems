@@ -917,6 +917,22 @@ app.post("/user_passenger", (req,res)=>{
 });
 
 
+app.get("/customer_booking/:id",(req,res)=>{
+    const cusId = req.params.id
+    const q = `SELECT r.origin, r.destination, f.departure_time, f.arrival_time, b.booking_id, s.seat_class, s.seat_number, b.flight_id, b.customer_id, c.name, c.nic, c.passport_id, a.call_sign
+                FROM booking as b 
+                JOIN flight as f on f.flight_id = b.flight_id
+                Join customer as c on c.customer_id = b.customer_id 
+                join route as r on r.route_id = f.route_id
+                join seat as s on s.seat_id = b.seat_id
+                join aircraft a on a.aircraft_id = f.aircraft_id
+                WHERE b.booking_id = ?`
+    db.query(q,[cusId],(err,data)=>{
+        if(err) return res.json(err)
+        return res.json(data)
+    })
+})
+
 
 app.listen(8000, ()=>{
     console.log("Connected to the backend . . .")
