@@ -121,7 +121,7 @@ export default function CustomizedSelects() {
                     </FormControl>
                 </Box>
 
-                <Box sx={{marginTop:2, marginBottom:1}}>
+                <Box sx={{marginTop:2, marginBottom:1, width:400}}>
                     <FormControl fullWidth>
                         <InputLabel id="demo-simple-select-label">Target Airport</InputLabel>
                         <Select
