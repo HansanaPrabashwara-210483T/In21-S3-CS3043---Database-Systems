@@ -29,7 +29,7 @@ app.get("/", (req,res)=>{
 
 app.get("/aircraft_model", (req,res)=>{
     const q = "SELECT * FROM aircraft_model WHERE valid = 1"
-    db.query(q,(err,data)=>{
+    db.execute(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
@@ -46,7 +46,7 @@ app.post("/aircraft_model", (req,res)=>{
         req.body.platinum_seats
     ];
 
-    db.query(q,[values],(err,data)=>{
+    db.execute(q,[values],(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     });
@@ -57,7 +57,7 @@ app.delete("/aircraft_model/:id", (req,res)=>{
     const modelId = req.params.id
     const q  = "UPDATE from aircraft_model SET `valid` = 0 where model_id = ?"
 
-    db.query(q,[modelId],(err,data)=>{
+    db.execute(q,[modelId],(err,data)=>{
         if(err) return res.json(err)
         return res.json("Aircraft Model has been deleted successfully")
     });
@@ -76,7 +76,7 @@ app.put("/aircraft_model/:id", (req,res)=>{
         req.body.platinum_seats
     ];
 
-    db.query(q,[...values,modelId],(err,data)=>{
+    db.execute(q,[...values,modelId],(err,data)=>{
         if(err) return res.json(err)
         return res.json("Aircraft model has been updated successfully")
     });
@@ -90,7 +90,7 @@ app.put("/aircraft_model/:id", (req,res)=>{
 
 app.get("/airport", (req,res)=>{
     const q = "SELECT * FROM airport where valid = 1"
-    db.query(q,(err,data)=>{
+    db.execute(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
@@ -104,7 +104,7 @@ app.post("/airport", (req,res)=>{
         req.body.location_id,
     ];
 
-    db.query(q,[values],(err,data)=>{
+    db.execute(q,[values],(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     });
@@ -115,7 +115,7 @@ app.delete("/airport/:id", (req,res)=>{
     const airportId = req.params.id
     const q  = "UPDATE airport SET `valid` = 0 where airport_code = ?"
 
-    db.query(q,[airportId],(err,data)=>{
+    db.execute(q,[airportId],(err,data)=>{
         if(err) return res.json(err)
         return res.json("Airport has been deleted successfully")
     });
@@ -132,7 +132,7 @@ app.put("/airport/:id", (req,res)=>{
         req.body.location_id,
     ];
 
-    db.query(q,[...values,airportId],(err,data)=>{
+    db.execute(q,[...values,airportId],(err,data)=>{
         if(err) return res.json(err)
         return res.json("Airport has been updated successfully")
     });
@@ -147,7 +147,7 @@ app.put("/airport/:id", (req,res)=>{
 app.get("/aircraft/:id", (req,res)=>{
     const aircraftId = req.params.id
     const q = "SELECT * FROM aircraft where aircraft_id = ?"
-    db.query(q,[aircraftId],(err,data)=>{
+    db.execute(q,[aircraftId],(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
@@ -156,7 +156,7 @@ app.get("/aircraft/:id", (req,res)=>{
 
 app.get("/aircraft", (req,res)=>{
     const q = "SELECT * FROM aircraft where valid = 1"
-    db.query(q,(err,data)=>{
+    db.execute(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
@@ -169,7 +169,7 @@ app.post("/aircraft", (req,res)=>{
         req.body.call_sign,
     ];
 
-    db.query(q,[values],(err,data)=>{
+    db.execute(q,[values],(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     });
@@ -180,7 +180,7 @@ app.delete("/aircraft/:id", (req,res)=>{
     const aircraftId = req.params.id
     const q  = "UPDATE aircraft SET `valid` = 0 where aircraft_id = ?"
 
-    db.query(q,[aircraftId],(err,data)=>{
+    db.execute(q,[aircraftId],(err,data)=>{
         if(err) return res.json(err)
         return res.json("Aircraft has been deleted successfully")
     });
@@ -196,7 +196,7 @@ app.put("/aircraft/:id", (req,res)=>{
         req.body.call_sign,
     ];
 
-    db.query(q,[...values,aircraftId],(err,data)=>{
+    db.execute(q,[...values,aircraftId],(err,data)=>{
         if(err) return res.json(err)
         return res.json("Aircraft has been updated successfully")
     });
@@ -208,7 +208,7 @@ app.put("/aircraft/:id", (req,res)=>{
  */
 app.get("/route", (req,res)=>{
     const q = "SELECT * FROM route where valid = 1"
-    db.query(q,(err,data)=>{
+    db.execute(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
@@ -224,7 +224,7 @@ app.post("/route", (req,res)=>{
         req.body.platinum_price
     ];
 
-    db.query(q,[values],(err,data)=>{
+    db.execute(q,[values],(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     });
@@ -234,7 +234,7 @@ app.delete("/route/:id", (req,res)=>{
     const routeId = req.params.id
     const q  = "UPDATE route SET `valid` = 0 where route_id = ?"
 
-    db.query(q,[routeId],(err,data)=>{
+    db.execute(q,[routeId],(err,data)=>{
         if(err) return res.json(err)
         return res.json("Route has been deleted successfully")
     });
@@ -253,7 +253,7 @@ app.put("/route/:id", (req,res)=>{
         req.body.platinum_price
     ];
 
-    db.query(q,[...values,routeId],(err,data)=>{
+    db.execute(q,[...values,routeId],(err,data)=>{
         if(err) return res.json(err)
         return res.json("Route has been updated successfully")
     });
@@ -267,7 +267,7 @@ app.put("/route/:id", (req,res)=>{
 
 app.get("/location", (req,res)=>{
     const q = "SELECT * FROM location"
-    db.query(q,(err,data)=>{
+    db.execute(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
@@ -281,7 +281,7 @@ app.post("/location", (req,res)=>{
         req.body.parent_location_id
     ];
 
-    db.query(q,[values],(err,data)=>{
+    db.execute(q,[values],(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     });
@@ -291,7 +291,7 @@ app.delete("/location/:id", (req,res)=>{
     const locationId = req.params.id
     const q  = "DELETE from location where location_id = ?"
 
-    db.query(q,[locationId],(err,data)=>{
+    db.execute(q,[locationId],(err,data)=>{
         if(err) return res.json(err)
         return res.json("Location has been deleted successfully")
     });
@@ -307,7 +307,7 @@ app.put("/location/:id", (req,res)=>{
         req.body.parent_location_id,
     ];
 
-    db.query(q,[...values,locationId],(err,data)=>{
+    db.execute(q,[...values,locationId],(err,data)=>{
         if(err) return res.json(err)
         return res.json("Location has been updated successfully")
     });
@@ -324,7 +324,7 @@ app.put("/location/:id", (req,res)=>{
 
 app.get("/flight", (req,res)=>{
     const q = "SELECT * FROM flight where valid = 1 ORDER BY departure_time ASC"
-    db.query(q,(err,data)=>{
+    db.execute(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
@@ -346,7 +346,7 @@ app.get("/flight", (req,res)=>{
 //         req.body.delayed_time,
 //         req.body.flight_id
 //     ];
-//     db.query(q, values, (err, data) => {
+//     db.execute(q, values, (err, data) => {
 //         if (err) return res.json(err);
 //         return res.json(data);
 //     });
@@ -362,7 +362,7 @@ app.post("/flight", (req,res)=>{
         req.body.status,
     ];
     console.log(values)
-    db.query(q,[values],(err,data)=>{
+    db.execute(q,[values],(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     });
@@ -372,7 +372,7 @@ app.delete("/flight/:id", (req,res)=>{
     const flightId = req.params.id
     const q  = "UPDATE flight SET `valid` = 0 where flight_id = ?"
 
-    db.query(q,[flightId],(err,data)=>{
+    db.execute(q,[flightId],(err,data)=>{
         if(err) return res.json(err)
         return res.json("Flight has been deleted successfully")
     });
@@ -392,7 +392,7 @@ app.put("/flight/:id", (req,res)=>{
         req.body.delay
     ];
 
-    db.query(q,[...values,flightId],(err,data)=>{
+    db.execute(q,[...values,flightId],(err,data)=>{
         if(err) return res.json(err)
         return res.json("flight has been updated successfully")
     });
@@ -403,7 +403,7 @@ app.put("/flight/:id", (req,res)=>{
  */
 app.get("/delay", (req,res)=>{
     const q = "SELECT * FROM flight where valid = 1 and arrival_time > CURRENT_TIMESTAMP() ORDER BY departure_time ASC "
-    db.query(q,(err,data)=>{
+    db.execute(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
@@ -416,7 +416,7 @@ app.put("/arrival_delay/:id", (req,res)=>{
     const values = [
         req.body.delay_arrival,
     ];
-    db.query(q,[flightId],(err,data)=>{
+    db.execute(q,[flightId],(err,data)=>{
         // if(err) return res.json(err)
         if(err){
             console.log(err)
@@ -432,7 +432,7 @@ app.put("/departure_delay/:id", (req,res)=>{
     const q  = "UPDATE flight SET `departure_time` = ADDTIME(`departure_time`," + '"' + ""+req.body.delay_departure+"" + '"' + "),`delay` = 1 where flight_id = ?";
 
   
-    db.query(q,[flightId],(err,data)=>{
+    db.execute(q,[flightId],(err,data)=>{
         // if(err) return res.json(err)
         if(err){
             console.log(err)
@@ -453,7 +453,7 @@ app.put("/departure_delay/:id", (req,res)=>{
 
 app.get("/booking_list", (req,res)=>{
     const q = "SELECT * FROM booking ORDER BY booking_id DESC"
-    db.query(q,(err,data)=>{
+    db.execute(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
@@ -464,7 +464,7 @@ app.delete("/booking_list/:id", (req,res)=>{
     const aircraftId = req.params.id
     const q  = "UPDATE booking SET `payment_status`= 0 where booking_id = ?"
 
-    db.query(q,[aircraftId],(err,data)=>{
+    db.execute(q,[aircraftId],(err,data)=>{
         if(err) return res.json(err)
         return res.json("Booking has been Invalidated successfully")
     });
@@ -476,7 +476,7 @@ app.put("/booking_list/:id", (req,res)=>{
     const aircraftId = req.params.id
     console.log(aircraftId)
     const q  = "UPDATE booking SET `payment_status`= 1 where booking_id = ?;"
-    db.query(q,[aircraftId],(err,data)=>{
+    db.execute(q,[aircraftId],(err,data)=>{
         if(err) return res.json(err)
         return res.json("Booking has been validated successfully")
     });
@@ -489,7 +489,7 @@ app.put("/booking_list/:id", (req,res)=>{
  */
 app.get("/user_list", (req,res)=>{
     const q = "SELECT user_id,membership,username,login_status,customer_id, f.num_bookings FROM user_view as u join user_booking_count as f on u.user_id = f.reg_user_id"
-    db.query(q,(err,data)=>{
+    db.execute(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
@@ -501,7 +501,7 @@ app.get("/user_list", (req,res)=>{
  */
 app.get("/in_air", (req,res)=>{
     const q = "SELECT * FROM flight where valid = 1 and departure_time < CURRENT_TIMESTAMP() and arrival_time > CURRENT_TIMESTAMP()"
-    db.query(q,(err,data)=>{
+    db.execute(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
@@ -509,7 +509,7 @@ app.get("/in_air", (req,res)=>{
 
 app.post("/in_air", (req,res)=>{
     const q1 = "UPDATE flight SET `status` = 'IN_AIR' where departure_time < CURRENT_TIMESTAMP() and arrival_time > CURRENT_TIMESTAMP()"
-    db.query(q1,(err,data)=>{
+    db.execute(q1,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)  
     })
@@ -517,7 +517,7 @@ app.post("/in_air", (req,res)=>{
 app.post("/in_air", (req,res)=>{
     const q = "UPDATE flight SET `status` = 'IN_AIR' where departure_time < CURRENT_TIMESTAMP() and arrival_time > CURRENT_TIMESTAMP()";
 
-    db.query(q,(err,data)=>{
+    db.execute(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     });
@@ -526,7 +526,7 @@ app.post("/in_air", (req,res)=>{
 app.put("/in_air", (req,res)=>{
     const q = "UPDATE flight SET `status` = 'ARRIVED' where  arrival_time < CURRENT_TIMESTAMP()";
 
-    db.query(q,(err,data)=>{
+    db.execute(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     });
@@ -535,7 +535,7 @@ app.put("/in_air", (req,res)=>{
 
 app.get("/boarding", (req,res)=>{
     const q = "SELECT * FROM flight where valid = 1 and TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP(),departure_time) < 10 and TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP(),departure_time) > 0"
-    db.query(q,(err,data)=>{
+    db.execute(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
@@ -544,7 +544,7 @@ app.get("/boarding", (req,res)=>{
 app.post("/boarding", (req,res)=>{
     const q = "UPDATE flight SET `status` = 'ARRIVED' where TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP(),departure_time) < 10 and TIMESTAMPDIFF(MINUTE,CURRENT_TIMESTAMP(),departure_time) > 0";
 
-    db.query(q,(err,data)=>{
+    db.execute(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     });
@@ -571,7 +571,7 @@ app.get("/report_1/:id", (req,res)=>{
             FROM airline_project_g24.customer
             WHERE customer_id in (SELECT customer_id FROM booking WHERE flight_id = ?);  
             `;
-    db.query(p,[flightId],(err,data)=>{
+    db.execute(p,[flightId],(err,data)=>{
         if(err) return console.log(err)
         return res.json(data)
     })
@@ -592,7 +592,7 @@ app.get("/report_2/:id/:start/:end", (req,res)=>{
             JOIN airport as a ON a.airport_code = r.destination
             WHERE r.destination = ? AND f.departure_time > ? AND f.arrival_time < ? ;  
             `;
-    db.query(p,[airportID,startTime,endTime],(err,data)=>{
+    db.execute(p,[airportID,startTime,endTime],(err,data)=>{
         if(err) return console.log(err)
         return res.json(data)
     })
@@ -611,7 +611,7 @@ app.get("/report_3/:start/:end", (req,res)=>{
         JOIN flight as f ON f.flight_id = b.flight_id
         WHERE f.departure_time > ? AND f.arrival_time < ?;  
     `;
-    db.query(p,[startTime,endTime],(err,data)=>{
+    db.execute(p,[startTime,endTime],(err,data)=>{
         if(err) return console.log(err)
         return res.json(data)
     })
@@ -631,7 +631,7 @@ app.get("/report_4/:origin/:destination", (req,res)=>{
         WHERE r.origin = ? AND r.destination = ? AND f.status = "ARRIVED"
         GROUP BY f.flight_id;  
     `;
-    db.query(p,[origin,destination],(err,data)=>{
+    db.execute(p,[origin,destination],(err,data)=>{
         if(err) return console.log(err)
         return res.json(data)
     })
@@ -657,7 +657,7 @@ app.get("/report_5", (req,res)=>{
         am.brand,
         am.model;
     `;
-    db.query(p,(err,data)=>{
+    db.execute(p,(err,data)=>{
         if(err) return console.log(err)
         return res.json(data)
     })
@@ -673,7 +673,7 @@ app.get("/report_5", (req,res)=>{
 app.get("/seat_select/:flight_id/:customer_id", (req,res)=>{
     const flightId = req.params.flight_id
     const q = "select seat_id, seat_number, seat_class, availability from seat where flight_id = ?"
-    db.query(q, [flightId],(err,data)=>{
+    db.execute(q, [flightId],(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
@@ -692,7 +692,7 @@ app.post("/seat_select/:seat_id/:flight_id/:customer_id", (req,res)=>{
     
 
     const q2 = "INSERT INTO booking (`customer_id`,`flight_id`,`seat_id`) VALUES (?);";
-    db.query(q2,[values],(err,data)=>{
+    db.execute(q2,[values],(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     });
@@ -703,7 +703,7 @@ app.post("/seat_select/:seat_id/:flight_id/:customer_id", (req,res)=>{
 app.put("/seat_select/:seat_id", (req,res)=>{
     const seatId = req.params.seat_id
     const q = "UPDATE seat SET `availability`= 0 where seat_id = ?;";
-    db.query(q,[seatId],(err,data)=>{
+    db.execute(q,[seatId],(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     });
@@ -714,7 +714,7 @@ app.get("/booking/:seat_id", (req,res)=>{
   
     
     const q = "SELECT booking_id FROM booking WHERE seat_id = ?"
-    db.query(q,[seatId],(err,data)=>{
+    db.execute(q,[seatId],(err,data)=>{
         // res.json(q)
         if(err) return res.json(err)
         return res.json(data)
@@ -730,7 +730,7 @@ app.get("/booking/:seat_id", (req,res)=>{
  */
 app.get("/shedule", (req,res)=>{
     const q = "select a.call_sign, r.origin, r.destination, f.departure_time, f.arrival_time, f.status, f.delay from flight as f join route as r on r.route_id = f.route_id join aircraft as a on a.aircraft_id = f.aircraft_id WHERE f.valid = 1 AND f.arrival_time > CURRENT_TIMESTAMP() ORDER BY DATE(f.departure_time) DESC"
-    db.query(q,(err,data)=>{
+    db.execute(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
@@ -746,7 +746,7 @@ app.get("/shedule", (req,res)=>{
 //displaying airport locations
 app.get("/location/airports", (req,res)=>{
     const q = "SELECT name, airport_code FROM airport WHERE valid = 1"
-    db.query(q,(err,data)=>{
+    db.execute(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
@@ -768,7 +768,7 @@ app.get("/route/available_flights/:origin/:destination/:departure/:arrival", (re
         WHERE origin = ? AND destination = ? AND
         departure_time >= ? AND arrival_time <= ?;
     `;
-    db.query(q, [originLocationId, destinationLocationId, departureTime, arrivalTime], (err, data) => {
+    db.execute(q, [originLocationId, destinationLocationId, departureTime, arrivalTime], (err, data) => {
         // if (err) return res.json(err);
         // return res.json(data);
         if (err) return console.log(err);
@@ -784,7 +784,7 @@ app.get("/route/:route_id", (req, res) => {
 
     const sql = "SELECT * FROM flight WHERE flight.flight_id = ? AND flight.departure_time > CURDATE() AND valid = 1";
 
-    db.query(sql, [route_id], (err, rows) => {
+    db.execute(sql, [route_id], (err, rows) => {
         if (err) return res.json(err);
         return res.json(rows);
     });
@@ -797,7 +797,7 @@ app.get("/route/:route_id", (req, res) => {
 
 app.get("/membership", (req,res)=>{
     const q = "SELECT * FROM membership"
-    db.query(q,(err,data)=>{
+    db.execute(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
@@ -811,7 +811,7 @@ app.post("/membership", (req,res)=>{
         req.body.mem_type,
     ];
 
-    db.query(q,[values],(err,data)=>{
+    db.execute(q,[values],(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     });
@@ -824,7 +824,7 @@ app.post("/membership", (req,res)=>{
 
 app.get("/user", (req,res)=>{
     const q = "SELECT * FROM registered_user"
-    db.query(q,(err,data)=>{
+    db.execute(q,(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     })
@@ -852,7 +852,7 @@ app.post("/user", (req,res)=>{
         req.body.user_role,
     ];
 
-    db.query(q,[values],(err,data)=>{
+    db.execute(q,[values],(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     });
@@ -876,7 +876,7 @@ app.post("/guest", (req,res)=>{
         req.body.passport_id,
     ];
 
-    db.query(q,[values],(err,data)=>{
+    db.execute(q,[values],(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     });
@@ -890,7 +890,7 @@ app.post("/guest", (req,res)=>{
 //     const pid = req.params.pid
     
 //     const q = "SELECT customer_id FROM customer WHERE name = ? AND date_of_birth = ? AND address = ? AND nic = ? AND passport_id = ?"
-//     db.query(q,[name,dob,address,nic,pid],(err,data)=>{
+//     db.execute(q,[name,dob,address,nic,pid],(err,data)=>{
 //         if(err) return res.json(err)
 //         return res.json(data)
 //     })
@@ -910,7 +910,7 @@ app.post("/user_passenger", (req,res)=>{
         req.body.passport_id,
     ];
 
-    db.query(q,[values],(err,data)=>{
+    db.execute(q,[values],(err,data)=>{
         if(err) return res.json(err)
         return res.json(data)
     });
