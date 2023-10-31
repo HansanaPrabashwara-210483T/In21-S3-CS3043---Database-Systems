@@ -81,7 +81,7 @@ export default function Ticket() {
                                         backgroundColor: '#000000'
                                     }}
                                 >
-                                    Print Report
+                                    Print Ticket
                                 </Button>
                             )}
                 </h1>
