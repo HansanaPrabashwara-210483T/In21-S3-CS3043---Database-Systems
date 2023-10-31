@@ -166,6 +166,7 @@ function ResponsiveAppBar() {
           
         
         {localStorage.getItem("token")  && (
+          <>
            <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -189,13 +190,12 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               <MenuItem onClick={handleLogout}>
-                  <Typography textAlign="center">Hi {localStorage.getItem("username")}</Typography>
-                </MenuItem>
-              <MenuItem onClick={handleLogout}>
                   <Typography textAlign="center">Logout</Typography>
                 </MenuItem>
             </Menu>
           </Box> 
+          <p style={{ whiteSpace: 'pre' }}>{"   " + localStorage.getItem("username")}</p>
+          </>
         )}
 
         </Toolbar>
