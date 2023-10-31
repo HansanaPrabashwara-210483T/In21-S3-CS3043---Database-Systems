@@ -18,8 +18,8 @@ import { useTheme } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 
 const Report_5_Results = () => {
-    const [flights,
-        setFlights] = useState([])
+    const [flights,setFlights] = useState([]);
+    const [isButtonHidden, setIsButtonHidden] = useState(false);
 
     
     const location = useLocation()
@@ -98,6 +98,20 @@ const Report_5_Results = () => {
         }
     ];
 
+    const printPage = () => {
+        window.print();
+    };
+
+    const combineEvent = () => {
+        setIsButtonHidden(true);
+        setTimeout(() => {
+            printPage();
+        }, 50); 
+        setTimeout(() => {
+            setIsButtonHidden(false);
+        }, 1000); 
+    };
+
     return ( <>
     <Container>
      <Box component="main" sx={{ flexGrow: 1, paddingTop: 4.5 }}>
@@ -108,13 +122,19 @@ const Report_5_Results = () => {
             <Grid>
 
                 <h1>Past Flights From {origin} to {destination}
-                    <Button
-                        variant="contained"
-                        onClick={() => window.print()}
-                        style={{
-                        float: 'right',
-                        backgroundColor: '#000000'
-                    }}>Print Report</Button>
+                {!isButtonHidden && (
+                                <Button
+                                    id="myButton"
+                                    variant="contained"
+                                    onClick={combineEvent}
+                                    style={{
+                                        float: 'right',
+                                        backgroundColor: '#000000'
+                                    }}
+                                >
+                                    Print Report
+                                </Button>
+                            )}
                 </h1>
 
             </Grid>
