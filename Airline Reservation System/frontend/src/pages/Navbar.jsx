@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+//import * as React from 'react';
 import logo from "../assets/logoNameSmall.png";
 // import { SiConsul } from "react-icons/si";
 // import { BsPhoneVibrate } from "react-icons/bs";
@@ -9,7 +11,10 @@ const pages = ['Booking','Schedule', 'Help'];
 const urls = ['/booking', '/shedule','/help']
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const Navbar = () => {
+
+const ResponsiveAppBar = () => {
+
+    const navigate = useNavigate();
 
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -37,6 +42,10 @@ const Navbar = () => {
         window.location.reload();
     }
 
+    const handleBookingClick = (event) => {
+        navigate('/booking');
+    }
+
     const [noBg, addBg] = useState("navBar");
     const addBgColor = () => {
         if (window.scrollY >= 10) {
@@ -61,7 +70,7 @@ const Navbar = () => {
                     <li className="listItem">
                         Schedule
                     </li>
-                    <li className="listItem">
+                    <li className="listItem" onClick={handleBookingClick}>
                         Book
                     </li>
                     <li className="listItem">
@@ -74,4 +83,4 @@ const Navbar = () => {
     );
 };
 
-export default Navbar;
+export default ResponsiveAppBar;
