@@ -672,6 +672,10 @@ app.get("/seat_select/:flight_id/:customer_id", (req,res)=>{
     })
 })
 
+
+/**
+ * For creating a booking as a non-registered user
+ */
 app.post("/seat_select/:seat_id/:flight_id/:customer_id", (req,res)=>{
     const seatId = req.params.seat_id
     const customerId = req.params.customer_id
@@ -680,15 +684,31 @@ app.post("/seat_select/:seat_id/:flight_id/:customer_id", (req,res)=>{
     const values = [
         Number(customerId),
         Number(flightId),
-        Number(seatId)
+        Number(seatId),
+        1
     ];
-    
+    // Final value '1' above is for payment status which we hard-code due to lack
+    // of payments support.
 
-    const q2 = "INSERT INTO booking (`customer_id`,`flight_id`,`seat_id`) VALUES (?);";
-    db.execute(q2,[values],(err,data)=>{
-        if(err) return res.json(err)
-        return res.json(data)
+    const query_call = "CALL CreateBooking(?, @out_booking_id);";
+    const query_select = "SELECT @out_booking_id;";
+    
+    db.query(query_call, [values], (err, data)=>{
+        if (err) {
+            console.log(err);
+            res.status(500).json({message: 'Error: Database Error'});
+        } else {
+            db.execute(query_select, (err, inner_data, fields) => {
+                if (err) {
+                    res.status(500).json({message: inner_data});
+                } else {
+                    const id = inner_data[0]['@out_booking_id'];
+                    res.json({booking_id: id});
+                }
+            });
+        }
     });
+
 
     
 });
@@ -696,7 +716,7 @@ app.post("/seat_select/:seat_id/:flight_id/:customer_id", (req,res)=>{
 app.put("/seat_select/:seat_id", (req,res)=>{
     const seatId = req.params.seat_id
     const q = "UPDATE seat SET `availability`= 0 where seat_id = ?;";
-    db.execute(q,[seatId],(err,data)=>{
+    db.execute(q, [seatId], (err, data)=>{
         if(err) return res.json(err)
         return res.json(data)
     });
@@ -859,7 +879,6 @@ app.post("/user", (req,res)=>{
 */
 
 app.post("/guest", (req,res)=>{
-    //const q = "INSERT INTO customer(`user_type`,`name`,`date_of_birth`,`address`, `nic`,`passport_id`) VALUES (?);";
     const query_insert = "CALL InsertAndGetGuestID(?, @out_customer_id);"
     const query_select = "SELECT @out_customer_id;";
     const values = [
@@ -891,28 +910,11 @@ app.post("/guest", (req,res)=>{
     });
 });
 
-// app.get("/guest_get_id/:name/:dob/:address/:nic/:pid", (req,res)=>{
-//     const name = req.params.name
-//     const dob = req.params.dob
-//     const address = req.params.address
-//     const nic = req.params.nic
-//     const pid = req.params.pid
-    
-//     const q = "SELECT customer_id FROM customer WHERE name = ? AND date_of_birth = ? AND address = ? AND nic = ? AND passport_id = ?"
-//     db.execute(q,[name,dob,address,nic,pid],(err,data)=>{
-//         if(err) return res.json(err)
-//         return res.json(data)
-//     })
-// })
 
-
-// CALL CreateUserPassenger(10, 'guest', 'Names The Name', '2000-04-01', 'The Seat In Front of Us', '998714V', '56987', @out_customer_id);
-//CreateUserPassenger (IN in_user_id INT(11), IN in_user_type VARCHAR(10), IN in_username VARCHAR(64), IN in_dob DATE, IN in_address VARCHAR(128), IN in_nic VARCHAR(20), IN in_passport_id VARCHAR(20), OUT out_customer_id INT(11))
 app.post("/user_passenger", (req,res)=>{
-    // const q = "INSERT INTO customer(`user_type`,`name`,`date_of_birth`,`address`, `nic`,`passport_id`) VALUES (?);";
     const query1 = "CALL CreateUserPassenger(?,@out_customer_id);";
     const query2 = "SELECT @out_customer_id;"
-    // and should create a user passenger instance with user_id and customer_id
+
     const values = [
         req.body.user_id,
         "guest",

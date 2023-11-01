@@ -50,11 +50,9 @@ export default function SeatSelect() {
     const handleSubmit = async e =>{
         e.preventDefault()
         try{
-            await axios.post("http://localhost:8000/seat_select/"+CurrentSeat.seat_id+"/"+flight_id+"/"+customer_id)
-            await axios.put("http://localhost:8000/seat_select/"+CurrentSeat.seat_id)
-            const res = await axios.get("http://localhost:8000/booking/"+CurrentSeat.seat_id)
-            console.log(res.data[0].booking_id)    
-            navigate("/ticket/"+res.data[0].booking_id) 
+            const res = await axios.post("http://localhost:8000/seat_select/"+CurrentSeat.seat_id+"/"+flight_id+"/"+customer_id);
+            const booking_id = res.data.booking_id;
+            navigate("/ticket/" + booking_id)
         }catch(err){
           console.log(err);
         }
