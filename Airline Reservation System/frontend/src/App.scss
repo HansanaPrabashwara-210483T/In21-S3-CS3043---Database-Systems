@@ -602,7 +602,7 @@ h2{
     color: var(--darkPrimary);
     text-align: center;
       h1{
-        font-size: 24px;
+        font-size: 2rem;
         padding-bottom: 5vh;
       }
     
@@ -663,7 +663,7 @@ justify-content: center;
     margin-top: 2rem;
     margin-bottom: 3rem;
     background: var(--glassColor);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(20px);
     border-radius: 1.5rem;
     .faqs{
       box-shadow:none;
@@ -703,3 +703,39 @@ justify-content: center;
   }
 }
 }
+
+.ContainerSchedule{
+  font-family: "Ubuntu";
+  padding-top: 15vh;
+  padding-left: 20vw;
+  padding-right: 20vw;
+  display:flex;
+  justify-content: center;
+  .glassBox{
+    background-color: var(--glassColor);
+    padding: 5rem;
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+    border-radius: 2rem;
+    text-align: center;
+    border: 2px solid var(--glassBorderColor);
+    backdrop-filter: blur(10px);
+    h1{
+      color: var(--darkPrimary);
+      padding-bottom:1rem ;
+    }
+    .models{
+      background: var(--glassColor);
+      border-radius: 2rem;
+      padding: 2rem;
+      backdrop-filter: blur(20px);
+      
+      .table{
+      border: none;
+      color: var(--darkPrimary);
+      
+    }
+    }
+    
+  }
+  }

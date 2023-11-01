@@ -571,7 +571,7 @@ h2 {
   text-align: center;
 }
 .flightTable h1 {
-  font-size: 24px;
+  font-size: 2rem;
   padding-bottom: 5vh;
 }
 
@@ -630,8 +630,8 @@ h2 {
   margin-top: 2rem;
   margin-bottom: 3rem;
   background: var(--glassColor);
-  -webkit-backdrop-filter: blur(10px);
-          backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(20px);
+          backdrop-filter: blur(20px);
   border-radius: 1.5rem;
 }
 .ContainerBooking .glassBox .allfaqs .faqs {
@@ -666,4 +666,39 @@ h2 {
 }
 .ContainerBooking .glassBox .bttnBooking:hover {
   background-color: var(--HoverColor);
+}
+
+.ContainerSchedule {
+  font-family: "Ubuntu";
+  padding-top: 15vh;
+  padding-left: 20vw;
+  padding-right: 20vw;
+  display: flex;
+  justify-content: center;
+}
+.ContainerSchedule .glassBox {
+  background-color: var(--glassColor);
+  padding: 5rem;
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+  border-radius: 2rem;
+  text-align: center;
+  border: 2px solid var(--glassBorderColor);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+}
+.ContainerSchedule .glassBox h1 {
+  color: var(--darkPrimary);
+  padding-bottom: 1rem;
+}
+.ContainerSchedule .glassBox .models {
+  background: var(--glassColor);
+  border-radius: 2rem;
+  padding: 2rem;
+  -webkit-backdrop-filter: blur(20px);
+          backdrop-filter: blur(20px);
+}
+.ContainerSchedule .glassBox .models .table {
+  border: none;
+  color: var(--darkPrimary);
 }/*# sourceMappingURL=App.css.map */

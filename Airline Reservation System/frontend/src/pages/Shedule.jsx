@@ -10,7 +10,7 @@ import { Container, Box } from "@mui/material";
 import Button from "@mui/material/Button";
 import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
 import { Stack } from "@mui/material";
-
+import Background from "../components/Background";
 import Grid from "@mui/material/Grid";
 
 const Schedule = () => {
@@ -116,31 +116,33 @@ const Schedule = () => {
   return (
     <>
       <NavBar />
-      <Container className="flightTable">
-        <Container>
+      <Background />
+      <Container className="ContainerSchedule">
+        <div className="glassBox">
+          {" "}
           <h1>Flight Schedule</h1>
-        </Container>
-
-        <div className="models">
-          <Box
-            sx={{
-              width: "100%",
-            }}
-          >
-            <DataGrid
-              rows={rows}
-              columns={columns}
-              initialState={{
-                pagination: {
-                  paginationModel: {
-                    pageSize: 8,
+          <div className="models">
+            <Box
+              sx={{
+                width: "100%",
+              }}>
+              <DataGrid
+              sx={{}}
+                className="table"
+                rows={rows}
+                columns={columns}
+                initialState={{
+                  pagination: {
+                    paginationModel: {
+                      pageSize: 6,
+                    },
                   },
-                },
-              }}
-              pageSizeOptions={[5]}
-              disableRowSelectionOnClick
-            />
-          </Box>
+                }}
+                pageSizeOptions={[5]}
+                disableRowSelectionOnClick
+              />
+            </Box>
+          </div>
         </div>
       </Container>{" "}
     </>
