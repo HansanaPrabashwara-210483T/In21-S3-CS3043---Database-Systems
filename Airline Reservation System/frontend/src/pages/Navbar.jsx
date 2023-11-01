@@ -91,7 +91,7 @@ const ResponsiveAppBar = () => {
             <>
               <div>
                 <div className="profile" onClick={handleOpenUserMenu}>
-                  <CgProfile />
+                  <CgProfile className="profile"/>
                   <p style={{ whiteSpace: "pre" }}>
                     {localStorage.getItem("username")}
                   </p>

@@ -145,6 +145,17 @@ h2{
     font-size: 2rem;
     padding-right: 2.5rem;
 
+    p{
+      color: var(--textColor);
+      margin-top: -.5rem;
+      
+      }
+    }
+    .profile{
+      color: var(--textColor);
+      
+      
+    }
     .listItem{
       padding: 0 .5rem;
       font-size: 16px;
@@ -182,7 +193,7 @@ h2{
       transition: .5s;
     }
   }
-}
+
 .navbar_With_Bg{
   backdrop-filter: blur(30px);
   background: var(--glassColorWhite);
@@ -657,6 +668,7 @@ justify-content: center;
     border-radius: 1rem;
   }
   h1{
+    font-weight: 500;
     color: var(--darkPrimary);
   }
   .allfaqs{
@@ -721,6 +733,7 @@ justify-content: center;
     border: 2px solid var(--glassBorderColor);
     backdrop-filter: blur(10px);
     h1{
+      font-weight: 500;
       color: var(--darkPrimary);
       padding-bottom:1rem ;
     }
@@ -739,3 +752,84 @@ justify-content: center;
     
   }
   }
+
+.signinContainer{
+  font-family: "Ubuntu";
+  padding-top: 15vh;
+  padding-left: 20vw;
+  padding-right: 20vw;
+  margin-bottom: 10vh;
+  display:flex;
+  justify-content: center;
+   .glassBox{
+    background-color: var(--glassColor);
+    padding: 4rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    border-radius: 2rem;
+    text-align: center;
+    border: 2px solid var(--glassBorderColor);
+    backdrop-filter: blur(10px);
+    
+    .signin{
+      h1{
+        color: var(--darkPrimary);
+        font-family: "Ubuntu";
+        font-size: 2rem;
+        font-weight: 500;
+
+      
+    }.allBoxes{
+      backdrop-filter: blur(50px);
+      padding: 3rem;
+      margin-bottom: 2rem;
+      margin-top: 2rem;
+      margin-bottom: 1.5rem;
+      background: var(--glassColor);
+      border-radius: 2rem;
+      font-family: "Ubuntu";
+      .box{   
+        gap: 1rem;
+        display: flex;
+        flex-direction: row;
+        margin-top: -1rem;
+        .iconDiv{
+          height: 60px;
+          width: 60px;
+          margin: 1rem;
+          margin-left: 0;
+          margin-right: 0;
+          padding: 14px;
+          border-radius: .5rem;
+          background: var(--glassColor2);
+
+    .icon{
+      padding: auto;
+      margin: auto;
+      color: var(--blackColor);
+          opacity: .7;
+          width: 25px;
+          height: 25px;
+    }
+  }}
+  
+      }
+  }
+  .bttnsignin{
+    box-shadow: none;
+    color: var(--whiteColor);
+    background-color: var(--PrimaryColor);
+    width: 15rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    height: 3rem;
+    border-radius: 1rem;
+    &:hover{
+      background-color: var(--HoverColor);
+    }
+  }
+}
+}
+ 
