@@ -3,6 +3,7 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 import NavBar from './Navbar'
 import { Container } from '@mui/material';
 import Grid from '@mui/material/Grid';
@@ -14,12 +15,12 @@ import {useEffect} from 'react'
 import EventSeatIcon from '@mui/icons-material/EventSeat';
 
 export default function SeatSelect() {
-    
+
     const [seats,
         setseats] = useState([]);
 
     const [CurrentSeat, setCurrentSeat] = useState();
-    
+
     const location = useLocation()
     const navigate = useNavigate()
 
@@ -39,92 +40,89 @@ export default function SeatSelect() {
         }
         fetchALLModels()
     }, [])
-    
+
     const handleChange = (e) =>{
         setCurrentSeat((prev) => ({[e.target.name]: e.target.value}));
     };
 
 
-    
+
     const handleSubmit = async e =>{
         e.preventDefault()
         try{
-            await axios.post("http://localhost:8000/seat_select/"+CurrentSeat.seat_id+"/"+flight_id+"/"+customer_id)
-            await axios.put("http://localhost:8000/seat_select/"+CurrentSeat.seat_id)
-            const res = await axios.get("http://localhost:8000/booking/"+CurrentSeat.seat_id)
-            console.log(res.data[0].booking_id)    
-            navigate("/ticket/"+res.data[0].booking_id) 
+            const res = await axios.post("http://localhost:8000/seat_select/"+CurrentSeat.seat_id+"/"+flight_id+"/"+customer_id);
+            const booking_id = res.data.booking_id;
+            navigate("/ticket/" + booking_id)
         }catch(err){
-          console.log(err);
+            console.log(err);
         }
     }
-    
 
-  return (<>< NavBar /> <Container>
 
-  <Container>
-      <Grid>
+    return (<>< NavBar /> <Container>
 
-          <h1>Seat Select</h1>
+            <Container>
+                <Grid>
 
-      </Grid>
-  </Container>
+                    <h1>Seat Select</h1>
 
-    <Container>
-    <FormControl>
-      <RadioGroup
-        row
-        aria-labelledby="demo-form-control-label-placement"
-        name="seat_id"
-        
-      >
-        {seats.map(seat => {
-            if (seat.availability.data == 1) {
-                return (
-                    <FormControlLabel
-                    flex={1}
-                    sx={{width:"5vw", marginBottom:"2vw"}}
-                        value={seat.seat_id}
-                        control={<Radio icon={<EventSeatIcon />} checkedIcon={<EventSeatIcon/>}/>}
-                        label={seat.seat_class + "-" + seat.seat_number}
-                        labelPlacement="top"
-                        onClick={handleChange}
-                        
-                    />
-                );
-            }else{
-                return (
-                    <FormControlLabel
-                    sx={{width:"5vw", marginBottom:"2vw"}}
-                        value={seat.seat_id}
-                        control={<Radio disabled icon={<EventSeatIcon/>}/>}
-                        label={seat.seat_class + "-" + seat.seat_number}
-                        labelPlacement="top"
-                    />
-                );
-            }
-        })}
-        
-     
-        
-      </RadioGroup>
-    </FormControl>
-    </Container>
+                </Grid>
+            </Container>
 
-    <Container>
+            <Container>
+                <FormControl>
+                    <RadioGroup
+                        row
+                        aria-labelledby="demo-form-control-label-placement"
+                        name="seat_id"
 
-    </Container>
+                    >
+                        {seats.map(seat => {
+                            if (seat.availability.data == 1) {
+                                return (
+                                    <FormControlLabel
+                                        flex={1}
+                                        sx={{width:"5vw", marginBottom:"2vw"}}
+                                        value={seat.seat_id}
+                                        control={<Radio icon={<EventSeatIcon />} checkedIcon={<EventSeatIcon/>}/>}
+                                        label={seat.seat_class + "-" + seat.seat_number}
+                                        labelPlacement="top"
+                                        onClick={handleChange}
+
+                                    />
+                                );
+                            }else{
+                                return (
+                                    <FormControlLabel
+                                        sx={{width:"5vw", marginBottom:"2vw"}}
+                                        value={seat.seat_id}
+                                        control={<Radio disabled icon={<EventSeatIcon/>}/>}
+                                        label={seat.seat_class + "-" + seat.seat_number}
+                                        labelPlacement="top"
+                                    />
+                                );
+                            }
+                        })}
+
+
+
+                    </RadioGroup>
+                </FormControl>
+            </Container>
+
+            <Container>
+
+            </Container>
             <Button    type="submit"
-              variant="contained"
-              fullwidth
-              sx={{ mt: 6,mb: 2,backgroundColor:"black", width:"50%" , float:"right", ":hover":{backgroundColor:"#36454F"}}}
-              onClick={handleSubmit}
-              >
-                  Next
+                       variant="contained"
+                       fullwidth
+                       sx={{ mt: 6,mb: 2,backgroundColor:"black", width:"50%" , float:"right", ":hover":{backgroundColor:"#36454F"}}}
+                       onClick={handleSubmit}
+            >
+                Next
             </Button>
-   
-    </Container>
-    </>
-  );
-}
 
+        </Container>
+        </>
+    );
+}

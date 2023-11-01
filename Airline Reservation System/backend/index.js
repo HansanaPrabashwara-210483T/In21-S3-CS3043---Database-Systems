@@ -2,8 +2,6 @@ import express from "express"
 import cors from "cors"
 import db from "./config/db.js";
 import authRouter from "./routes/auth.js";
-import e from "express";
-
 
 const app = express()
 
@@ -13,11 +11,6 @@ app.use(cors());
 // For all authentication or profile-related routes, use the auth.js router
 app.use('/auth', authRouter);
 
-/* 
-app.get('/auth/register', (req, res) => {
-    res.send("Done");
-}); 
-*/
 
 /**
  * Aircraft Models
@@ -431,7 +424,7 @@ app.put("/departure_delay/:id", (req,res)=>{
     const flightId = req.params.id
     const q  = "UPDATE flight SET `departure_time` = ADDTIME(`departure_time`," + '"' + ""+req.body.delay_departure+"" + '"' + "),`delay` = 1 where flight_id = ?";
 
-  
+
     db.execute(q,[flightId],(err,data)=>{
         // if(err) return res.json(err)
         if(err){
@@ -511,7 +504,7 @@ app.post("/in_air", (req,res)=>{
     const q1 = "UPDATE flight SET `status` = 'IN_AIR' where departure_time < CURRENT_TIMESTAMP() and arrival_time > CURRENT_TIMESTAMP()"
     db.execute(q1,(err,data)=>{
         if(err) return res.json(err)
-        return res.json(data)  
+        return res.json(data)
     })
 })
 app.post("/in_air", (req,res)=>{
@@ -602,7 +595,7 @@ app.get("/report_2/:id/:start/:end", (req,res)=>{
 app.get("/report_3/:start/:end", (req,res)=>{
     const startTime = req.params.start
     const endTime = req.params.end
- 
+
     const p = `
         SELECT COUNT(CASE WHEN c.user_type = 'reg' THEN c.customer_id END) AS count1, 
             COUNT(CASE WHEN c.user_type = 'guest' THEN c.customer_id END) AS count2
@@ -621,7 +614,7 @@ app.get("/report_3/:start/:end", (req,res)=>{
 app.get("/report_4/:origin/:destination", (req,res)=>{
     const origin = req.params.origin
     const destination = req.params.destination
- 
+
     const p = `
         SELECT f.flight_id, a.call_sign ,f.departure_time,f.arrival_time,f.delay, COUNT(b.booking_id) AS total_booking_amount
         FROM flight as f
@@ -679,6 +672,10 @@ app.get("/seat_select/:flight_id/:customer_id", (req,res)=>{
     })
 })
 
+
+/**
+ * For creating a booking as a non-registered user
+ */
 app.post("/seat_select/:seat_id/:flight_id/:customer_id", (req,res)=>{
     const seatId = req.params.seat_id
     const customerId = req.params.customer_id
@@ -687,23 +684,39 @@ app.post("/seat_select/:seat_id/:flight_id/:customer_id", (req,res)=>{
     const values = [
         Number(customerId),
         Number(flightId),
-        Number(seatId)
+        Number(seatId),
+        1
     ];
-    
+    // Final value '1' above is for payment status which we hard-code due to lack
+    // of payments support.
 
-    const q2 = "INSERT INTO booking (`customer_id`,`flight_id`,`seat_id`) VALUES (?);";
-    db.execute(q2,[values],(err,data)=>{
-        if(err) return res.json(err)
-        return res.json(data)
+    const query_call = "CALL CreateBooking(?, @out_booking_id);";
+    const query_select = "SELECT @out_booking_id;";
+
+    db.query(query_call, [values], (err, data)=>{
+        if (err) {
+            console.log(err);
+            res.status(500).json({message: 'Error: Database Error'});
+        } else {
+            db.execute(query_select, (err, inner_data, fields) => {
+                if (err) {
+                    res.status(500).json({message: inner_data});
+                } else {
+                    const id = inner_data[0]['@out_booking_id'];
+                    res.json({booking_id: id});
+                }
+            });
+        }
     });
 
-    
+
+
 });
 
 app.put("/seat_select/:seat_id", (req,res)=>{
     const seatId = req.params.seat_id
     const q = "UPDATE seat SET `availability`= 0 where seat_id = ?;";
-    db.execute(q,[seatId],(err,data)=>{
+    db.execute(q, [seatId], (err, data)=>{
         if(err) return res.json(err)
         return res.json(data)
     });
@@ -711,8 +724,8 @@ app.put("/seat_select/:seat_id", (req,res)=>{
 
 app.get("/booking/:seat_id", (req,res)=>{
     const seatId = Number(req.params.seat_id)
-  
-    
+
+
     const q = "SELECT booking_id FROM booking WHERE seat_id = ?"
     db.execute(q,[seatId],(err,data)=>{
         // res.json(q)
@@ -792,7 +805,7 @@ app.get("/route/:route_id", (req, res) => {
 
 
 /**
- * Membership 
+ * Membership
  */
 
 app.get("/membership", (req,res)=>{
@@ -863,10 +876,11 @@ app.post("/user", (req,res)=>{
 
 /**
  * Customer form for guest user booking
-*/
+ */
 
 app.post("/guest", (req,res)=>{
-    const q = "INSERT INTO customer(`user_type`,`name`,`date_of_birth`,`address`, `nic`,`passport_id`) VALUES (?);";
+    const query_insert = "CALL InsertAndGetGuestID(?, @out_customer_id);"
+    const query_select = "SELECT @out_customer_id;";
     const values = [
         "guest",
         req.body.name,
@@ -876,32 +890,33 @@ app.post("/guest", (req,res)=>{
         req.body.passport_id,
     ];
 
-    db.execute(q,[values],(err,data)=>{
-        if(err) return res.json(err)
-        return res.json(data)
+    db.query(query_insert, [values], (err, data, fields) => {
+        if(err) {
+            return res.json(err);
+
+        } else {
+            db.query(query_select,(err, inner_data, fields)=>{
+                if (err) {
+                    console.log(err);
+                    return res.json(err)
+
+                } else {
+                    const customer_id = inner_data[0]["@out_customer_id"];
+                    return res.json({customer_id: customer_id});
+                }
+
+            });
+        }
     });
 });
 
-// app.get("/guest_get_id/:name/:dob/:address/:nic/:pid", (req,res)=>{
-//     const name = req.params.name
-//     const dob = req.params.dob
-//     const address = req.params.address
-//     const nic = req.params.nic
-//     const pid = req.params.pid
-    
-//     const q = "SELECT customer_id FROM customer WHERE name = ? AND date_of_birth = ? AND address = ? AND nic = ? AND passport_id = ?"
-//     db.execute(q,[name,dob,address,nic,pid],(err,data)=>{
-//         if(err) return res.json(err)
-//         return res.json(data)
-//     })
-// })
-
-
 
 app.post("/user_passenger", (req,res)=>{
-    const q = "INSERT INTO customer(`user_type`,`name`,`date_of_birth`,`address`, `nic`,`passport_id`) VALUES (?);"
-    // and should create a user passenger instance with user_id and customer_id
+    const query1 = "CALL CreateUserPassenger(?,@out_customer_id);";
+    const query2 = "SELECT @out_customer_id;"
+
     const values = [
+        req.body.user_id,
         "guest",
         req.body.name,
         req.body.date_of_birth,
@@ -910,9 +925,18 @@ app.post("/user_passenger", (req,res)=>{
         req.body.passport_id,
     ];
 
-    db.execute(q,[values],(err,data)=>{
-        if(err) return res.json(err)
-        return res.json(data)
+    db.query(query1, [values], (err,data) => {
+        if (err) {
+            return res.json(err);
+
+        } else {
+            db.query(query2,(err, inner_data, fields)=>{
+                const customer_id = inner_data[0]["@out_customer_id"];
+                console.log(customer_id);
+                return res.json({customer_id: customer_id});
+
+            });
+        }
     });
 });
 
