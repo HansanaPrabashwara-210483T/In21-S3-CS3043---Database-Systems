@@ -626,6 +626,33 @@ h2 {
 .ContainerBooking .glassBox h1 {
   color: var(--darkPrimary);
 }
+.ContainerBooking .glassBox .allfaqs {
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+  background: var(--glassColor);
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  border-radius: 1.5rem;
+}
+.ContainerBooking .glassBox .allfaqs .faqs {
+  box-shadow: none;
+  background: rgba(0, 0, 0, 0);
+}
+.ContainerBooking .glassBox .allfaqs .faqs h4 {
+  padding-left: 1rem;
+  font-family: "Ubuntu";
+  color: var(--textColor);
+  font-weight: 500;
+}
+.ContainerBooking .glassBox .allfaqs .faqs h6 {
+  color: var(--darkPrimary);
+  font-weight: 400;
+  font-size: 0.8rem;
+  padding-left: 1.5rem;
+  padding-right: 2rem;
+  margin-top: -1rem;
+  text-align: start;
+}
 .ContainerBooking .glassBox .bttnBooking {
   color: var(--whiteColor);
   background-color: var(--PrimaryColor);

@@ -50,26 +50,24 @@ function FAQ() {
       <NavBar />
       <Background />
       <div className="ContainerBooking">
-        <Container sx={{ paddingTop: 8 }}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            Frequently Asked Questions
-          </Typography>
-          {faqs.map((faq, index) => (
-            <Accordion
-              key={index}
-              sx={{ borderTop: "2px solid rgba(0, 0, 0, 0.3)" }}>
-              <AccordionSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls={`panel${index}-content`}
-                id={`panel${index}-header`}>
-                <Typography variant="h6">{faq.question}</Typography>
-              </AccordionSummary>
-              <AccordionDetails>
-                <Typography>{faq.answer}</Typography>
-              </AccordionDetails>
-            </Accordion>
-          ))}
-        </Container>
+        <div className="glassBox">
+          <h1>Frequently Asked Questions</h1>
+          <div className="allfaqs">
+            {faqs.map((faq, index) => (
+              <Accordion key={index} className="faqs">
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls={`panel${index}-content`}
+                  id={`panel${index}-header`}>
+                  <h4>{faq.question}</h4>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <h6>{faq.answer}</h6>
+                </AccordionDetails>
+              </Accordion>
+            ))}
+          </div>
+        </div>
       </div>
     </>
   );
