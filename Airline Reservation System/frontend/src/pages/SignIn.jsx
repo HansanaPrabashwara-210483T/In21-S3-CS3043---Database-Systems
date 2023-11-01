@@ -1,16 +1,11 @@
 import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
 import NavBar from "./Navbar";
 import { PiPasswordFill } from "react-icons/pi";
 import { CgProfile } from "react-icons/cg";
 
-import HiveSharpIcon from "@mui/icons-material/HiveSharp";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Background from "../components/Background";

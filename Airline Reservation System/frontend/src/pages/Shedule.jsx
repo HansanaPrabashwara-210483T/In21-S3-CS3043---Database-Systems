@@ -4,14 +4,10 @@ import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import NavBar from "./Navbar";
 import { Container, Box } from "@mui/material";
-import Button from "@mui/material/Button";
 import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
-import { Stack } from "@mui/material";
 import Background from "../components/Background";
-import Grid from "@mui/material/Grid";
 
 const Schedule = () => {
   const [models, setmodels] = useState([]);

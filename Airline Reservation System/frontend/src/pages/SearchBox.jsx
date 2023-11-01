@@ -2,7 +2,6 @@ import Paper from '@mui/material/Paper';
 import Container from '@mui/material/Container';
 
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';

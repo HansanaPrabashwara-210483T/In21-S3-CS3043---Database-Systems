@@ -1,9 +1,7 @@
 // NoFlightsPage.js
-
 import React from "react";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-//import "./Styles/NoFlightsAvailable.css";
 import NavBar from "./Navbar";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
