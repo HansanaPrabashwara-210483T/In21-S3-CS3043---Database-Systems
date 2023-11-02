@@ -10,9 +10,12 @@ import Typography from '@mui/material/Typography';
 import HiveSharpIcon from '@mui/icons-material/HiveSharp';
 import Toolbar from '@mui/material/Toolbar';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import Button from '@mui/material/Button';
+
 
 export default function Ticket() {
     const [booking,setBookings] = useState([])
+    const [isButtonHidden, setIsButtonHidden] = useState(false);
 
 
     const location = useLocation()
@@ -41,16 +44,33 @@ export default function Ticket() {
         return date + " | " + h + " : " + m;
     };
 
+    const printPage = () => {
+        window.print();
+    };
+
+    const combineEvent = () => {
+        setIsButtonHidden(true);
+        setTimeout(() => {
+            printPage();
+        }, 50); 
+        setTimeout(() => {
+            setIsButtonHidden(false);
+        }, 1000); 
+    };
+
 
     return(
-        <>< NavBar />
-         <br></br>
+        <>{!isButtonHidden && (
+            < NavBar />
+        )}
+        <br></br>
 
         <Container>
         <Container sx={{marginTop:'15vh', justifyContent:"center", display:"flex"}}>
             <Grid>
       
-                <h1>Your Ticket</h1>
+                <h1>Your Ticket </h1>
+                
       
             </Grid>
         </Container>
@@ -112,6 +132,28 @@ export default function Ticket() {
         </Container>
                 
         </Container>
+        <Container sx={{marginTop:'5vh', justifyContent:"center", display:"flex"}}>
+            <Grid>
+      
+            {!isButtonHidden && (
+                                <Button 
+                                    id="myButton"
+                                    variant="contained"
+                                    onClick={combineEvent}
+                                    style={{
+                                        float: 'right',
+                                        backgroundColor: '#000000'
+                                    }}
+                                >
+                                    Print Ticket
+                                </Button>
+                            )}
+                
+      
+            </Grid>
+        </Container>
+        
+        
         </>
     );
 }
