@@ -12,7 +12,7 @@ function Footer() {
     <div className="footer">
       <div className="sectionContainer container grid">
         <div className="gridOne">
-          <a href="Home">
+          <a href="/">
             <img src={logo} alt="logo" className="logoDiv" />
           </a>
 
