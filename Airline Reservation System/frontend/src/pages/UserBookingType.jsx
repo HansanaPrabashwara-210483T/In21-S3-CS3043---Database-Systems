@@ -1,75 +1,81 @@
-import axios from 'axios';
-import React, { useState, useEffect } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import NavBar from './Navbar'
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import NavBar from "./Navbar";
+import Background from "../components/Background";
 
-import HiveSharpIcon from '@mui/icons-material/HiveSharp';
+import HiveSharpIcon from "@mui/icons-material/HiveSharp";
 import logo from "../assets/logoNameSmall.png";
 
-
-
 const UserBookingType = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
 
-    const navigate = useNavigate()
-    const location = useLocation()
-
-    const flight_id = location.pathname.split("/")[2]
-
+  const flight_id = location.pathname.split("/")[2];
 
   return (
     <>
-            <NavBar/>
-            <br></br>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop:'20vh',
-            marginBottom:'20vh',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-  
-          }}
-        >
-           <div className="logoDiv" style={{width:"50%"}}>
+      <NavBar /> <Background />
+      <br></br>
+      <div className="glassloginbooking">
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}>
+            <div className="logoDiv" style={{ width: "50%" }}>
               <img src={logo} alt="B Airways logo" className="logo" />
             </div>
-          
-          <Box component="form"  noValidate sx={{ mt: 1 }}>
-         
-            <Button    type="submit"
-              fullWidth
-              variant="contained"
-              onClick={()=>navigate("/seat_select/"+flight_id+"/"+localStorage.getItem("customer_id"))}
-              sx={{ mt: 6,mb: 2,backgroundColor:"black", ":hover":{backgroundColor:"#36454F"}}}
-              >
+            <div className="models">
+              <Box component="form" noValidate sx={{ mt: 1 }}>
+                <button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  onClick={() =>
+                    navigate(
+                      "/seat_select/" +
+                        flight_id +
+                        "/" +
+                        localStorage.getItem("customer_id")
+                    )
+                  }
+                  className="bttn bttnNew2">
                   Booking for Me
-            </Button>
+                </button>
 
-            <Button    type="submit"
-              fullWidth
-              variant="contained"
-              onClick={()=>navigate("/user_passenger/"+flight_id+"/"+localStorage.getItem("user_id"))}
-              sx={{ mt: 1,mb: 2,backgroundColor:"black", ":hover":{backgroundColor:"#36454F"}}}
-              >
+                <button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  onClick={() =>
+                    navigate(
+                      "/user_passenger/" +
+                        flight_id +
+                        "/" +
+                        localStorage.getItem("user_id")
+                    )
+                  }
+                  className="bttn bttnNew2">
                   Booking for Other
-            </Button>
-
-           
+                </button>
+              </Box>
+            </div>
           </Box>
-        </Box>
-      </Container>
-      </>
+        </Container>
+      </div>
+    </>
   );
-}
+};
 
-
-export default UserBookingType
+export default UserBookingType;
