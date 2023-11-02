@@ -11,6 +11,7 @@ import Container from '@mui/material/Container';
 import NavBar from './Navbar'
 
 import HiveSharpIcon from '@mui/icons-material/HiveSharp';
+import logo from "../assets/logoNameSmall.png";
 
 
 
@@ -25,6 +26,7 @@ const UserBookingType = () => {
   return (
     <>
             <NavBar/>
+            <br></br>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -37,12 +39,10 @@ const UserBookingType = () => {
   
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: '#000000' }}>
-            <HiveSharpIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Booking Type
-          </Typography>
+           <div className="logoDiv" style={{width:"50%"}}>
+              <img src={logo} alt="B Airways logo" className="logo" />
+            </div>
+          
           <Box component="form"  noValidate sx={{ mt: 1 }}>
          
             <Button    type="submit"

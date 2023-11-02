@@ -43,9 +43,11 @@ export default function Ticket() {
 
 
     return(
-        <>< NavBar /> <Container>
+        <>< NavBar />
+         <br></br>
 
         <Container>
+        <Container sx={{marginTop:'15vh', justifyContent:"center", display:"flex"}}>
             <Grid>
       
                 <h1>Your Ticket</h1>

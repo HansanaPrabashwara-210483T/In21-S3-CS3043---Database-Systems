@@ -10,7 +10,7 @@ import Container from '@mui/material/Container';
 import NavBar from './Navbar'
 
 import HiveSharpIcon from '@mui/icons-material/HiveSharp';
-
+import logo from "../assets/logoNameSmall.png";
 
 
 const LoginForBooking = () => {
@@ -40,12 +40,11 @@ const LoginForBooking = () => {
   
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: '#000000' }}>
-            <HiveSharpIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Join with Us
-          </Typography>
+            {/* <HiveSharpIcon /> */}
+            <div className="logoDiv" style={{width:"50%"}}>
+              <img src={logo} alt="B Airways logo" className="logo" />
+            </div>
+         
           <Box component="form"  noValidate sx={{ mt: 1 }}>
          
             <Button    type="submit"
