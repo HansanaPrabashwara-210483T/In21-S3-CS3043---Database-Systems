@@ -11,7 +11,7 @@ import HiveSharpIcon from '@mui/icons-material/HiveSharp';
 import Toolbar from '@mui/material/Toolbar';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Button from '@mui/material/Button';
-
+import logo from "../assets/ticketLogo.png";
 
 export default function Ticket() {
     const [booking,setBookings] = useState([])
@@ -79,52 +79,52 @@ export default function Ticket() {
       
         <Container sx={{marginTop:"10vh", justifyContent:"center", display:"flex"}}>
             <Box sx={{backgroundColor:"black", width:"75%",borderRadius:"10px", height:"50vh",background: 'linear-gradient(160deg, rgba(117,116,116,1) 0%, rgba(0,0,0,1) 58%, rgba(0,0,0,1) 100%)'}}>
-                <Container sx={{color:"#fff"}}>
-                <Toolbar disableGutters>   
-                <HiveSharpIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}/>  
-                <Typography variant="h6"sx={{
-                    mr: 2,
-                    display: { xs: 'none', md: 'flex' },
-                    fontFamily: 'monospace',
-                    fontWeight: 700,
-                    letterSpacing: '.0rem',
-                    color: 'inherit',
-                    textDecoration: 'none',
-                    }}>
-                    B Airlines
-                </Typography>
-                </Toolbar>
+                <Container sx={{color:"#fff", marginTop:"2vh"}}>
+                
 
                 <Container>
-                    <Typography variant='h2'>
+                    <div className="logoDiv">
+                        <img src={logo} style={{width:"10vw", marginTop:"1vh"}} alt="B Airways logo" className="logo" />
+                    </div>
+                    <Typography variant='h2' style={{color:"#fff"}}>
                         {booking.origin} <ArrowForwardIcon sx={{fontSize:"0.7em"}}/> {booking.destination}
                     </Typography>
-                    <Typography variant='p'>
-                        Aircraft: {booking.call_sign}
-                        <br/>
-                        Seat No: {booking.seat_class}-{booking.seat_number}
-                        <br/>
-                        Class : {
-                            booking.seat_class === "E" && "Economy"
-                            || booking.seat_class === "B" && "Business"
-                            || booking.seat_class === "P" && "Platinum"
-                        }
-                        <br/>
-                        Departure : {removeTAndZ(booking.departure_time)}
-                        <br/>
-                        Arrival : {removeTAndZ(booking.arrival_time)}
-                        <br/>
-                       
 
-                    </Typography>
-                    <Typography variant='p'>
 
-                        Name : {booking.name}
-                        <br/>
-                        NIC : {booking.nic}
-                        <br/>
-                        Passport Id : {booking.passport_id} 
-                    </Typography>
+
+                    <div style={{display:"flex", marginTop:"2vh"}}>
+                        <div style={{flex: "50%"}}>
+                            <Typography variant='p'>
+                                Aircraft: {booking.call_sign}
+                                <br/>
+                                Seat No: {booking.seat_class}-{booking.seat_number}
+                                <br/>
+                                Class : {
+                                    booking.seat_class === "E" && "Economy"
+                                    || booking.seat_class === "B" && "Business"
+                                    || booking.seat_class === "P" && "Platinum"
+                                }
+                                <br/>
+                                Departure : {removeTAndZ(booking.departure_time)}
+                                <br/>
+                                Arrival : {removeTAndZ(booking.arrival_time)}
+                                <br/>
+                            </Typography>
+                        </div>
+                        <div style={{flex: "50%"}}>
+                        <Typography variant='p'>
+                            Name : {booking.name}
+                            <br/>
+                            NIC : {booking.nic}
+                            <br/>
+                            Passport Id : {booking.passport_id} 
+                            </Typography>
+                        </div>
+                    </div>
+
+
+                    
+                    
                 </Container>
 
                 </Container>
