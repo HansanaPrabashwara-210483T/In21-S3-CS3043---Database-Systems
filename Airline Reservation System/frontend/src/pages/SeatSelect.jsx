@@ -59,17 +59,18 @@ export default function SeatSelect() {
     }
 
 
-    return (<>< NavBar /> <Container>
+    return (<>
+            < NavBar />
+            <br></br>
+            <Container sx={{marginTop:10}}>
+                <Grid sx={{marginLeft:"35%"}} >
 
-            <Container>
-                <Grid>
-
-                    <h1>Seat Select</h1>
+                    <h1>Seat Selection</h1>
 
                 </Grid>
             </Container>
 
-            <Container>
+            <Container sx={{marginTop:4}}>
                 <FormControl>
                     <RadioGroup
                         row
@@ -110,9 +111,9 @@ export default function SeatSelect() {
                 </FormControl>
             </Container>
 
-            <Container>
+            
 
-            </Container>
+            <Container>
             <Button    type="submit"
                        variant="contained"
                        fullwidth
