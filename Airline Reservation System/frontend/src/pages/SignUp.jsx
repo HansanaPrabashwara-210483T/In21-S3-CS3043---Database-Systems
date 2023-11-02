@@ -35,13 +35,16 @@ export default function SignUp() {
     };
     // TODO: THE ABOVE DOESN'T WORK. Phone number functionality is broken. 
 
-    console.log(phone_number);
-
 
     const navigate = useNavigate();
     
     const handleSubmit = async (event) => {
         event.preventDefault();
+
+        if (password !== confirm_password) {
+            alert("Passwords do not match");
+            return;
+        }
 
         try {
             const response = await axios.post("http://localhost:8000/auth/register", {
@@ -56,10 +59,11 @@ export default function SignUp() {
                 Confirm_Password: confirm_password
             });
 
-            console.log(response);
-            //navigate('/login');
+            alert('Account successfully created! You will now be redirected to login!');
+            navigate('/sign-in');
         } catch (error) {
             console.log(error);
+            alert('Account Creation Failed');
         }
 
     };
