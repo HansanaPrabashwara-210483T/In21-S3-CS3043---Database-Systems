@@ -50,11 +50,8 @@ const login = async (req, res) => {
     const username = req.body.Username;
     const plain_password = req.body.Password;
 
-    // Retrieving the hashed password corresponding to provided username from the
-    // database. Sends 500 server error if errored. If there is no user with 
-    // provided username, the stored procedure itself will raise SQLEXCEPTION with
-    // code 45000. Unfortunately, this stops our server. That behaviour should
-    // be avoided if possible... (TODO)
+    // Fetching the hashed password stored in the database using stored procedure
+    // Uses Promise.
     const hashed_password = await new Promise((resolve, reject) => {
         db.execute("CALL GetHashedPass(?, @hashed_pass);", [username], (error, results, fields) => {
             if (error) {
@@ -63,7 +60,9 @@ const login = async (req, res) => {
             } else {
                 db.execute("SELECT @hashed_pass;", (error, inner_results, fields) => {
                     if (error) {
-                        res.status(500).json({message: error.message || "Database Server Error!"});
+                        console.log(error);
+                        //res.json(error);
+                        //res.status(500).json({message: error.message || "Database Server Error!"});
                         reject(error);
                         return;
                     } else {
@@ -78,7 +77,16 @@ const login = async (req, res) => {
     
 
     // Comparing hashed password with plaintext password
-    const same = bcrypt.compare(plain_password, hashed_password);
+    var same = false;
+    if (hashed_password) {
+        // Since `compare` is async, we wait...
+        same = await bcrypt.compare(plain_password, hashed_password);
+
+    } else {
+        // Means there is no user with provided username
+        res.status(401).json({message: "Invalid username or password!"});
+        return;
+    }
 
     if (same) {
         // Passwords are the same
@@ -108,7 +116,7 @@ const login = async (req, res) => {
             });
         });
 
-        // TODO: Frontend takes it from here...
+        // Frontend takes it from here...
         res.status(200).json({token: access_token, user: user });
         
     } else {
