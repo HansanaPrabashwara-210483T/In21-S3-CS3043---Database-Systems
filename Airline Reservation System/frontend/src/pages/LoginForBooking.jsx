@@ -26,7 +26,8 @@ const LoginForBooking = () => {
 
   return (
     <>
-            <NavBar/>
+      <NavBar/>
+      <br></br>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
