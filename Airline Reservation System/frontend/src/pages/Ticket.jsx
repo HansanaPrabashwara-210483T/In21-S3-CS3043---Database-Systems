@@ -12,6 +12,8 @@ import Toolbar from '@mui/material/Toolbar';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Button from '@mui/material/Button';
 import logo from "../assets/ticketLogo.png";
+import Background from "../components/Background";
+import CssBaseline from "@mui/material/CssBaseline";
 
 export default function Ticket() {
     const [booking,setBookings] = useState([])
@@ -61,12 +63,18 @@ export default function Ticket() {
 
     return(
         <>{!isButtonHidden && (
-            < NavBar />
+            <><NavBar /><Background /></>
+
         )}
         <br></br>
+        
 
+            
+            <div className={!isButtonHidden &&("signinContainer")}>
+            <CssBaseline />
+            <div className={!isButtonHidden &&("glassBox")}>
         <Container>
-        <Container sx={{marginTop:'15vh', justifyContent:"center", display:"flex"}}>
+        <Container sx={{ justifyContent:"center", display:"flex"}} className="signin">
             <Grid>
       
                 <h1>Your Ticket </h1>
@@ -78,11 +86,11 @@ export default function Ticket() {
         
       
         <Container sx={{marginTop:"10vh", justifyContent:"center", display:"flex"}}>
-            <Box sx={{backgroundColor:"black", width:"75%",borderRadius:"10px", height:"50vh",background: 'linear-gradient(160deg, rgba(117,116,116,1) 0%, rgba(0,0,0,1) 58%, rgba(0,0,0,1) 100%)'}}>
+            <Box sx={{backgroundColor:"black",width:"55vw",borderRadius:"10px",background: 'linear-gradient(160deg, rgba(117,116,116,1) 0%, rgba(0,0,0,1) 58%, rgba(0,0,0,1) 100%)'}}>
                 <Container sx={{color:"#fff", marginTop:"2vh"}}>
                 
 
-                <Container>
+                <Container sx={{justifyContent:"left", marginBottom:"5vh"}}>
                     <div className="logoDiv">
                         <img src={logo} style={{width:"10vw", marginTop:"1vh"}} alt="B Airways logo" className="logo" />
                     </div>
@@ -93,7 +101,7 @@ export default function Ticket() {
 
 
                     <div style={{display:"flex", marginTop:"2vh"}}>
-                        <div style={{flex: "50%"}}>
+                        <div style={{flex: "33%"}}>
                             <Typography variant='p'>
                                 Aircraft: {booking.call_sign}
                                 <br/>
@@ -105,13 +113,18 @@ export default function Ticket() {
                                     || booking.seat_class === "P" && "Platinum"
                                 }
                                 <br/>
-                                Departure : {removeTAndZ(booking.departure_time)}
+                                
+                            </Typography>
+                        </div>
+                        <div style={{flex: "33%"}}>
+                            <Typography variant='p'>
+                            Departure : {removeTAndZ(booking.departure_time)}
                                 <br/>
                                 Arrival : {removeTAndZ(booking.arrival_time)}
                                 <br/>
                             </Typography>
                         </div>
-                        <div style={{flex: "50%"}}>
+                        <div style={{flex: "33%"}}>
                         <Typography variant='p'>
                             Name : {booking.name}
                             <br/>
@@ -137,13 +150,11 @@ export default function Ticket() {
       
             {!isButtonHidden && (
                                 <Button 
+                                    className="bttn bttnsignin"
                                     id="myButton"
                                     variant="contained"
                                     onClick={combineEvent}
-                                    style={{
-                                        float: 'right',
-                                        backgroundColor: '#000000'
-                                    }}
+                                    
                                 >
                                     Print Ticket
                                 </Button>
@@ -152,7 +163,8 @@ export default function Ticket() {
       
             </Grid>
         </Container>
-        
+        </div>
+        </div>
         
         </>
     );
