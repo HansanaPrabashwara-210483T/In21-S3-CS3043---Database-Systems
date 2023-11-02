@@ -67,7 +67,7 @@ import Report_5_Results from "./pages/Admin/Reports/Report_5_Results";
 import SeatSelect from "./pages/SeatSelect"; 
 import Ticket from "./pages/Ticket";
 
-import Shedule from "./pages/Shedule";
+import Schedule from "./pages/Schedule";
 import "./style.css";
 import Booking from "./pages/Booking";
 import FlightResults from "./pages/FlightResults";
@@ -90,7 +90,7 @@ function App() {
         <Route path="/booking" element={<Booking/>}/>
         <Route path="/sign-in" element={<SignIn/>}/>
         <Route path="/sign-up" element={<SignUp/>}/>
-        <Route path="/shedule" element={<Shedule/>}/>
+        <Route path="/schedule" element={<Schedule/>}/>
         <Route path="/seat_select/:flight_id/:customer_id" element={<SeatSelect/>}/>
         <Route path="/ticket/:booking_id" element={<Ticket/>}/>
 

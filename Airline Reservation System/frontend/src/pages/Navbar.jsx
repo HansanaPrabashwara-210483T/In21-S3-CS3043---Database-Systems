@@ -30,7 +30,7 @@ const ResponsiveAppBar = () => {
     navigate("/booking");
   };
   const handleScheduleClick = (event) => {
-    navigate("/shedule");
+    navigate("/schedule");
   };
   const handleHomeClick = (event) => {
     navigate("/");
