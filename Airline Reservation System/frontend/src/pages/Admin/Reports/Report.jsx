@@ -235,8 +235,8 @@ export default function AirRoute() {
             </Grid>
         </Box>
         
-      <Box sx={{ width: '50%' }} marginLeft={30}>
-      <Stack spacing={2}>
+      <Box sx={{ width: '80%'}} marginLeft='5%'>
+      <Stack spacing={1.5} maxWidth={'80%'}>
         <Item>
             <h2>Adults and Children in a flight
 
