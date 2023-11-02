@@ -24,15 +24,6 @@ export default function SignUp() {
 
   // Instead of simply adding the value, we need to create a custom function
   // to concatenate the previous value with the incoming value.
-  const setChangedPhoneNumber = (value) => {
-    setPhoneNumber((prev) => ({
-      ...prev,
-      phone_number: prev.country_code + value,
-    }));
-  };
-  // TODO: THE ABOVE DOESN'T WORK. Phone number functionality is broken.
-
-  console.log(phone_number);
 
   const navigate = useNavigate();
 
@@ -44,7 +35,6 @@ export default function SignUp() {
         Name: name,
         Dob: dob,
         Address: address,
-        Phone_Number: phone_number,
         Nic: nic,
         Passport_Id: passport_id,
         Username: username,
@@ -131,22 +121,6 @@ export default function SignUp() {
                     setAddress(e.target.value);
                   }}
                   autoComplete="address"
-                />
-
-                <MuiTelInput
-                  InputLabelProps={{
-                    sx: {
-                      fontFamily: "Ubuntu",
-                    },
-                  }}
-                  margin="normal"
-                  required
-                  fullWidth
-                  id="phone-number"
-                  name="phone_number"
-                  autoComplete=""
-                  label="Phone Number"
-                  onChange={setChangedPhoneNumber}
                 />
 
                 <TextField
