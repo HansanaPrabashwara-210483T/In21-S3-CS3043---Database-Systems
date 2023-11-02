@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import NavBar from "./Navbar";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
+import Background from "../components/Background";
 
 const NoFlightsPage = () => {
   const navigate = useNavigate();
@@ -16,29 +17,23 @@ const NoFlightsPage = () => {
   return (
     <>
       <NavBar />
-      <Container component="main" maxWidth="xs">
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            marginBottom: "20vh",
-          }}></Box>
+      <Background />
+      <br></br>
+      <div className="glassBoxNo">
         <div className="no-flights-page">
           <h2>Sorry.... No Flights Available</h2>
           <p>There are no flights available during the given time period.</p>
           <br />
-          <Button
+          <button
+            className="bttn bttnreturn"
             type="submit"
             onClick={handleReturn}
             fullWidth
-            variant="contained"
-            sx={{ mt: 6, mb: 2, backgroundColor: "black" }}>
-            {" "}
+            variant="contained">
             Return
-          </Button>
+          </button>
         </div>
-      </Container>
+      </div>
     </>
   );
 };

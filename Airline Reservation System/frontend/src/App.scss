@@ -779,7 +779,8 @@ justify-content: center;
         font-weight: 500;
 
       
-    }.allBoxes{
+    }
+    .allBoxes{
       backdrop-filter: blur(50px);
       padding: 3rem;
       margin-bottom: 2rem;
@@ -832,4 +833,235 @@ justify-content: center;
   }
 }
 }
+
+.glassBoxNo{
+  margin: 25vw;
+  margin-bottom: 20vh;
+  margin-top: 20vh;
+  background-color: var(--glassColor);
+  padding: 4rem;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-radius: 2rem;
+  text-align: center;
+  border: 2px solid var(--glassBorderColor);
+  backdrop-filter: blur(10px);
+  .no-flights-page{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    h2{
+      color: var(--darkPrimary);
+      font-family: "Ubuntu";
+      font-size: 2rem;
+      font-weight: 500;
+    }
+    .bttnreturn{
+      box-shadow: none;
+      color: var(--whiteColor);
+      background-color: var(--PrimaryColor);
+      width: 10rem;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      font-weight: 500;
+      height: 3rem;
+      border-radius: 1rem;
+      &:hover{
+        background-color: var(--HoverColor);
+      }
+    }
+  }
+}
  
+.bttnNew{
+  box-shadow: none;
+      color: var(--whiteColor);
+      background-color: var(--PrimaryColor);
+      width: 10rem;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      font-size: .8rem;
+      font-weight: 500;
+      height: 2.5rem;
+      border-radius: 1rem;
+      &:hover{
+        background-color: var(--HoverColor);
+      }
+}
+
+.bttnNew2{
+  box-shadow: none;
+      color: var(--whiteColor);
+      background-color: var(--PrimaryColor);
+      width: 15rem;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      font-weight: 500;
+      height: 2.5rem;
+      border-radius: 1rem;
+      &:hover{
+        background-color: var(--HoverColor);
+      }
+}
+
+
+.glassBoxflightresult{
+  margin: 6vw;
+  margin-bottom: 20vh;
+  margin-top: 20vh;
+  background-color: var(--glassColor);
+  padding: 3rem;
+  padding-top: 0;
+  border-radius: 2rem;
+  text-align: center;
+  border: 2px solid var(--glassBorderColor);
+  backdrop-filter: blur(10px);
+  h2{
+    color: var(--darkPrimary);
+    font-family: "Ubuntu";
+    font-size: 2rem;
+    font-weight: 500;
+  }
+  .models{
+    background: var(--glassColor);
+    border-radius: 2rem;
+    padding: 2.5rem;
+    backdrop-filter: blur(20px);
+    margin-top: 2rem;
+    
+    .table{
+    border: none;
+    color: var(--darkPrimary);
+    
+  }
+  }
+}
+
+.glassloginbooking{
+  .logoDiv{
+    padding-top: 2rem;
+    display: block;
+  margin-left: auto;
+  margin-right: auto;
+  }
+  margin: 30vw;
+  margin-bottom: 15vh;
+  margin-top: 20vh;
+  background-color: var(--glassColor);
+  padding: 4rem;
+  padding-top: 0;
+  border-radius: 2rem;
+  text-align: center;
+  border: 2px solid var(--glassBorderColor);
+  backdrop-filter: blur(10px);
+  h2{
+    color: var(--darkPrimary);
+    font-family: "Ubuntu";
+    font-size: 2rem;
+    font-weight: 500;
+  }
+  .models{
+    background: var(--glassColor);
+    border-radius: 2rem;
+    padding: 2.5rem;
+    backdrop-filter: blur(20px);
+    margin-top: 2rem;
+    
+    .table{
+    border: none;
+    color: var(--darkPrimary);
+    
+  }
+  }
+}
+
+.seatsel{
+  font-family: "Ubuntu";
+  padding-top: 15vh;
+  padding-left: 20vw;
+  padding-right: 20vw;
+  margin-bottom: 10vh;
+  display:flex;
+  justify-content: center;
+   .glassBox5{
+    background-color: var(--glassColor);
+    padding: 4rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    border-radius: 2rem;
+    text-align: center;
+    border: 2px solid var(--glassBorderColor);
+    backdrop-filter: blur(10px);
+    .allBoxes3{
+      backdrop-filter: blur(50px);
+      padding: 3rem;
+      margin-bottom: 2rem;
+      margin-top: 2rem;
+      margin-bottom: 1.5rem;
+      background: var(--glassColor);
+      border-radius: 2rem;
+      font-family: "Ubuntu";
+      .box3{
+        backdrop-filter: blur(50px);
+        background: var(--glassColor2);
+        border-radius: .5rem;
+        padding: .5rem;
+      }
+    }
+    h1{
+      color: var(--darkPrimary);
+      font-family: "Ubuntu";
+      font-size: 2rem;
+      font-weight: 500;
+    }
+   }}
+
+   .ContainerTicket{
+    font-family: "Ubuntu";
+    padding-top: 15vh;
+    display:flex;
+    justify-content: center;
+    .glassBox{
+      background-color: var(--glassColor);
+      width: 60vw;
+      padding-top: 2rem;
+      padding-bottom: 4rem;
+      border-radius: 2rem;
+      text-align: center;
+      border: 2px solid var(--glassBorderColor);
+      backdrop-filter: blur(10px);
+      h1{
+        font-weight: 500;
+        color: var(--darkPrimary);
+        padding-bottom:1rem ;
+      }
+      .models3{
+        text-align: left;
+        padding-top: 5rem;
+        background: var(--glassColor);
+        border-radius: 2rem;
+        padding: 2rem;
+        backdrop-filter: blur(20px);
+        
+        .table{
+        border: none;
+        color: var(--darkPrimary);
+        
+      }
+      }
+      
+    }
+    }
+
+    .bigText{
+        font-weight: 500;
+        color: var(--blackColor);
+    }
+
+    .smallText{
+      color: var(--greyText);
+      text-align: left;
+    }
+  
