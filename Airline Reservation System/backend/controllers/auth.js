@@ -50,11 +50,8 @@ const login = async (req, res) => {
     const username = req.body.Username;
     const plain_password = req.body.Password;
 
-    // Retrieving the hashed password corresponding to provided username from the
-    // database. Sends 500 server error if errored. If there is no user with 
-    // provided username, the stored procedure itself will raise SQLEXCEPTION with
-    // code 45000. Unfortunately, this stops our server. That behaviour should
-    // be avoided if possible... (TODO)
+    // Fetching the hashed password stored in the database using stored procedure
+    // Uses Promise.
     const hashed_password = await new Promise((resolve, reject) => {
         db.execute("CALL GetHashedPass(?, @hashed_pass);", [username], (error, results, fields) => {
             if (error) {
@@ -63,7 +60,8 @@ const login = async (req, res) => {
             } else {
                 db.execute("SELECT @hashed_pass;", (error, inner_results, fields) => {
                     if (error) {
-                        res.status(500).json({message: error.message || "Database Server Error!"});
+                        console.log(error);
+                        // res.status(500).json({message: error.message || "Database Server Error!"});
                         reject(error);
                         return;
                     } else {
@@ -78,7 +76,14 @@ const login = async (req, res) => {
     
 
     // Comparing hashed password with plaintext password
-    const same = bcrypt.compare(plain_password, hashed_password);
+    var same = false;
+    if (hashed_password) {
+        same = await bcrypt.compare(plain_password, hashed_password);
+
+    } else {
+        res.status(401).json({message: "Invalid username or password!"});
+        return;
+    }
 
     if (same) {
         // Passwords are the same
@@ -108,7 +113,7 @@ const login = async (req, res) => {
             });
         });
 
-        // TODO: Frontend takes it from here...
+        // Frontend takes it from here...
         res.status(200).json({token: access_token, user: user });
         
     } else {
@@ -146,13 +151,13 @@ const verify = (req, res) => {
 }
 
 
-// TODO: this part is to be made... First have to verify whether the current token is
+// First have to verify whether the current token is
 // valid and then proceed with logging out...
 const logout = (req, res) => {
     // Invoke verify() to check whether token is valid
     verify (req, res, () => {
         // TODO: take it from here...
-        console.log('logging the fellow out!');
+        console.log('Logging the fellow out!');
         res.status(200).json({message: "Logged out!"});
     });
     // const access_token = req.data.token;

@@ -30,6 +30,11 @@ export default function SignUp() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    if (password !== confirm_password) {
+        alert('Passwords do not match!');
+        return;
+    }
+
     try {
       const response = await axios.post("http://localhost:8000/auth/register", {
         Name: name,
@@ -43,9 +48,13 @@ export default function SignUp() {
       });
 
       console.log(response);
-      //navigate('/login');
+
+      alert('Account successfully created!\nYou will now be redirected to login!');
+      navigate('/sign-in');
+
     } catch (error) {
       console.log(error);
+      alert('Account creation failed :(');
     }
   };
 

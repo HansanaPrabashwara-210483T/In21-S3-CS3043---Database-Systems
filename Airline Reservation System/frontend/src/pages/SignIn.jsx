@@ -28,7 +28,7 @@ export default function SignIn() {
       // If returned status is 200, then login was successfu
       if (response.status === 200) {
         if (response.data.token) {
-          // setUser(response.data.user);
+
           // Store the JWT (if it exists) in the client's local-storage
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("user_id", response.data.user.user_id);
@@ -38,22 +38,22 @@ export default function SignIn() {
           if (response.data.user.username == "Admin") {
             navigate("/dashboard");
           } else {
-            navigate(-1);
+            navigate('/booking');
           }
         } else {
           // Redirect to the previous page on successful login
-          navigate(-1);
+          alert('500 ERROR: Missing JWToken!');
+          navigate('/sign-in');
         }
       } else if (response.status === 401) {
-        alert("ERROR: " + response.data.message);
+        alert("401 ERROR: " + response.message);
+
       } else if (response.status === 500) {
-        alert("ERROR: " + response.data.message);
+        alert("500 ERROR: " + response.data.message);
       }
     } catch (error) {
-      alert("ERROR: " + error);
+      alert("401 ERROR: " + error.response.data.message);
       navigate("/sign-in");
-      console.log(error);
-      //useNavigate('/somewhere');
     }
   };
 
