@@ -51,6 +51,7 @@ import BookingList_Update from "./pages/Admin/BookingList/BookingListUpdate";
 
 import User from "./pages/Admin/User/User";
 import AdminPanel from "./pages/Admin/AdminPanel";
+import Logout from "./pages/Admin/Logout";
 
 import Report from "./pages/Admin/Reports/Report";
 import Report_1 from "./pages/Admin/Reports/Report_1";
@@ -162,6 +163,10 @@ function App() {
         
 
         <Route path="/user_list" element={<User/>}/>
+
+        <Route path="/logout" element={<Logout/>}/>
+
+
       
         <Route path="/flight-results" element={<FlightResults/>} />
         <Route path="/help" element={<FAQ />} />
