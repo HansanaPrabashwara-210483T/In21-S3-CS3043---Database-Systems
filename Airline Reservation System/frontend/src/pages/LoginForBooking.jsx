@@ -39,7 +39,8 @@ const LoginForBooking = () => {
                   type="submit"
                   fullWidth
                   variant="contained"
-                  href="/sign-up">
+                  onClick={() => navigate("/sign-up")}>
+                  {/* href="/sign-up"> */}
                   Sign Up
                 </button>
 
@@ -48,7 +49,8 @@ const LoginForBooking = () => {
                   type="submit"
                   fullWidth
                   variant="contained"
-                  href="/sign-in">
+                  onClick={() => navigate("/sign-in")}>
+                  {/* href="/sign-in"> */}
                   Sign In
                 </button>
 
